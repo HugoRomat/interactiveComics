@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <style>
+    .comic-panel {
+      margin: 5px;
+    }
+    .interactive{
+      box-shadow: 0px 0px 3px 2px rgb(12 2 255 / 26%);
+    }
+    .flag{
+      /* outline: 6px solid white; */
+      cursor: pointer;
+      position: absolute;
+      background: rgb(12 2 255 / 5%);
+      box-shadow: none;
+    }
+    div.tooltip {	
+    position: absolute;			
+    text-align: left;			
+    /* width: 60px;					
+    height: 28px;					 */
+    color: white;
+    padding: 5px;				
+    font: 12px sans-serif;		
+    background: black;	
+    border: 0px;		
+    border-radius: 1px;			
+    pointer-events: none;			
+}
+svg{
+  font-family: Neucha, cursive;
+}
+  </style>
+<head>
+  <meta charset="UTF-8">
+  <title>Hugo</title>
+  <link rel="stylesheet" href="https://gramener.com/comicgen/dist/comicgen.min.css">
+<script async src="https://gramener.com/comicgen/dist/comicgen.min.js"></script>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Neucha&display=swap'><link rel="stylesheet" href="./style.css">
+<script src="https://d3js.org/d3.v6.min.js"></script>
+
+
+</head>
+<body>
+  <div class="comic-row">
+    <div class="comic-panel">
+      <div class="comic-caption-top">Hi! I'm Hugo.</div>
+      <g class="comicgen" name="dey" angle="straight" emotion="smile" pose="handsfolded" x="-317" y="9" scale="2.2" width="150" height="200"></g>
+    </div>
+
+  
+
+    <div class="comic-panel interactive" id="clickPanel">
+      <div class="comic-caption-top">I rencently went from social interactions to...</div>
+      <svg width="335" height="200">
+        <!-- <g class="comicgen" name="dey" angle="sitting" emotion="hmm" pose="sittingatdesk" x="-10" y="20" scale="0.6" width="300" height="200" mirror="1"></g> -->
+        <!-- <g class="comicgen" name="dey" angle="straight" emotion="laugh" pose="handsonhip" x="-10" y="20" scale="0.6" width="300" height="200" mirror="1"></g> -->
+        <g class="comicgen" name="dee" angle="side" emotion="laugh" pose="explaining" x="160" y="0" scale="0.88" width="300" height="200" mirror="1"></g>
+        <g class="comicgen" name="dey" angle="straight" emotion="laugh" pose="handsonhip" x="-120" y="10" scale="0.88" width="300" height="200"></g>
+
+        <g class="comicgen keep" name="dey" angle="sitting" emotion="hmm" pose="sittingatdesk" x="90" y="20" scale="0.6" width="300" height="200" mirror="1" opacity="0"></g>
+      </svg>
+      </svg>
+    </div>
+
+    <div class="comic-panel">
+      <div class="comic-caption-top">Let's try to understand how COVID works.</div>
+      <svg width="200" height="200">
+        <g class="comicgen" name="dey" angle="straight" emotion="curious" pose="thinking" x="-90" y="20" scale="1.1" width="300" height="200" mirror="1"></g>
+      </svg>
+    </div>
+
+    <div class="comic-panel">
+      <div class="comic-caption-top">We will pick a first example: France</div>
+      <svg width="200" height="200">
+        <g class="comicgen" name="dey" angle="straight" emotion="lookingright" pose="pointingright" x="-130" y="60" scale="0.8" width="300" height="200" ></g>
+        <image width="80" height="80" y="60" x="120" xlink:href="france.png" />
+      </svg>
+    </div>
+
+
+  </div>
+
+    <div class="comic-row">
+
+      
+    <div class="comic-panel interactive" >
+      <div class="comic-caption-top">
+        LEt's see how did the number of visitors change since the beginning of the pandemic</div>
+      <svg width="500" height="450" viewBox="0 0 500 450" preserveAspectRatio="xMidYMin slice"  id="visitors">
+        <image width="500" height="350" y="100" xlink:href="changes-visitors-covid.png" />
+
+        <g id="lineInspection" transform="translate(-100, 125)">
+          <line x1=0 y1=0 x2=0 y2=275 stroke="black" stroke-width='3' stroke-dasharray='10,5' opacity=0.4></line>
+        </g>
+        
+        <g id="headVisitor1" opacity="0" class="comicgen" name="dey" angle="straight" emotion="rollingeyes" pose="handsinpocket" x="-40" y="20" scale="0.5" width="500" height="120" mirror="1"></g>
+        <!-- <g id="headVisitor2" class="comicgen" name="dey" angle="straight" emotion="curious" pose="handsinpocket" x="50" y="20" scale="0.5" width="500" height="120" mirror="1"></g> -->
+        <g id="headVisitor2" opacity="0" class="comicgen" name="dey" angle="straight" emotion="happy" pose="handsinpocket" x="80" y="20" scale="0.5" width="500" height="120" mirror="1"></g>
+        <g id="headVisitor3" opacity="0" class="comicgen" name="dey" angle="straight" emotion="cryingloudly" pose="handsinpocket" x="220" y="20" scale="0.5" width="500" height="120" mirror="1"></g>
+      </svg>
+    </div>
+
+    <div class="comic-panel">
+      <div class="comic-caption-top">Let's understand how other countries are handling this crisis </div>
+      <svg width="413" height="450">
+       <foreignObject width="413" height="450" x="0" y="100">
+         <img class="flag interactive" id="Germany" width="80" height="80" style="left: 170px;" src="germany.png" />
+          <img class="flag interactive" id="Italy" width="80" height="80"  style="left: 280px;" src="italia.png" />
+          <img class="flag interactive" id="Belgium" width="80" height="80"  style="left: 200px; top: 100px;" src="belgium.png" />
+      </foreignObject>
+        
+        <g id="headVisitor1" opacity="1" class="comicgen" name="dey" angle="side" emotion="ooh" pose="yuhoo" x="-40" y="150" scale="0.5" width="500" height="450" mirror="1"></g>
+      </svg>
+    </div>
+    <div class="comic-panel">
+      <div class="comic-caption-top">Let's investigate how much parks were opened!</div>
+      <svg width="600" height="500" >
+        <!-- <g class="comicgen" name="dey" angle="straight" emotion="smile" pose="handsfolded" x="-317" y="9" scale="2.2" width="150" height="200"></g> -->
+
+        <g id="graph" transform="translate(40, 60)"></g>
+      </svg>
+    </div>
+  </div>
+    
+
+    <div class="comic-row">
+      
+    </div>
+
+  <!-- <div class="comic-panel">
+    <div class="comic-caption-top">And this is Dey, my co-star on this strip.</div>
+    <svg width="300" height="200">
+      <g class="comicgen" name="dee" angle="straight" emotion="smilehappy" pose="pointingright" x="160" y="0" scale="0.88" width="300" height="200" mirror="1"></g>
+      <g class="comicgen" name="dey" angle="straight" emotion="smile" pose="handsinpocket" x="-120" y="10" scale="0.88" width="300" height="200"></g>
+    </svg>
+  </div> -->
+
+
+
+</body>
+
+<script>
+  d3.select('#clickPanel').style('cursor', 'pointer')
+d3.select('#clickPanel').on('mousedown', function(event){
+  console.log('GG', this)
+  d3.select(this).selectAll('.comicgen').transition().duration(200).attr('opacity', '0');
+  d3.select(this).selectAll('.keep').transition().duration(200).attr('opacity', '1');
+  d3.select(this).selectAll('.comic-caption-top').html('working alone....').style('text-align', 'center')
+})
+
+var interactiveVisitors = d3.select('#visitors')
+  .on('mousemove', (event) => {
+      var coords = d3.pointer( event );
+
+      d3.select("#headVisitor1").attr('opacity', '0')
+      d3.select("#headVisitor2").attr('opacity', '0')
+      d3.select("#headVisitor3").attr('opacity', '0')
+      d3.select("#lineInspection").attr('opacity', '1')
+
+      if (150 >  coords[0] && coords[0] > 0){
+        d3.select("#headVisitor1").attr('opacity', '1')
+        d3.select("#lineInspection").attr('transform', 'translate(85, 125)')
+        // d3.select('#rectText').select('text').text('Complete alert /r Lockdown');
+        div.html("First lockdown<br/>Everything shutting down <br/> Work from home...")	
+                .style("left", "135px")		
+                .style("top", "290px")
+                .style('opacity','1')
+            
+      } 
+      if (250 >  coords[0] && coords[0] > 150){
+        d3.select("#headVisitor2").attr('opacity', '1')
+        d3.select("#lineInspection").attr('transform', 'translate(205, 125)')
+
+        div.html("Everything reopened<br/>Summer! Beach and parks opened <br/>")	
+                .style("left", "255px")		
+                .style("top", "290px")
+                .style('opacity','1')
+
+      }
+      if (400 >  coords[0] && coords[0] > 300){
+        d3.select("#headVisitor3").attr('opacity', '1')
+        d3.select("#lineInspection").attr('transform', 'translate(345, 125)')
+
+        div.html("Curfew! <br/>Parks and restaurant closed...")	
+                .style("left", "395px")		
+                .style("top", "290px")
+                .style('opacity','1')
+
+      }
+    })
+    .on('mouseleave', (event) => {
+      d3.select("#headVisitor1").attr('opacity', '0')
+      d3.select("#headVisitor2").attr('opacity', '0')
+      d3.select("#headVisitor3").attr('opacity', '0')
+      d3.select("#lineInspection").attr('opacity', '0')
+      div.style('opacity','0')
+    })
+
+
+    var div = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
+
+
+
+var selectedCountry = ['France'];
+d3.selectAll('.flag').on('mousedown', function(event){
+  // console.log();
+  var name = d3.select(this).attr('id');
+  selectedCountry = addOrRemove(selectedCountry, name);
+  // console.log(selectedCountry)
+  computeData(selectedCountry)
+})
+
+
+// d3.csv("visitors.csv", function(data){
+//   if (dataVisitors[data.Entity] == undefined){
+//     dataVisitors[data.Entity] = []
+//   }
+//   dataVisitors[data.Entity].push(data);
+   
+//   console.log(dataVisitors)
+// });
+computeData(selectedCountry)
+function computeData(name){
+  d3.csv('visitors.csv')
+  .then(function(data) {
+    var dataVisitors = {}
+    // console.log(name)
+     data.forEach(element => {
+      //  console.log(element)
+      if (name.indexOf(element.Entity) > -1 ){
+        // console.log(element.Entity)
+        if (dataVisitors[element.Entity] == undefined){
+            dataVisitors[element.Entity] = []
+        }
+        dataVisitors[element.Entity].push(element);
+      }
+        
+     });
+     var myData = dataVisitors;
+     var nestedArray = []
+     for (var key in dataVisitors){
+      nestedArray.push({'key': key, 'values': dataVisitors[key]})
+     }
+    //  console.log(myData)
+    //  console.log(nestedArray)
+     d3.select('#graph').selectAll('*').remove();
+
+    //  setTimeOut(function(){
+      createGraph(nestedArray, data, selectedCountry);
+    //  }, 2000)
+     
+
+
+  })
+  .catch(function(error){
+     // handle error   
+  })
+}
+const addOrRemove = (array, item) => {
+  const exists = array.includes(item)
+
+  if (exists) {
+    return array.filter((c) => { return c !== item })
+  } else {
+    const result = array
+    result.push(item)
+    return result
+  }
+}
+
+
+  function createGraph(sumstat, data, selectedCountry){
+
+    var height  = 400;
+    var width   = 650;
+    var hEach   = 40;
+
+    var margin = {top: 20, right: 100, bottom: 25, left: 25};
+
+    width =     width - margin.left - margin.right;
+    height =    height - margin.top - margin.bottom;
+
+
+    // console.log(data)
+    var svg = d3.select('#graph')
+    // var sumstat = data;
+
+    var parseDate = d3.timeParse("%Y-%m-%d");
+    // console.log(parseDate('2020-11-04'));
+    // var sumstat = d3.nest().key(function(d) { return d.Entity;}).entries(data);
+    var x = d3.scaleTime()
+      .domain(d3.extent(data, function(d) { return parseDate(d.Date); }))
+      .range([ 0, width ]);
+
+      // console.log('HELLO')
+
+    var date = new Date();
+    // console.log(date)
+
+    // console.log(x(date))
+
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).ticks(5));
+
+  // Add Y axis
+  var y = d3.scaleLinear()
+    .domain([d3.min(data, function(d) { return +d.parks; }), d3.max(data, function(d) { return +d.parks; })])
+    .range([ height, 0 ]);
+
+    
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+  // color palette
+  var res = sumstat.map(function(d){ return d.key }) // list of group names
+  var color = d3.scaleOrdinal()
+    .domain(['Italy', 'Belgium', 'Germany', 'France'])
+    .range(['#4daf4a','#984ea3','#ff7f00','lightblue','#f781bf','#999999'])
+// console.log(color)
+  // color['Italy'] = 'green'
+  // color['Belgium'] = 'red'
+  // color['Germany'] = 'blue'
+  // color['France'] = 'purple'
+
+  // Draw the line
+  // console.log(sumstat)
+  svg.selectAll(".line")
+      .data(sumstat)
+      .enter()
+      .append("path").attr('class', 'line')
+        .attr("fill", "none")
+        .attr("stroke", function(d){ return color(d.key) })
+        .attr("stroke-width", 1.5)
+        .attr("d", function(d){
+          // console.log(d.values[0]);
+          // console.log(d.values[30].Date, x(parseDate(d.values[30].Date)));
+            // (d.values))
+            // return "M10"
+            return d3.line()
+              .x(function(d) { return x(parseDate(d.Date)); })
+              .y(function(d) { return y(+d.parks); })
+              (d.values)
+        })
+
+        // console.log(selectedCountry)
+        var legend = svg.selectAll('.legend')
+          .data(selectedCountry)
+          .enter()
+          .append('g')
+          .attr('class', 'legend');
+
+          legend.append('rect')
+          .attr('x', width - 500)
+          .attr('y', function(d, i) {
+            // console.log(d)
+            return i * 20;
+          })
+          .attr('width', 10)
+          .attr('height', 10)
+          .style('fill', function(d) {
+            return color(d);
+          });
+
+        legend.append('text')
+          .attr('x', width - 480)
+          .attr('y', function(d, i) {
+            return (i * 20) + 9;
+          })
+          .text(function(d) {
+            return d;
+          });
+
+
+
+
+    var mouseG = svg.append("g")
+      .attr("class", "mouse-over-effects");
+
+    mouseG.append("path") // this is the black vertical line to follow mouse
+      .attr("class", "mouse-line")
+      .style("stroke", "grey")
+      .style("stroke-width", "0.5px")
+      .style("opacity", "0");
+      
+    var lines = document.getElementsByClassName('line');
+
+    // console.log(lines)
+    var mousePerLine = mouseG.selectAll('.mouse-per-line')
+      .data(selectedCountry)
+      .enter()
+      .append("g")
+      .attr("class", "mouse-per-line");
+
+    mousePerLine.append("circle")
+      .attr("r", 7)
+      .style("stroke", function(d) {
+        return color(d);
+      })
+      .style("fill", "none")
+      .style("stroke-width", "1px")
+      .style("opacity", "0");
+
+    mousePerLine.append("text")
+      .attr("transform", "translate(10,3)");
+
+    mouseG.append('svg:rect') // append a rect to catch mouse movements on canvas
+      .attr('width', width) // can't catch mouse events on a g element
+      .attr('height', height)
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .on('mouseout', function() { // on mouse out hide line, circles and text
+        d3.select(".mouse-line")
+          .style("opacity", "0");
+        d3.selectAll(".mouse-per-line circle")
+          .style("opacity", "0");
+        d3.selectAll(".mouse-per-line text")
+          .style("opacity", "0");
+      })
+      .on('mouseover', function() { // on mouse in show line, circles and text
+        d3.select(".mouse-line")
+          .style("opacity", "1");
+        d3.selectAll(".mouse-per-line circle")
+          .style("opacity", "1");
+        d3.selectAll(".mouse-per-line text")
+          .style("opacity", "1");
+      })
+      .on('mousemove', function() { // mouse moving over canvas
+        var mouse = d3.pointer( event );
+
+    
+        d3.select(".mouse-line")
+          .attr("d", function() {
+            var d = "M" + mouse[0] + "," + height;
+            d += " " + mouse[0] + "," + 0;
+            return d;
+          });
+
+        d3.selectAll(".mouse-per-line")
+          .attr("transform", function(d, i) {
+            // console.log(width/mouse[0])
+            var xDate = x.invert(mouse[0]);
+            var bisect = d3.bisector(function(d) { return d.date; }).right;
+            var idx = bisect(d, xDate);
+            // console.log(idx)
+            var beginning = 0,
+                end = lines[i].getTotalLength(),
+                target = null;
+
+            while (true){
+              target = Math.floor((beginning + end) / 2);
+              pos = lines[i].getPointAtLength(target);
+              if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                  break;
+              }
+              if (pos.x > mouse[0])      end = target;
+              else if (pos.x < mouse[0]) beginning = target;
+              else break; //position found
+            }
+            
+            d3.select(this).select('text')
+              .text(y.invert(pos.y).toFixed(2));
+              
+            return "translate(" + mouse[0] + "," + pos.y +")";
+          });
+      });
+
+
+  }
+
+</script>
+</html>
+<!-- 
+
+d3.select("#headVisitor").append('g')
+          .attr("class", "comicgen")
+          .attr("name", "dey")
+          .attr("angle", "sitting")
+          .attr("emotion", "hmm")
+          .attr("pose", "sittingatdesk")
+
+          .attr("x", "30")
+          .attr("y", "30")
+          .attr("scale", "0.6")
+          .attr("width", "300")
+          .attr("height", "200") -->
+          <!-- .attr("mirror", "1") -->

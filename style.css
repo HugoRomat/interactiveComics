@@ -1,0 +1,8 @@
+:root {
+  --comic-caption-background: #eee;         /* Light grey background. Default: white */
+  --comic-caption-font: Neucha, cursive;    /* Custom Google font. Default: cursive */
+  --comic-caption-padding: 0.25rem 0.5rem;  /* Custom margin. Default: 0.25rem */
+}
+.comic-caption-top, .comic-caption-bottom { /* Apply any custom styles you want */
+  text-transform: uppercase;
+}
