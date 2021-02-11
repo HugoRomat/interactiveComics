@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Prototype</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
+
+  
+  <div id="content">
+    <div class="cell">
+      <!-- <svg> -->
+          <!-- <foreignObject style="width:100%;height:100%;padding:10px;"> -->
+            <div>The number of flights was dramatically decreased in 2020. But do you remember how many flights you took in 2019?</div>
+            <div id="sliderInnerFlights" class="myslider"  data-min="0" data-max="10" ></div>
+            <div class="text"><span id="textInnerFlights" class="boldy">0</span> times of inner continental flight</div>
+            
+            <div id="sliderCrossFlights" class="myslider" style="" data-min="0" data-max="10" ></div>
+            <div class="text"><span id="textCrossFlights" class="boldy">0</span> times of cross continental flight</div>
+          <!-- </foreignObject> -->
+      <!-- </svg> -->
+    </div>
+
+    <div class="contentVertical">
+      <div class="cell hori">
+        <!-- <svg> -->
+
+          <!-- <foreignObject style="width:100%;height:100%;padding:10px;"> -->
+            <div>In 2019, you travel X times, a total of X km by plan</div>
+            <div id="glyph1" class='glyph' style="font-size: 35px;"> </div>
+            
+          <!-- </foreignObject> -->
+
+        <!-- </svg> -->
+      </div>
+      <div class="cell hori">
+        <div>That's about X times around the globe</div>
+        <div id="glyph2" class='glyph' style="font-size: 35px;"> </div>
+      </div>
+    </div>
+
+    <div class="cell">
+      <div>Which produced around X tons of CO2</div>
+      <span id="glyph3" class='glyph' style="font-size: 35px;"> </span><span style="font-size: 35px;"> ✈️</span>
+    </div>
+
+    <div class="cell withoutBorder text" style="width:480px;">
+      
+      How much is X tons of CO2 indicate? Let's compare the amount with: 
+
+      <div class="contentHorizontal">
+        <div class="cell verti" id="tree1">
+          <div>
+            <img style="width:100%;" src="../img/people.png" />
+          </div>
+          <div class="text">Average C02 production by human</div>
+        </div>
+        <div class="cell verti" id="tree2">
+          <div>
+            <img style="width:100%;" src="../img/tree.png" />
+          </div>
+          <div class="text">C02 absorbed by trees</div>
+        </div>
+        <div class="cell verti"  id="tree3" style="width:200px !important;">
+          <div>
+            <img style="width:100%;" src="../img/bull.png" />
+          </div>
+          <div class="text">Equivalent greenhouse gasses by cows' farts and burps</div>
+        </div>
+        </div>
+      </div>
+
+
+
+      <div class="cell">
+        <div>It would take 4.5 trees a year to absorb 100kg C02</div>
+        <img style="width:30px;" src="../img/tree2.png" />
+      </div>
+
+
+
+    </div>
+
+  </div>
+  <!-- <svg id="comic" width=1500px height=500px> -->
+    
+    <!-- Panels -->
+    <!-- <rect x="20" y="20" width=300 height=300 fill="white" stroke="black"></rect>
+    <rect x="340" y="20" width=300 height=300 fill="white" stroke="black"></rect>
+    <rect x="660" y="20" width=300 height=300 fill="white" stroke="black"></rect> -->
+    
+    <!-- Text -->
+    <!-- <text x=60 y=40>In 2016, I took</text>     
+    <text x=159 y=40 id="number_of_flights" style="font-weight:800">20</text> 
+    <text class="old" x=179 y=40>domestic flights.</text> 
+    <text class="new" x=172 y=40>domestic flight.</text> 
+    
+    <text class="old" x=370 y=40>Each of these flights produced 0.6 tons </text> 
+    <text class="old" x=370 y=57>of CO₂...</text> 
+    
+    <text class="new" x=370 y=40>This single flight produced 0.6 tons </text> 
+    <text class="new" x=370 y=57>of CO₂...</text> 
+    
+    <text class="new" x=680 y=40>That's more than half of my annual</text> 
+    <text class="new" x=680 y=58>1 ton allowance for emissions if we are</text> 
+    <text class="new" x=680 y=75>to meet the targets for 2° of warming.</text> 
+    
+    <text class="new" x=705 y=270>There's not a lot left over for</text> 
+    <text class="new" x=700 y=295>the remaining necessities of life.</text> 
+    
+    <text class="old" x=680 y=40>Meaning that my carbon footprint was</text> 
+    <text class="old" x=680 y=58 id="number_of_tons" style="font-weight:800">20x</text> 
+    <text class="old" x=713 y=58>larger than the average footprint</text> 
+    <text class="old" x=680 y=75>needed to meet the targets for 2° of </text> 
+    <text class="old" x=680 y=91>warming.</text> -->
+    
+<!-- </svg> -->
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
