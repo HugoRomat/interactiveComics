@@ -9,6 +9,73 @@
   font-weight: 1000;
   /* background: green; */
 }
+.box1 > div{
+  transform: rotate(-2deg);
+}
+.box2 > div{
+  transform: rotate(2deg);
+}
+.box3 > div{
+  transform: rotate(-2deg);
+}
+.box1{
+  border-width: 3px 4px 3px 5px;
+  border-radius:95% 4% 92% 5%/4% 95% 6% 95%;
+  transform: rotate(2deg);
+}
+.box2{
+  width:350px;
+  border-width: 3px 3px 5px 5px;
+  border-radius:4% 95% 6% 95%/95% 4% 92% 5%;
+  transform: rotate(-2deg);
+}
+
+.box3{
+  border-width: 5px 3px 3px 5px;
+  border-radius:95% 4% 97% 5%/4% 94% 3% 95%;
+  transform: rotate(2deg);
+}
+
+.cell {
+  width: 400px;
+  height: 310px;
+  border: solid black 3px;
+  border-color: black;
+  margin: 5px;
+  padding: 10px;
+  background-color: white;
+}
+
+
+  /* border: solid 5px hsla(0, 95%, 35%, 1); */
+  
+  /* border-image: url("http://s3.amazonaws.com/dfc_attachments/images/3247065/sketchy_web.png") 30 30 round; */
+  /* border-image: url("http://s3.amazonaws.com/dfc_attachments/images/3247065/sketchy_web.png") 30 30 stretch; */
+/* } */
+
+  /* padding: 4rem 8rem; */
+  /* display: inline-block; */
+  /* border: 3px solid #333333; */
+  /* font-size: 2.5rem; */
+  /* border-radius: 2% 6% 5% 4%/1% 1% 2% 4%; */
+  /* text-transform: uppercase; */
+  /* letter-spacing: 0.3ch; */
+  /* background: #ffffff; */
+  /* position: relative; */
+
+/* .cell::before {
+  content: "";
+  border: 2px solid #353535;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+  border-radius: 1% 1% 2% 4%/2% 6% 5% 4%;
+} */
+
 .myslider{
   width: 200px;
   text-align: center;
@@ -21,6 +88,7 @@
 }
 body{
   font-family: Neucha, cursive;
+  background: #f3f3f3;
 }
 .old {
   /*opacity:0.0;*/
@@ -71,14 +139,7 @@ body{
   width: 120px !important;
   height: 240px !important;
 }
-.cell{
-  /* background-color: red; */
-  width: 400px;
-  height: 310px;
-  border: black solid 1px;
-  margin: 5px;
-  padding: 5px;
-}
+
 .cell svg{
   width: 100%;
   height: 100%;
