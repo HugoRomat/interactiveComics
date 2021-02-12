@@ -49,18 +49,54 @@
 //   d3.select("svg").append("polygon").attr("points","490,180 490,100 600,100 552,258").attr("fill","white").attr("class","glyph")
 //   d3.select("svg").append("text").attr("x","465").attr("y","195").attr("font-size","40").text("0.6").attr("class","glyph")
 // }
+function roundHalf(num) {
+  return Math.round(num*2)/2;
+}
 function updateGlyph1(){
   console.log('HELLO')
-  for (var i =0; i<valueInner; i++){
-    $('#glyph1').append("✈️")
-  }
+  var kms = (valueInner * 1500) + (valueCross * 8000);
+  var aroundGlobe = kms/40000
+  var c02 = (kms * 0.85) /10000;
+  var totalFlight = valueInner+valueCross;
+  // console.log(c02)
+  
+  $('#travelTime').html(valueInner+valueCross);
+  $('#travelDistance').html(kms);
 
-  for (var i =0; i<valueCross; i++){
-    $('#glyph2').append("🌎")
+  $('#timeAroundGlobe').html(aroundGlobe);
+  $('#C02tons').html(aroundGlobe);
+  
+  
+  //✈️
+ 
+  for (var i =0; i<totalFlight; i++){
+    $('#glyph1').append('<img  style="width:40px;" src="../img/plane.png" />')
   }
-  for (var i =0; i<valueCross; i++){
-    $('#glyph3').append("☁️")
+  //🌎
+  // var roundValue = roundHalf(aroundGlobe);
+  var decPart = (aroundGlobe % 1).toFixed(4)
+  var intPart = Math.trunc(aroundGlobe)
+  var calculatedDecPart = decPart * 70;
+  for (var i=0; i<intPart; i++){
+    $('#glyph2').append('<img style="width:70px;" src="../img/earth.png" />')
   }
+  $('#glyph2').append('<img style="width:70px;position: absolute;clip: rect(0, '+calculatedDecPart+'px, 200px, 0);" src="../img/earth.png" />')
+
+  
+  //☁️
+  // for (var i =0; i<c02; i++){
+    
+  //   $('#glyph3').append('<img style="width:70px;" src="../img/fog.png" />')
+  // }
+
+  var decPart = (c02 % 1).toFixed(4)
+  var intPart = Math.trunc(c02)
+  var calculatedDecPart = decPart * 70;
+  for (var i=0; i<intPart; i++){
+    $('#glyph3').append('<img style="width:70px;" src="../img/fog.png" />')
+  }
+  $('#glyph3').append('<img style="width:70px;position: absolute;clip: rect(0, '+calculatedDecPart+'px, 200px, 0);" src="../img/fog.png" />')
+
 
 
   
@@ -96,6 +132,17 @@ function updateGlyphs () {
 //   d3.selectAll(".old").attr("opacity",1.0)
 
 // Slider code from https://jqueryui.com/slider/#steps
+d3.selectAll('.treeSelect').on('click', function(){
+  var id = d3.select(this).attr('id');
+  var lastId = id.substr(id.length - 1);
+  d3.selectAll('.treePath').style('display', 'none');
+  d3.selectAll('.path'+lastId).style('display', 'inline');
+})
+
+d3.selectAll('.path1').style('display', 'none');
+d3.selectAll('.path2').style('display', 'none');
+d3.selectAll('.path3').style('display', 'none');
+
 
 var valueInner = 0;
 var valueCross = 0;

@@ -29,11 +29,24 @@ body{
 .new {
   /*opacity:1.0;*/
 }
-
+#clip {
+  position: absolute;
+  clip: rect(0, 100px, 200px, 0);
+  /* clip: shape(top, right, bottom, left); NB 'rect' is the only available option */
+}
+.centerMiddle{
+  align-items: center;
+  /* background: red; */
+  display: flex;
+}
 #content{
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+}
+.marginAuto{
+  width: auto !important;
+  /* height: auto !important; */
 }
 .contentVertical{
   display: flex;
@@ -59,11 +72,12 @@ body{
   height: 240px !important;
 }
 .cell{
-  background-color: red;
+  /* background-color: red; */
   width: 400px;
-  height: 300px;
+  height: 310px;
   border: black solid 1px;
   margin: 5px;
+  padding: 5px;
 }
 .cell svg{
   width: 100%;

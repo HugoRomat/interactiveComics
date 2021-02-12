@@ -35,7 +35,7 @@
         <!-- <svg> -->
 
           <!-- <foreignObject style="width:100%;height:100%;padding:10px;"> -->
-            <div>In 2019, you travel X times, a total of X km by plan</div>
+            <div>In 2019, you travel <span id="travelTime">0</span> times, a total of <span id="travelDistance">0</span> km by plane</div>
             <div id="glyph1" class='glyph' style="font-size: 35px;"> </div>
             
           <!-- </foreignObject> -->
@@ -43,34 +43,47 @@
         <!-- </svg> -->
       </div>
       <div class="cell hori">
-        <div>That's about X times around the globe</div>
+        <div>That's about <span id="timeAroundGlobe">0</span> times around the globe</div>
         <div id="glyph2" class='glyph' style="font-size: 35px;"> </div>
       </div>
     </div>
 
-    <div class="cell">
-      <div>Which produced around X tons of CO2</div>
-      <span id="glyph3" class='glyph' style="font-size: 35px;"> </span><span style="font-size: 35px;"> ✈️</span>
+    <div class="cell text">
+      <div>Which produced around <span id="C02tons">0</span> tons of CO2</div>
+      <div class="centerMiddle" style="width:100%; height:100%;display: grid;grid-template-columns: 300px 100px;">
+        <div><span id="glyph3" class='glyph' style="font-size: 35px;"> </span></div>
+        <!-- <span style="font-size: 35px;"> </span> -->
+        <div>
+          <div style="">
+            <img style="width:70px;" src="../img/plane.png" />
+          </div>
+          <div>
+            <img style="width:70px;" src="../img/C02.png" />
+          </div>
+        </div>
+      </div>
+     
+      
     </div>
 
-    <div class="cell withoutBorder text" style="width:480px;">
+    <div class="cell withoutBorder text" style="width:506px;">
       
       How much is X tons of CO2 indicate? Let's compare the amount with: 
 
       <div class="contentHorizontal">
-        <div class="cell verti" id="tree1">
+        <div class="cell verti treeSelect" id="tree1" visible='yes'>
           <div>
             <img style="width:100%;" src="../img/people.png" />
           </div>
           <div class="text">Average C02 production by human</div>
         </div>
-        <div class="cell verti" id="tree2">
+        <div class="cell verti treeSelect" id="tree2" visible='no'>
           <div>
             <img style="width:100%;" src="../img/tree.png" />
           </div>
           <div class="text">C02 absorbed by trees</div>
         </div>
-        <div class="cell verti"  id="tree3" style="width:200px !important;">
+        <div class="cell verti treeSelect"  id="tree3" style="width:200px !important;" visible='no'>
           <div>
             <img style="width:100%;" src="../img/bull.png" />
           </div>
@@ -78,19 +91,62 @@
         </div>
         </div>
       </div>
+    
 
 
-
-      <div class="cell">
-        <div>It would take 4.5 trees a year to absorb 100kg C02</div>
-        <img style="width:30px;" src="../img/tree2.png" />
-      </div>
-
-
-
+     <!--  PATH 2 -->
+    <div class="cell path2 treePath">
+      <div>It would take 4.5 trees a year to absorb 100kg C02</div>
+      <img style="width:30px;" src="../img/tree2.png" />
     </div>
 
+    <div class="cell path2 treePath">
+      <div>So, it would take X trees to absorb the C02 you produced by flights in 2019</div>
+      <img style="width:30px;" src="../img/tree2.png" />
+      <img style="width:30px;" src="../img/tree2.png" />
+    </div>
+
+    <!--  PATH 3 -->
+    <div class="cell path3 text treePath">
+      <div>Each cow produce X tons of C02-eq greenhouse gas per annum</div>
+      <img style="width:280px;" src="../img/fartingCow.png" />
+    </div>
+
+    <div class="cell path3 treePath">
+      <div>So, it would take X trees to absorb the C02 you produced by flights in 2019</div>
+      <img style="width:80px;" src="../img/bull.png" />
+      <img style="width:80px;" src="../img/bull.png" />
+    </div>
+
+    <!--  PATH 1 -->
+    <div class="cell path1 treePath marginAuto ">
+      <div class="centerMiddle" style="width:100%; height:100%;">
+
+      
+      <!-- <div>It would take 4.5 trees a year to absorb 100kg C02</div> -->
+    
+        <div><img class="" style="height:200px;" src="../img/graph1.png" /></div>
+        <div><img class="" style="height:200px;" src="../img/graph2.png" /></div>
+
+      </div>
+   
+    </div>
+
+    <div class="cell path1 treePath marginAuto centerMiddle" style="">
+      <div class="centerMiddle" style="width:100%; height:100%;display: grid;grid-template-columns: 200px auto;">
+        <div class="text" style="width:170px;">Your X tons of CO2 produced by flights in 2019 were more than the average person in the most counties. </div>
+        <div><img style="height:150px;" src="../img/graph3.png" /></div>
+      </div>
+    </div>
+
+
   </div>
+
+
+
+    
+
+</div>
   <!-- <svg id="comic" width=1500px height=500px> -->
     
     <!-- Panels -->
