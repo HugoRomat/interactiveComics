@@ -53,10 +53,14 @@ function roundHalf(num) {
   return Math.round(num*2)/2;
 }
 function updateGlyph1(){
-  console.log('HELLO')
+  // console.log('HELLO')
   var kms = (valueInner * 1500) + (valueCross * 8000);
-  var aroundGlobe = kms/40000
-  var c02 = (kms * 0.85) /10000;
+  var aroundGlobe = kms/40000;
+
+
+  // ==> UPDATE THE VALUE
+  var c02 = (kms * 0.85) ; // in kg
+  c02 = c02 * 0.001 // in TONS
   var totalFlight = valueInner+valueCross;
   // console.log(c02)
   
@@ -64,7 +68,15 @@ function updateGlyph1(){
   $('#travelDistance').html(kms);
 
   $('#timeAroundGlobe').html(aroundGlobe);
-  $('#C02tons').html(aroundGlobe);
+  $('.C02tons').html(c02);
+
+  // 4.5 tress => 100Kg ==> 0.1 ton
+  var tressNumber =  c02 * 4.5 / 0.1
+  $('.tressNumber').html(tressNumber);
+  
+
+  $('.cowBurp').html(c02);
+  
   
   
   //✈️
@@ -88,9 +100,9 @@ function updateGlyph1(){
     
   //   $('#glyph3').append('<img style="width:70px;" src="../img/fog.png" />')
   // }
-
-  var decPart = (c02 % 1).toFixed(4)
-  var intPart = Math.trunc(c02)
+  var c02Viz = c02 / 10 ;/// 10000
+  var decPart = (c02Viz % 1).toFixed(4)
+  var intPart = Math.trunc(c02Viz)
   var calculatedDecPart = decPart * 70;
   for (var i=0; i<intPart; i++){
     $('#glyph3').append('<img style="width:70px;" src="../img/fog.png" />')
@@ -98,6 +110,21 @@ function updateGlyph1(){
   $('#glyph3').append('<img style="width:70px;position: absolute;clip: rect(0, '+calculatedDecPart+'px, 200px, 0);" src="../img/fog.png" />')
 
 
+  // TREE VISUALISATION
+  $('#treeVisualisation').html('');
+  console.log(tressNumber)
+  for (var i=0; i<tressNumber/10; i++){
+    // $('#treeVisualisation').html();
+    $('#treeVisualisation').append('<img style="width:10px;" src="../img/tree2.png" />')
+  }
+
+  
+
+  $('#cowVisualization').html('');
+  for (var i=0; i<c02/10; i++){
+    $('#cowVisualization').append('<img style="width:50px;" src="../img/fartingCow.png" />')
+  }
+  
 
   
     
@@ -108,30 +135,9 @@ function updateGlyphs () {
 
   updateGlyph1();
    
-  // if (n == 1)
-  // {
-  //   d3.selectAll(".new").attr("opacity",1.0)
-  //   d3.selectAll(".old").attr("opacity",0.0)
-  //   update_glyphs_2();
-  // }
-  // else {
-  //   d3.selectAll(".new").attr("opacity",0.0)
-  //   d3.selectAll(".old").attr("opacity",1.0)
-  //   update_glyphs_1(n);
-  // }
   
 }
 
-//   initial_val = 16
-//   update_glyphs(initial_val);
-
-//   $("#number_of_flights").html(initial_val)
-//   $("#number_of_tons").html(Math.round(initial_val * 0.6) + "X")
-
-//   d3.selectAll(".new").attr("opacity",0.0)
-//   d3.selectAll(".old").attr("opacity",1.0)
-
-// Slider code from https://jqueryui.com/slider/#steps
 d3.selectAll('.treeSelect').on('click', function(){
   var id = d3.select(this).attr('id');
   var lastId = id.substr(id.length - 1);
