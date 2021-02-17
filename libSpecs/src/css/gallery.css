@@ -1,0 +1,144 @@
+body{
+    /* background-color: grey; */
+    overflow: hidden;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 0;
+    /* width: 951px; */
+}
+/* html, body {
+    height: 100%;
+  } */
+.cell{
+    border: 1px solid black;
+    /* width: 300px; */
+    /* height: 100px; */
+    height: 100%;
+    /* margin-right: 10px; */
+}
+.line > .cell{
+    margin: 10px;
+}
+.line{
+    display: flex;
+    /* flex-wrap: wrap; */
+    height: 300px;
+    width: 100%;
+    /* min-width: 100%; */
+    margin: 20px;
+}
+.gutter.gutter-horizontal {
+    cursor: ew-resize;
+}
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+#story{
+    margin: 0px;
+    width: 1173px;
+    height: 300px;
+}
+.cell img {
+    /* height: 100%; */
+    max-width: 100%;
+    max-height: 100%; 
+}
+.panel{
+    /* display: flex;
+    flex-wrap: wrap; */
+    width: 100%;
+    width: 1850px;
+}
+
+.object img{
+    height: 100%;
+    width: 100%;
+}
+.app{
+    /* display: flex;
+    position: relative; */
+    /* height: 100%; */
+}
+#go{
+    background-color: grey;
+    position: absolute;
+    z-index: 100;
+    padding: 10px;
+    /* padding-bottom: 5px; */
+    /* padding-top: 5px; */
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 21px;
+    outline: none;
+    cursor: pointer;
+    /* top: 5px; */
+    margin: 10px;
+}
+
+.add{
+    cursor: pointer;
+    font-size: 80px;
+    text-align: center;
+    width: 100%;
+}
+.center{
+    width: 100%;
+    text-align: center;
+}
+.numberCircle{
+    font-size: 40px !important;
+    /* border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+
+    background: #fff;
+    border: 2px solid #666; */
+    color: #666;
+    /* text-align: center;
+
+    font: 32px Arial, sans-serif; */
+}
+.addCell{
+    cursor: pointer;
+    font-size: 40px;
+    text-align: center;
+    width: 100%;
+    background-color: #eaeaea91;
+}
+
+
+/* SIDE BAR */
+.sidebar{
+    color: white;
+    height: 100%;
+    width: 270px;
+    /* min-width: 270px; */
+    /* text-align: left;
+    transition: width, left, right, 0.3s;
+    position: relative;
+    z-index: 1009; */
+    background-color: grey;
+    padding: 10px;
+    
+}
+#root{
+    height: 100%;
+}
+.blockNav{
+    border: 1px solid black;
+    /* width: 80%; */
+    padding:10px;
+    cursor: grab;
+    /* height: 60px; */
+}
