@@ -250,7 +250,7 @@ class App extends React.Component {
                                    theme="monokai"
                                    wrapEnabled={true}
                                    // onChange={onChange}
-                                   fontSize={20}
+                                   fontSize={15}
                                    defaultValue={JSON.stringify(this.state, 1, 1)}
                                    name="hello"
                                    // editorProps={{ $blockScrolling: false }}
