@@ -15,7 +15,7 @@ module.exports = env => {
       library: 'inkspace'
     },
     devServer: {
-      contentBase: "./public",
+      contentBase: "./dist",
       port: 8080,
       proxy: {
         '/api': 'http://127.0.0.1:5000',
