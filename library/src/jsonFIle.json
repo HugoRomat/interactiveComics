@@ -1,0 +1,59 @@
+classes: 
+	{
+		class: countries
+		elements:[#france, #germany, #uk]
+	},{
+		class: countries-alliance-1
+		elements:[#france, #germany]
+	},{
+		class: countries-alliance-2
+		elements:[#uk, #russia]
+	}
+
+panelclasses: 
+	config1: [<layout-here>]
+	config2: [<layout-here>]
+	config3: [<layout-here>]
+
+
+operations:[
+	{ 
+		trigger: onclick,
+	 	element: panel_0,
+		operation: replace 
+		replacepanel: [panel_0],
+		newpanels: [panel_5,panel_7], 
+		flexwrap: false
+	}, 
+	{ 
+		trigger: onclick,
+	 	element: panel_0,
+		operation: append
+		after: [panel_0] 
+		newpanels: [panel_5,panel_7], 
+		flexwrap: false
+	}, 
+	{ 
+		operation: fliterpanels, // shows panels with a specific element, e.g., click 'france'
+		element: .countries // which elements this applies to
+ 		trigger: click, // click on that element 
+		radio: true 	// shown only the clicked one or keep all
+		flexwrap: false 
+		animation: true, 
+	},
+	{		
+		operation: highlight, // highlights same element across all other panels 
+ 		element: .countries
+ 		trigger: mouseover, 
+		resize: 10%,
+		color: #f00, 
+		border: 1px solid #f00	
+	},
+	{
+		operation: show, 
+		radio: true
+		trigger: onclick,
+		element: #button_1,
+		newpanels: .config1
+	}
+]

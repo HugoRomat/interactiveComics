@@ -1,0 +1,124 @@
+import _ from 'underscore'
+import * as d3 from 'd3';
+import { useThumbOverlap } from 'react-range';
+import { select } from 'd3';
+
+export class Slider { 
+    constructor(appContext, state) { 
+        this.state = JSON.parse(JSON.stringify(state));
+        this.stateApp = appContext;
+    } 
+    init(){
+        
+        
+        var panelSliders = this.stateApp.state.panels.filter((d) => d.sliders != undefined);
+        console.log(panelSliders)
+        for (var index in panelSliders){
+            var panel = panelSliders[index];
+            var idPanel = panel['id'];
+            // console.log(panel)
+            for (var indexSliders in panel['sliders']){
+                var slider = panel['sliders'][indexSliders];
+                
+                // console.log(slider);
+                var idSlider = slider['id'];
+                this.appendSlider(idPanel, idSlider, slider);
+            }
+           
+        }
+        // console.log(panelSliders);
+    }
+    appendSlider(idPanel, idSlider, slider){
+        console.log(idPanel, idSlider);
+        
+        var selection = d3.select('#panel_'+ idPanel).select('svg')//;
+        // console.log(selection)
+        var BBox = selection.select('.'+idSlider).node().getBBox();
+        // console.log(BBox)
+        this.slider(selection, BBox, slider);
+
+    }
+    slider (selection, BBox, slider) {
+        var that = this;
+        console.log(BBox)
+        var width = BBox.width,
+            value = 0.5, /* Domain assumes to be [0 - 1] */
+            event,
+            x = 0,
+            y = 0;
+
+        var parent = selection.append('g').attr('class', 'slider')
+        .attr('transform', 'translate('+ BBox.x + ',' + BBox.y + ')')
+
+        //Line to represent the current value
+        var valueLine = parent.append("line")
+            .attr("x1", x)
+            .attr("x2", x + (width * value))
+            .attr("y1", y)
+            .attr("y2", y)
+            .style('stroke', "black")
+            .style('stroke-linecap', "round")
+            .style('stroke-width', 8)
+
+        //Line to show the remaining value
+        var emptyLine = parent.append("line")
+            .attr("x1", x + (width * value))
+            .attr("x2", x + width)
+            .attr("y1", y)
+            .attr("y2", y)
+            .style("stroke", "#ECECEC")
+            .style("stroke-linecap", "round")
+            .style("stroke-width", 8)
+
+            // parent.append("circle")
+            // .attr('cx', 0)
+            // .attr('cy', 0)
+            // .attr('r', 10)
+            // .attr('fill', 'red')
+            
+
+        var drag = d3.drag().on("drag", function() {
+                var newX = d3.mouse(this)[0];
+
+                if (newX < x)
+                    newX = x;
+                else if (newX > x + width)
+                    newX = x + width;
+
+                value = (newX - x) / width;
+                valueCircle.attr("cx", newX);
+                valueLine.attr("x2", x + (width * value));
+                emptyLine.attr("x1", x + (width * value));
+
+                if (event)
+                    event();
+
+                d3.event.sourceEvent.stopPropagation();
+
+                // UPDATE THE STATE WITH THE NEW VARIABLE VALUE
+                that.stateApp.updateVariable(slider.variable, value, false);
+                // that.stateApp.state.variables[slider.variable] = value;
+            })
+            .on("end", function() {
+                that.stateApp.updateVariable(slider.variable, value, true);
+            })
+
+            //Draggable circle to represent the current value
+            var valueCircle = parent.append("circle")
+                .attr("cx", x + (width * value))
+                .attr("cy", y)
+                .attr("r", 20)
+
+                .style("stroke", "black")
+                .style("stroke-width", 1.0)
+                .style("fill", "white")
+                
+                .call(drag);
+        
+    }
+    computeValue() {
+        
+        
+    }
+}  
+

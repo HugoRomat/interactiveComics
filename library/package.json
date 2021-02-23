@@ -22,6 +22,7 @@
     "css-loader": "^5.0.1",
     "csv-parser": "^3.0.0",
     "d3": "^5.5.0",
+    "d3-selection-multi": "^1.0.1",
     "express": "^4.17.1",
     "fabric": "^4.3.0",
     "file-loader": "^6.2.0",
