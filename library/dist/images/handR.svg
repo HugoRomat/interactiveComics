@@ -20,10 +20,7 @@
 <text id='totalMovement' x='50' y='0'></text>
 
 
-
-<g class="isotypePlaceHolder" transform="translate(0, 0)">
-	
-</g>
+<rect xmlns="http://www.w3.org/2000/svg" id="isotypePlaceHolder" x="0.5" y="100" width="200" height="300" fill="white" stroke="black"/>
 
 <g id="handRight" transform="matrix(0.8746401,0,0,-0.8518511,33.878521,592.87107)">
 	<polygon id="polygon2401" points="318.9,470.2 318.8,469.9 318.7,469.4 318.6,469 318.6,468.9 318.6,468.8 318.6,468.8 

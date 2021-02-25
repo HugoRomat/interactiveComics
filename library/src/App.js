@@ -144,8 +144,29 @@ class App extends React.Component {
                          variable:'totalMovement',
                          to: 'isotypePlaceHolder',
                          icon: 'images/fog.png',
-                         attr: {'widthIcon': 30, 'widthContainer': 200}
+                         attr: {'widthIcon': 20}
                     },
+                    { 
+                         trigger: 'click',
+                         element: 'panel_3',
+                         operation: 'append',
+                         after: 'panel_5',
+                         newpanels: ['panel_15'], 
+                         flexwrap: false
+                    },
+                    {
+                         trigger: 'condition',
+                         condition: ["totalMovement", " > 60"],
+                         operation: 'append',
+                         after: 'panel_3',
+                         newpanels: [['panel_11','panel_12'],['panel_13','panel_14']]
+                    },
+                    {
+                         trigger: 'condition',
+                         condition: ["totalMovement", " < 60"],
+                         operation: 'remove',
+                         panel: [['panel_11','panel_12'],['panel_13','panel_14']],
+                    }
                     // ,size: '10%', color: '#f00', 
                     // { 
                     //      trigger: 'over',
@@ -209,24 +230,27 @@ class App extends React.Component {
 
                // console.log(variableValue, isotype['variable'])
                // console.log()
-               var elementsSelected = $('.' + isotype.to).get()
+               var elementsSelected = $('.' + isotype.to).get();
+               $('.imagesIsotope').remove()
                for (var k in elementsSelected){
                     var elementSelected = elementsSelected[k]
-                    $(elementSelected).empty();
-                    var BBox = $(elementSelected).parent().get()[0].getBBox()
-                    var widthContainer = isotype.attr['widthContainer'] != undefined ? isotype.attr['widthContainer'] : BBox.width;
+                    var BBox = $(elementSelected).get()[0].getBBox()
+
+                    // console.log($(elementSelected).get()[0])
+                    // var widthContainer = isotype.attr['widthContainer'] != undefined ? isotype.attr['widthContainer'] : BBox.width;
                     var width = isotype.attr['widthIcon']
-                    var numberLine = Math.round(widthContainer / width);
-                    // console.log
+                    var parentNode = $(elementSelected).parent().get()[0]//.select(this.parentNode)
+                    
+                    var parent = d3.select(parentNode).append('g').attr('class', 'imagesIsotope')
+                         .attr('transform', 'translate('+ BBox.x + ',' + BBox.y + ')')
+
+                    var fO = parent.append('foreignObject')
+                                   .attr('width', BBox.width)
+                                   .attr('height', BBox.height)
+
+                    var bodyForeign = fO.append("xhtml:body")
                     for (var k =0; k < variableValue; k++){
-                         // $(elementSelected).append('<image x="'+k%numberLine * width+'" y="'+parseInt(k / numberLine) * width+'" width="'+width+'" height="'+width+'" xlink:href="'+isotype.icon+'"></image>')
-                         d3.select(elementSelected)
-                              .append("svg:image")
-                              .attr('x', k%numberLine * width)
-                              .attr('y', parseInt(k / numberLine) * width)
-                              .attr('width', width)
-                              .attr('height', width)
-                              .attr("xlink:href", isotype.icon)
+                         $(bodyForeign.node()).append('<img width="'+width+'" src="'+isotype.icon+'"  />')
                     }
                }
               
@@ -235,6 +259,7 @@ class App extends React.Component {
 
           
      }
+
      // For mathematical operations
      // When moving the sliders or updating things
      updateVariable = (variableName, value, isFinal) => {
@@ -268,8 +293,9 @@ class App extends React.Component {
                // console.log('END')
                this.setState({variables:this.state.variables})
           }
-
+          // console.log('GOO')
           this.updateIsotype();
+          this.events.setCondition();
           
      }
      changeLayout = (event, from, to, width) => {

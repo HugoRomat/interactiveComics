@@ -24,9 +24,63 @@ export class EventsPanels {
             var keys2 = Object.keys(operationTrigger)
             for (var j in keys2){
                 var trigger = keys2[j];
-                this.setEvents(idPanel, trigger, operationTrigger[trigger])
+                // console.log(trigger)
+                // if (trigger == "condition") this.setEventsCondition(operationTrigger[trigger])
+                if (trigger != 'undefined') this.setEvents(idPanel, trigger, operationTrigger[trigger])
             }
         }
+    }
+    setCondition(){
+        var conditions = this.state.operations.filter((d)=> d.trigger == 'condition');
+        this.setEventsCondition(conditions);
+        // console.log(conditions)
+    }
+    setEventsCondition(conditions){
+        // console.log(conditions);
+        for (var i in conditions){
+            var mathematicalFunction = "";
+            var condition = conditions[i];
+            for (var j in condition['condition']){
+                var item = condition['condition'][j];
+                // console.log(item, j)
+                var myIndex = this.stateApp.state.variables.findIndex(x => x.name == item);
+                // // console.log(item, this.state.variables[item], this.state.variables)
+                if (myIndex == -1){
+                    mathematicalFunction += item
+                } else {
+                    mathematicalFunction += this.stateApp.state.variables[myIndex]['value'];
+                }
+            }
+            var isSatisfied = eval(mathematicalFunction);
+            
+            if (isSatisfied){
+                if (condition.operation == "append") {
+                    var arePresent = this.arePresent(condition.newpanels);
+                    if (arePresent == false) this.append(condition.after,condition.newpanels, false);
+                }
+                else if (condition.operation == "remove") {
+                    var arePresent = this.arePresent(condition.panel);
+                    // console.log(arePresent)
+                    if (arePresent == true) this.remove(condition.panel, false);
+                }
+            }
+            // console.log(isSatisfied)
+            // console.log(eval(mathematicalFunction))
+        }
+        // console.log(eval(mathematicalFunction))
+        
+    //    variable.value = eval(mathematicalFunction)
+    }
+    arePresent(panels){
+        var mypanels = panels.flat(100);
+        // var areThere = []
+        // console.log(mypanels)
+        for (var i in mypanels){
+            var panel = mypanels[i];
+            // console.log(panel, $("#" + panel).get(0))
+            if (!$("#" + panel).get(0)) return false
+        }
+        return true;
     }
     setEvents(idPanel, trigger, event){
         console.log(idPanel, trigger, event);
@@ -87,7 +141,6 @@ export class EventsPanels {
                 var selector = d3.selectAll('.'+what)
                 this.highlight(element, after, selector)
             }
-
             if (event.operation == 'highlight' && reverse == true){
                 // console.log('GO')
                 var element = event['element'];
@@ -123,7 +176,7 @@ export class EventsPanels {
     
     }
     highlight(element, after, idSelector){
-        console.log('HIGHLIGHT')
+        // console.log('HIGHLIGHT')
 
         // if ()
         var elementDOM = idSelector.nodes();
@@ -163,10 +216,61 @@ export class EventsPanels {
             this.stateApp.setState({layout: this.state.layout})
         } 
     }
+    remove(items, isFlex){
+        console.log("====== REMOVE")
+        var itemsToRemove = this.splitArray(items);
+        itemsToRemove = itemsToRemove.flat(100);
+        var allIndexes = []
+        // console.log(itemsToRemove)
+        for (var e in itemsToRemove){
+            var where = itemsToRemove[e]
+            var indexes = []
+            var arrayArrangement = this.state.layout.arrangment;
+            for (var i = arrayArrangement.length-1; i >= 0; i--){
+                // console.log(arrayArrangement[i])
+                for (var j = arrayArrangement[i].length-1; j >= 0; j--){
+                    if (Array.isArray(arrayArrangement[i][j])){
+                        // console.log(arrayArrangement[i][j], where, arrayArrangement[i][j].indexOf(where))
+                        if (arrayArrangement[i][j].indexOf(where) > -1){
+                            indexes = [i,j, arrayArrangement[i][j].indexOf(where)]
+                            // console.log('inline', indexes)
+                        }
+                    }
+                    else if (arrayArrangement[i][j] == where){
+                        indexes= [i,j]
+                    }
+                } 
+            }
+            allIndexes.push(indexes);
+            // console.log(indexes)
+        }
+
+        // TO SORT THE ARRAY BY INDEX
+        allIndexes.sort(function(a, b) {
+            return a[2] - b[2] || a[1] - b[1] || a[0] - b[0];
+        });
+
+        // // NOW ITERATE TO REMOVE
+        for (var i = allIndexes.length-1; i >= 0; i--){
+            var allIndex = allIndexes[i]
+            if (allIndex.length == 3) arrayArrangement[allIndex[0]][allIndex[1]].splice(allIndex[2]);
+            else arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
+            
+        }
+      
+        // // REMOVE IF EMPTY PANEL
+        for (var i = arrayArrangement.length-1; i >= 0; i--){
+            for (var j = arrayArrangement[i].length-1; j >= 0; j--){
+                if (arrayArrangement[i][j].length == 0) arrayArrangement[i].splice(j, 1);
+            }
+        }
+        // console.log(arrayArrangement)
+        this.stateApp.setState({layout: this.state.layout})
+    }
     // append(where, what, isFlex){
     // SPlit and parse multidimensionnal array
     splitArray(data){
-        console.log(data)
+        // console.log(data)
         var newData = data.map((d) => {
             // if (d.length != undefined)
             if (Array.isArray(d)){
@@ -179,18 +283,29 @@ export class EventsPanels {
     }
     append(where, what, isFlex){
         
-        console.log(where, what);
+        // console.log(where, what);
         var where = parseInt(where.split('_')[1])
         var what = this.splitArray(what);
+        console.log(where, what);
         // console.log(event);
         
+        // indexes of the from array
         var indexes = []
         var arrayArrangement = this.state.layout.arrangment;
         for (var i= 0; i <  arrayArrangement.length; i++){
             for (var j= 0; j <  arrayArrangement[i].length; j++){
-                    if (arrayArrangement[i][j] == where){indexes.push([i,j])}
+                if (Array.isArray(arrayArrangement[i][j])){
+                    if (arrayArrangement[i][j].indexOf(where) > -1){
+                        indexes.push([i,j])
+                    }
+                }
+                else if (arrayArrangement[i][j] == where){
+                    indexes.push([i,j])
+                }
             } 
         }
+        if (indexes.length == 0) console.log('no INDEXES FOUND')
+        // console.log(indexes)
 
         if (isFlex == false){
             arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
