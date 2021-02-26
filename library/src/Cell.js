@@ -152,7 +152,7 @@ class Cell extends React.Component {
                 {svg}
                 {sliders}
                 
-                <div style={{position: 'absolute'}}> {this.props.cell} </div>
+                <div style={{position: 'absolute'}}> ID: {this.props.cell} </div>
                 {/* <div className="dot"></div> */}
             </div>
            

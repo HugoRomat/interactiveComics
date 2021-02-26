@@ -42,6 +42,7 @@ class App extends React.Component {
           
           for (var i in isotypes){
                var isotype = isotypes[i];
+               // console.log(isotype)
                
                // var clockTime = time > 12 ? 'PM' : 'AM' ;
                var variableValue = this.state.variables.find((d) => d.name ==isotype['variable'] )['value']
@@ -198,6 +199,20 @@ class App extends React.Component {
           }, 1000)
           // this.handleClass();
      }
+     reloadEvents(){
+
+          setTimeout(() =>{
+               this.createClasses();
+
+               this.events = new EventsPanels(this, this.state);
+               this.sliders = new Slider(this, this.state);
+          
+               this.events.init();
+               this.sliders.init();
+               
+          }, 1000)
+          
+     }
      // addColumn = () => {
      //      var lengthCell = this.state.cells.length;
      //      this.setState({cells: [...this.state.cells,{id:'cell'+lengthCell, type: 'column', text: 'how', w: 300, h: 100, objects:[]}]})
@@ -207,7 +222,9 @@ class App extends React.Component {
           var comicRendering = null;
           // console.log(this.state.panels, this.state.layout.arrangment)
           if (this.state.layout.length != 0){
-               comicRendering = this.state.layout.arrangment.map((line, index) => ( 
+               var layout = this.state.layout.find(x => x.name == this.state.currentLayout)
+               // console.log(layout)
+               comicRendering = layout.panels.map((line, index) => ( 
                     <div className="line" key={index}>
                          {
                               line.map((cell, indexCell) => {

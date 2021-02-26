@@ -32,10 +32,13 @@ class OverallApp extends React.Component {
                        class: 'countries-alliance-2',
                        elements:['.uk', '.russia']
              }],
-             layout: {
-                  arrangment: [[0,1,2], [3,4,[5,6]]]
+             layout: [{
+                name: 'smallLayout',
+                panels: [[0,1,2], [3,4,[5,6]]]
+             }],
+                  
                   // width: [['250px', '250px', '250px'], ['250px', '250px', '250px']]
-             },
+             
              variables: [
                   {'name': 'movementSpeed', 'value': 0 },
                   {'name': 'movementVelocity', 'value': 0 },
@@ -232,13 +235,23 @@ class OverallApp extends React.Component {
               ]
              }
             ],
-            "layout": {
-             "arrangment": [
-              [0,[1,2],3],
-              [4],
-              [5,6,7]
-             ]
-            },
+            currentLayout: 'smallLayout',
+            layout: [{
+                name: 'smallLayout',
+                panels: [
+                    [12],
+                    [ 0,[1,2],[3, 13]],
+                    [4],
+                    [5,6,7]
+                   ]
+            },{
+                name: 'secondLayout',
+                panels: [
+                    [12],
+                    [1, 2, 3]
+                ]
+                }],
+            
             "variables": [
              {
               "name": "movementSpeed",
@@ -283,7 +296,7 @@ class OverallApp extends React.Component {
              },
              {
               "id": 2,
-              "url": "/CO2Footprint/around.svg"
+              "url": "/CO2Footprint/around2.svg"
              },
              {
               "id": 3,
@@ -321,6 +334,15 @@ class OverallApp extends React.Component {
              {
               "id": 11,
               "url": "/CO2Footprint/if1TonHigher1.svg"
+             },
+             {
+              "id": 12,
+              "url": "/CO2Footprint/layout.svg"
+             },
+             
+             {
+              "id": 13,
+              "url": "/CO2Footprint/isotypes.svg"
              }
             ],
             "operations": [
@@ -339,7 +361,28 @@ class OverallApp extends React.Component {
                     "operation": "append",
                     "after": "panel_7",
                     "newpanels": [[[ "panel_8", "panel_9","panel_10"]]]
-                }
+                },
+                { 
+                    'trigger': "click",
+                    'type': 'loadLayout',
+                    'element': "Layout2",
+                    'layout': "secondLayout"
+                 }
+                 ,
+                { 
+                    'trigger': "click",
+                    'type': 'loadLayout',
+                    'element': "Layout1",
+                    'layout': "smallLayout"
+                 },
+                 {
+                        type: 'isotype', 
+                        variable:'movementSpeed',
+                        to: 'isotypePlaceHolder2',
+                        on: 0,
+                        attr: {widthIcon: 35},
+                        icon: 'images/bull.png'
+                    }
             
             ]
            }
@@ -405,7 +448,7 @@ class OverallApp extends React.Component {
                                    style={{width:'100%', height:window.innerHeight+'px'}}
                               />
                         </div>
-                        <div className="container">
+                        <div id="container">
                             {this.state.panels.length > 0 ? (<App json={this.state}/>) : ( null)}
 
 

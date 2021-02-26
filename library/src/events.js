@@ -11,7 +11,8 @@ export class EventsPanels {
         this.objectsAttributes = {}
 
         
-       
+       this.layout = this.state.layout.find(x => x.name == this.state.currentLayout)
+
     } 
     setVariables(appTontext, state){
         console.log('GOOOOO')
@@ -135,7 +136,7 @@ export class EventsPanels {
         for (var i in events){
             var event = events[i];
 
-            console.log(event.condition)
+            console.log(event)
             var isSatisfied = true;
             if (event.condition != undefined){
                 var mathematicalFunction = "";
@@ -153,6 +154,7 @@ export class EventsPanels {
                 isSatisfied = eval(mathematicalFunction);
                 if (!isSatisfied) idSelector.attr('isTriggered', 'false')
             }
+            
             if (event.operation == 'append' && isSatisfied){
                 var where = event['after'];
                 var what = event['newpanels'];
@@ -181,10 +183,27 @@ export class EventsPanels {
                 var selector = d3.selectAll('.'+what)
                 this.unhighlight(element, after, selector)
             }
+
+            if (event.type == 'loadLayout' && isSatisfied){
+                // console.log('GO')
+                var element = event['element'];
+                var layout = event['layout'];
+                this.loadLayout(element, layout)
+            }
             
            
         }
 
+    }
+    loadLayout(element, layout){
+
+        // this.stateApp.setState({currentLayout: []});
+        this.stateApp.setState({currentLayout: layout});
+
+        // console.log(this.stateApp.state.layout)
+        this.stateApp.reloadEvents();
+
+        // console.log(element, layout)
     }
     unhighlight(element, after, idSelector){
         // console.log(this.objectsAttributes)
@@ -236,8 +255,8 @@ export class EventsPanels {
         var what = this.splitArray(what);
         console.log(where, what);
         
-        var indexes = []
-        var arrayArrangement = this.state.layout.arrangment;
+        var indexes = [];
+        var arrayArrangement = this.layout.panels;
         for (var i= 0; i <  arrayArrangement.length; i++){
             for (var j= 0; j <  arrayArrangement[i].length; j++){
                     if (arrayArrangement[i][j] == where){indexes.push([i,j])}
@@ -258,7 +277,7 @@ export class EventsPanels {
         for (var e in itemsToRemove){
             var where = itemsToRemove[e]
             var indexes = []
-            var arrayArrangement = this.state.layout.arrangment;
+            var arrayArrangement = this.layout.panels;
             for (var i = arrayArrangement.length-1; i >= 0; i--){
                 // console.log(arrayArrangement[i])
                 for (var j = arrayArrangement[i].length-1; j >= 0; j--){
@@ -345,7 +364,7 @@ export class EventsPanels {
         
         // indexes of the from array
         var indexes = []
-        var arrayArrangement = this.state.layout.arrangment;
+        var arrayArrangement = this.layout.panels;
         for (var i= 0; i <  arrayArrangement.length; i++){
             for (var j= 0; j <  arrayArrangement[i].length; j++){
                 if (Array.isArray(arrayArrangement[i][j])){
@@ -377,7 +396,7 @@ export class EventsPanels {
                 // arrayArrangement = arrayArrangement.concat(myArrayToAppend);
             }
             // console.log(arrayArrangement, this.state.layout)
-            this.state.layout.arrangment = arrayArrangement
+            this.layout.panels = arrayArrangement
 
 
             this.stateApp.setState({layout: this.state.layout})
