@@ -9,6 +9,10 @@ export class Slider {
         this.state = JSON.parse(JSON.stringify(state));
         this.stateApp = appContext;
     } 
+    setVariables(appContext, state){
+        this.state = JSON.parse(JSON.stringify(state));
+        this.stateApp = appContext;
+    }
     init(){
         
         
@@ -33,7 +37,7 @@ export class Slider {
         console.log(idPanel, idSlider, slider);
         var that = this;
         var selection = d3.select('#panel_'+ idPanel).select('svg')//;
-        // console.log(selection)
+        console.log(selection)
         var BBox = selection.select('.'+idSlider).node().getBBox();
         // console.log(BBox)
         // this.slider(selection, BBox, slider);

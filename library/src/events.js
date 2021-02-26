@@ -5,12 +5,22 @@ import { select } from 'd3';
 import $ from 'jquery';
 
 export class EventsPanels { 
-    constructor(appTontext, state) { 
+    constructor(appTontext, state){
         this.state = JSON.parse(JSON.stringify(state));
         this.stateApp = appTontext;
         this.objectsAttributes = {}
+
+        
        
     } 
+    setVariables(appTontext, state){
+        console.log('GOOOOO')
+        this.state = JSON.parse(JSON.stringify(state));
+        this.stateApp = appTontext;
+        this.objectsAttributes = {}
+
+        
+    }
     //Group operations
     init(){
         var objectGrouped = _.groupBy(this.state.operations, "element");
@@ -97,10 +107,11 @@ export class EventsPanels {
             // console.log('clicl')
             var isTriggered = d3.select(this).attr('isTriggered')
             if (isTriggered == 'false'){
-                that.populateEvent(event, idSelector);
+                
                
                 
                 d3.select(this).attr('isTriggered', 'true')
+                that.populateEvent(event, idSelector);
             }
             
         })
@@ -123,17 +134,38 @@ export class EventsPanels {
 
         for (var i in events){
             var event = events[i];
-            if (event.operation == 'append'){
+
+            console.log(event.condition)
+            var isSatisfied = true;
+            if (event.condition != undefined){
+                var mathematicalFunction = "";
+                var condition = event.condition;
+                for (var j in condition){
+                    var item = condition[j];
+                    var myIndex = this.stateApp.state.variables.findIndex(x => x.name == item);
+                    if (myIndex == -1){
+                        mathematicalFunction += item
+                    } else {
+                        mathematicalFunction += this.stateApp.state.variables[myIndex]['value'];
+                    }
+                }
+                console.log(mathematicalFunction)
+                isSatisfied = eval(mathematicalFunction);
+                if (!isSatisfied) idSelector.attr('isTriggered', 'false')
+            }
+            if (event.operation == 'append' && isSatisfied){
                 var where = event['after'];
                 var what = event['newpanels'];
                 var isFlex = event['flexwrap'];
-                this.append(where, what, isFlex)
-            } else if (event.operation == 'replace'){
+                var newline = event['newline'];
+                // var condition = event['newline'];
+                this.append(where, what)//, isFlex, newline)
+            } else if (event.operation == 'replace' && isSatisfied){
                 var where = event['after'];
                 var what = event['newpanels'];
                 var isFlex = event['flexwrap'];
                 this.replace(where, what, isFlex)
-            } else if (event.operation == 'highlight' && reverse == undefined){
+            } else if (event.operation == 'highlight' && reverse == undefined && isSatisfied){
                 var element = event['element'];
                 var after = event['after'];
                 var what = event['what']
@@ -141,7 +173,7 @@ export class EventsPanels {
                 var selector = d3.selectAll('.'+what)
                 this.highlight(element, after, selector)
             }
-            if (event.operation == 'highlight' && reverse == true){
+            if (event.operation == 'highlight' && reverse == true && isSatisfied){
                 // console.log('GO')
                 var element = event['element'];
                 var after = event['after'];
@@ -149,6 +181,7 @@ export class EventsPanels {
                 var selector = d3.selectAll('.'+what)
                 this.unhighlight(element, after, selector)
             }
+            
            
         }
 
@@ -283,7 +316,28 @@ export class EventsPanels {
     }
     append(where, what, isFlex){
         
-        // console.log(where, what);
+        console.log(where, what, isFlex);
+        var myNewLine = [];
+        var lineToAvoid = []
+
+        //TO RETRIVE THE NEW LINE
+        for (var i = what.length-1; i >= 0; i--){
+           
+            if (Array.isArray(what[i])){
+                // console.log(what[i])
+                for (var j = what[i].length-1; j >= 0; j--){
+                    // console.log(what[i][j])
+                    if (lineToAvoid.indexOf(i) == -1 && Array.isArray(what[i][j])){
+                        // console.log('GO')
+                        // console.log(what[i] + 'is multi array'+ i)
+                        myNewLine.push(what.splice(i, 1));
+                        lineToAvoid.push(i);
+                    }
+                }
+            } 
+        }
+
+        console.log(what)
         var where = parseInt(where.split('_')[1])
         var what = this.splitArray(what);
         console.log(where, what);
@@ -305,17 +359,38 @@ export class EventsPanels {
             } 
         }
         if (indexes.length == 0) console.log('no INDEXES FOUND')
-        // console.log(indexes)
 
-        if (isFlex == false){
+
+        if (isFlex == undefined){
             arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
+
+            // IF THERE IS A NEW LINE MENTIONNED
+            if (myNewLine.length > 0){
+                console.log(myNewLine)
+                for (var i = myNewLine.length-1; i >= 0; i--){
+                    var element = this.splitArray(myNewLine[i][0]);
+                    // arrayArrangement.concat(element);
+                    arrayArrangement = [...arrayArrangement, element] 
+                    // console.log(element)
+                }
+                
+                // arrayArrangement = arrayArrangement.concat(myArrayToAppend);
+            }
+            // console.log(arrayArrangement, this.state.layout)
+            this.state.layout.arrangment = arrayArrangement
+
+
             this.stateApp.setState({layout: this.state.layout})
+
+
+
         } 
         //EVERYTNIGN THAT IS BEFORE null and new line
-        else {
+        /*else {
             
             // arrayArrangement[indexes[0][0]].splice(0, 0, []);
-            // console.log(indexes)
+            console.log(indexes)
+            console.log(arrayArrangement)
             // ADD LINE
             arrayArrangement.splice(indexes[0][0] + 1, 0, []);
 
@@ -338,15 +413,15 @@ export class EventsPanels {
             arrayArrangement[indexes[0][0] + 1] = arrayArrangement[indexes[0][0] + 1].concat(myArrayToAppend);
         
             // ADD ELEMENT
-            arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
+            arrayArrangement[indexes[0][0] + 1].splice(indexes[0][1]+1, 0, ...what);
             // 
 
-            // console.log(arrayArrangement)
+            console.log(arrayArrangement)
 
             this.stateApp.setState({layout: this.state.layout});
 
             //Left element on new line
-        }
+        }*/
     }
     uuidv4() {
         var date = new Date();

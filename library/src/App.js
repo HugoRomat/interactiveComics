@@ -21,189 +21,7 @@ class App extends React.Component {
           super(props);
           
 
-          this.state = {
-               classes: [{
-                         class: 'countries',
-                         elements:['.france', '.germany', '.uk']
-                    },{
-                         class: 'hand',
-                         elements:['.handRight']
-                    },{
-                         class: 'countries-alliance-1',
-                         elements:['.france', '.germany']
-                    },{
-                         class: 'countries-alliance-2',
-                         elements:['.uk', '.russia']
-               }],
-               layout: {
-                    arrangment: [[0,1,2], [3,4,[5,6]]]
-                    // width: [['250px', '250px', '250px'], ['250px', '250px', '250px']]
-               },
-               variables: [
-                    {'name': 'movementSpeed', 'value': 0 },
-                    {'name': 'movementVelocity', 'value': 0 },
-                    {'name': 'totalMovement', 'value': 0, 'what': ['(', 'movementSpeed', '+', 'movementVelocity', ')','*10']}
-               ],
-               panels:[
-                    {
-                         id:0, 
-                         url:'cow_1.svg'
-                         
-                    },
-                    {id:1, url:'Slider.svg', sliders: [
-                              {id:'slider_movementSpeed', variable:'movementSpeed'},
-                              {id:'slider_movementVelocity', variable:'movementVelocity'}
-                         ]},
-                    {id:2, url:'handR.svg'},
-                    {id:3, url:'handL.svg'},
-                    {id:4, url:'handL.svg'},
-                    {id:5, url:'handL.svg'},
-                    {id:6, url:'handL.svg'},
-                    {id:7, url:'small.svg'},
-                    {id:8, url:'small.svg'},
-                    {id:9, url:'handL.svg'},
-                    {id:10, url:'handL.svg'},
-                    {id:11, url:'small.svg'},
-                    {id:12, url:'small.svg'},
-                    {id:13, url:'small.svg'},
-                    {id:14, url:'small.svg'},
-                    {id:15, url:'small.svg'}
-               ],
-               operations: [
-                    // { 
-                    //      type: 'replace', 
-                    //      action: { from: [3], to: [[11, 12], [13, 14]]},
-                    //      event: 'click',
-                    //      on: 2,
-                    //      backForth: false
-                    // },
-                    // { 
-                    //      type: 'append', 
-                    //      action: { from: [2], to: [9, 10]},
-                    //      event: 'click',
-                    //      on: 1,
-                    //      backForth: false,
-                    //      flexwrap: false
-                    // },
-                    // { 
-                    //           type: 'replace', 
-                    //           action: { from: [3], to: [[11, 12], [13, 14]]},
-                    //           event: 'click',
-                    //           on: 2,
-                    //           backForth: false
-                    // },
-                    // { 
-                    //      trigger: 'onclick',
-                    //      element: 'panel_1',
-                    //      operation: 'replace',
-                    //      replacepanel: [0],
-                    //      newpanels: [1,2], 
-                    //      flexwrap: false
-                    // },
-                    // { 
-                    //      trigger: 'click',
-                    //      element: 'handRight',
-                    //      operation: 'replace',
-                    //      after: 'panel_1',
-                    //      newpanels: ['panel_9','panel_10'], 
-                    //      flexwrap: false
-                    // }, 
-                    // { 
-                    //      trigger: 'click',
-                    //      element: 'panel_1',
-                    //      operation: 'append',
-                    //      after: 'panel_1',
-                    //      newpanels: ['panel_9','panel_10'], 
-                    //      flexwrap: true
-                    // },
-                    { 
-                         trigger: 'click',
-                         element: 'panel_0',
-                         operation: 'append',
-                         after: 'panel_3',
-                         newpanels: [['panel_11','panel_12'],['panel_13','panel_14']], 
-                         flexwrap: true
-                    },
-                    { 
-                         trigger: 'click',
-                         element: 'panel_4',
-                         operation: 'replace',
-                         after: 'panel_4',
-                         newpanels: ['panel_12', 'panel_15'], 
-                         flexwrap: false
-                    },
-                    {		
-                         trigger: 'mouseover', 
-                         element: 'hand',
-                         operation: 'highlight', // highlights same element across all other panels 
-                         after: {style: {'fill': 'red', 'transform': 'scale(1.5)'}, attr:[]},
-                         what: 'handNew'
-                    },
-                    {
-                         type: 'isotype', 
-                         variable:'totalMovement',
-                         to: 'isotypePlaceHolder',
-                         icon: 'images/fog.png',
-                         attr: {'widthIcon': 20}
-                    },
-                    { 
-                         trigger: 'click',
-                         element: 'panel_3',
-                         operation: 'append',
-                         after: 'panel_5',
-                         newpanels: ['panel_15'], 
-                         flexwrap: false
-                    },
-                    {
-                         trigger: 'condition',
-                         condition: ["totalMovement", " > 60"],
-                         operation: 'append',
-                         after: 'panel_3',
-                         newpanels: [['panel_11','panel_12'],['panel_13','panel_14']]
-                    },
-                    {
-                         trigger: 'condition',
-                         condition: ["totalMovement", " < 60"],
-                         operation: 'remove',
-                         panel: [['panel_11','panel_12'],['panel_13','panel_14']],
-                    }
-                    // ,size: '10%', color: '#f00', 
-                    // { 
-                    //      trigger: 'over',
-                    //      element: 'panel_0',
-                    //      operation: 'append',
-                    //      after: 'panel_2',
-                    //      newpanels: ['panel_11','panel_12'], 
-                    //      flexwrap: false
-                    // },
-                    // { 
-                    //      trigger: 'click',
-                    //      element: 'panel_1',
-                    //      operation: 'append',
-                    //      after: 'panel_2',
-                    //      newpanels: ['panel_11','panel_12'], 
-                    //      flexwrap: false
-                    // },
-
-                    //
-                    // {
-                    //      type: 'isotype', 
-                    //      // from:'slider_movementSpeed',
-                    //      variable:'movementSpeed',
-                    //      to: 'isotypePlaceHolder2',
-                    //      on: 0,
-                    //      icon: 'images/bull.png'
-                    // }
-                    // { 
-                    //      type: 'remove', 
-                    //      action: { from: [0, 1, 3]},
-                    //      event: 'click',
-                    //      on: 2,
-                    //      backForth: true
-                    // }
-                         
-               ]
-          }
+          this.state = this.props.json;
           this.events = new EventsPanels(this, this.state);
           this.sliders = new Slider(this, this.state);
      }
@@ -287,7 +105,26 @@ class App extends React.Component {
                     
                }
                // update all panels name
-               d3.selectAll('.'+variable.name).text(variable.value)
+               // $("."+variable.name +"> text").remove();
+               // $("."+variable.name +"> text").html('<text> hello </text>')
+               // d3.selectAll('.'+variable.name).text(variable.value)
+               // d3.selectAll('.'+variable.name).text(variable.value)
+               var elementsSelected = $('.' + variable.name).get();
+               $('.variables'+variable.name).remove()
+               for (var k in elementsSelected){
+                    var elementSelected = elementsSelected[k]
+                    var BBox = $(elementSelected).get()[0].getBBox()
+
+                    var parentNode = $(elementSelected).parent().get()[0]//.select(this.parentNode)
+                    
+                    var parent = d3.select(parentNode).append('g').attr('class', 'variables'+variable.name)
+                         .attr('transform', 'translate('+ BBox.x + ',' + (BBox.y + 15) + ')')
+
+                    var fO = parent.append('text').attr('fill', 'black').text(variable.value)
+
+                    
+               }
+
           }
           if (isFinal) {
                // console.log('END')
@@ -352,6 +189,9 @@ class App extends React.Component {
           // when images will be loaded
           setTimeout(() =>{
                this.createClasses();
+
+               
+          
                this.events.init();
                this.sliders.init();
                
@@ -362,16 +202,7 @@ class App extends React.Component {
      //      var lengthCell = this.state.cells.length;
      //      this.setState({cells: [...this.state.cells,{id:'cell'+lengthCell, type: 'column', text: 'how', w: 300, h: 100, objects:[]}]})
      // }
-     renderComic= () => {
-          // console.log('GO')
-          var that = this;
-          this.setState({layout: []})
-          setTimeout(function(){ that.setState(JSON.parse(that.refs.aceEditor.editor.getValue())); }, 100)
-          
-          // this.forceUpdate();
-          //
-
-     }
+     
      render() {
           var comicRendering = null;
           // console.log(this.state.panels, this.state.layout.arrangment)
@@ -412,45 +243,9 @@ class App extends React.Component {
           // if (this.state.rendering == false) comicRendering = null; 
           return(
                <div className="app">
-                    {/* <UIToolbar /> */}
-
-                    <Split sizes={[30,70]} style={{display: 'flex'}}>
-                         
-                    <div>
-                              <button id="go" onMouseDown={this.renderComic}> GO</button>
-                              <AceEditor
-                                   onLoad={editorInstance => {
-                                        editorInstance.container.style.resize = "both";
-                                        // mouseup = css resize end
-                                        document.addEventListener("mouseup", e => (
-                                        editorInstance.resize()
-                                        ));
-                                   }}
-                                   ref="aceEditor"
-                                   mode="java"
-                                   theme="monokai"
-                                   wrapEnabled={true}
-                                   // onChange={onChange}
-                                   fontSize={15}
-                                   defaultValue={JSON.stringify(this.state, 1, 1)}
-                                   name="hello"
-                                   // editorProps={{ $blockScrolling: false }}
-                                   
-                                   // commands={Beautify.commands}
-                                   style={{width:'100%', height:window.innerHeight+'px'}}
-                              />
-                         </div>
-
-                         <div className="container">
-                              {comicRendering}
-                             
-                         </div>
-                         
-                         
-                    </Split>
-                    
-                    
-                    
+                    <div className="container">
+                         {comicRendering}   
+                    </div>
                </div>
                
           );
