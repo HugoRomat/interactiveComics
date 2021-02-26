@@ -38,7 +38,7 @@ class App extends React.Component {
           })
      }
      updateIsotype(){
-          var isotypes = this.state.operations.filter((d)=> d.type == 'isotype');
+          var isotypes = this.state.operations.filter((d)=> d.operation == 'isotype');
           
           for (var i in isotypes){
                var isotype = isotypes[i];

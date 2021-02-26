@@ -102,25 +102,46 @@ export class EventsPanels {
         idSelector = d3.select('.'+ idPanel)
 
         
+        if (trigger == "click"){
+            // console.log(idSelector, idPanel)
+            idSelector.on(trigger, function(d, i){
+                // console.log('clicl')
+                var isTriggered = d3.select(this).attr('isTriggered')
+                if (isTriggered == 'false'){
+                    d3.select(this).attr('isTriggered', 'true')
+                    that.populateEvent(event, idSelector);
+                }
+                
+            })
+            .attr('isTriggered', 'false')
+        }
+        
+        if (trigger == "zoom"){
 
-        // console.log(idSelector, idPanel)
-        idSelector.on(trigger, function(d, i){
-            // console.log('clicl')
-            var isTriggered = d3.select(this).attr('isTriggered')
-            if (isTriggered == 'false'){
-                
+            // for (var i in event){
+            //     var myevent = event[i];
+            //     console.log(myevent)
+            // }
+            // console.log()
+            var myEvent = event[0]
+            console.log(myEvent)
+            idSelector.call(d3.zoom().on("zoom", function () {
+
+                for (var i in myEvent['linked']){
+                    var idPanel = myEvent['linked'][i]
+                    d3.select('.'+idPanel).select('svg').attr("transform", d3.event.transform)
+                }
+                idSelector.select('svg').attr("transform", d3.event.transform)
                
-                
-                d3.select(this).attr('isTriggered', 'true')
-                that.populateEvent(event, idSelector);
-            }
-            
-        })
-        .attr('isTriggered', 'false')
+            }))
+
+
+        }
+
 
 
         // console.log(trigger, event.operation)
-        if (trigger == 'mouseover' ){
+        if (trigger == 'mouseover'){
             idSelector.on('mouseout', function(d, i){
                 // that.getToInitial();
                 var isTriggered = d3.select(this).attr('isTriggered')
@@ -132,7 +153,7 @@ export class EventsPanels {
         }
     }
     populateEvent(events, idSelector, reverse){
-
+        // console.log(events)
         for (var i in events){
             var event = events[i];
 
@@ -184,15 +205,23 @@ export class EventsPanels {
                 this.unhighlight(element, after, selector)
             }
 
-            if (event.type == 'loadLayout' && isSatisfied){
+            if (event.operation == 'loadLayout' && isSatisfied){
                 // console.log('GO')
                 var element = event['element'];
                 var layout = event['layout'];
                 this.loadLayout(element, layout)
             }
-            
+            if (event.operation == 'zoom' && isSatisfied){
+                var element = event['element'];
+                var linked = event['linked'];
+                this.zoom(element, linked)
+            }
            
         }
+
+    }
+    zoom(element, layout){
+        console.log(element, layout)
 
     }
     loadLayout(element, layout){

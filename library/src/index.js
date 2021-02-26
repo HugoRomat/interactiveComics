@@ -239,7 +239,8 @@ class OverallApp extends React.Component {
             layout: [{
                 name: 'smallLayout',
                 panels: [
-                    [12],
+                    [12, [14, 15]],
+                    
                     [ 0,[1,2],[3, 13]],
                     [4],
                     [5,6,7]
@@ -343,7 +344,26 @@ class OverallApp extends React.Component {
              {
               "id": 13,
               "url": "/CO2Footprint/isotypes.svg"
-             }
+             },
+             
+             {
+              "id": 14,
+              "url": "/CO2Footprint/nysub.svg",
+              "type": 'map',
+              "attr": {'width': '400px', 'height': '200px'}
+             },
+             {
+                "id": 15,
+                "url": "/CO2Footprint/nysub2.svg",
+                "type": 'map',
+                "attr": {'width': '400px', 'height': '200px'}
+               },
+               {
+                "id": 16,
+                "url": "/CO2Footprint/nysub3.svg",
+                "type": 'map',
+                "attr": {'width': '500px', 'height': '400px'}
+               }
             ],
             "operations": [
                 {
@@ -364,25 +384,41 @@ class OverallApp extends React.Component {
                 },
                 { 
                     'trigger': "click",
-                    'type': 'loadLayout',
+                    'operation': 'loadLayout',
                     'element': "Layout2",
                     'layout': "secondLayout"
                  }
                  ,
                 { 
                     'trigger': "click",
-                    'type': 'loadLayout',
+                    'operation': 'loadLayout',
                     'element': "Layout1",
                     'layout': "smallLayout"
                  },
                  {
-                        type: 'isotype', 
-                        variable:'movementSpeed',
-                        to: 'isotypePlaceHolder2',
-                        on: 0,
-                        attr: {widthIcon: 35},
-                        icon: 'images/bull.png'
-                    }
+                    operation: 'isotype', 
+                    variable:'movementSpeed',
+                    to: 'isotypePlaceHolder2',
+                    on: 0,
+                    attr: {widthIcon: 35},
+                    icon: 'images/bull.png'
+                },
+                {
+                    "operation": 'zoom', 
+                    "trigger": "zoom",
+                    'element': "panel_14",
+                    'linked': ['panel_15']
+                   
+                }
+                // ,
+                // {
+                //     "operation": 'zoom', 
+                //     "trigger": "zoom",
+                //     'element': "panel_6",
+                //     'linked': ['isotypePlaceHolder2']
+                   
+                // }
+
             
             ]
            }

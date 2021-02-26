@@ -32,9 +32,25 @@ class Cell extends React.Component {
                         this.state[variable] = [10]         
                     });
                     this.setState({sliders: true})
+                    
+                }
+
+                if (that.props.cellData.type == "map"){
+                    console.log(that.props.cellData)
+                    // $('.panel_'+ that.props.cellData.id).addClass('mapLayer');
+                    for (var key in that.props.cellData.attr){
+                        d3.select('.panel_'+ that.props.cellData.id).style(key, that.props.cellData.attr[key])
+                    }
+                    // $('.panel_'+ that.props.cellData.id)
+                    console.log()
                 }
                 
-           
+                // console.log(that.props.cellData.zoomable)
+                // if (that.props.cellData.zoomable != undefined && that.props.cellData.zoomable == true){
+                //     // console.log("HEYYYY")
+
+                //     d3.select()
+                // }
         
             // if (that.props.event != undefined ){
             //     console.log( that.props.event)
