@@ -39,6 +39,7 @@ class App extends React.Component {
      }
      updateIsotype(){
           var isotypes = this.state.operations.filter((d)=> d.operation == 'isotype');
+          // console.log(isotypes)
           
           for (var i in isotypes){
                var isotype = isotypes[i];
@@ -46,27 +47,36 @@ class App extends React.Component {
                
                // var clockTime = time > 12 ? 'PM' : 'AM' ;
                var variableValue = this.state.variables.find((d) => d.name ==isotype['variable'] )['value']
-
+               // $('.imagesIsotope'+variableValue).remove();
                // console.log(variableValue, isotype['variable'])
                // console.log()
                var elementsSelected = $('.' + isotype.to).get();
-               $('.imagesIsotope').remove()
+               // console.log(elementsSelected)
+               
                for (var k in elementsSelected){
-                    var elementSelected = elementsSelected[k]
-                    var BBox = $(elementSelected).get()[0].getBBox()
-
-                    // console.log($(elementSelected).get()[0])
-                    // var widthContainer = isotype.attr['widthContainer'] != undefined ? isotype.attr['widthContainer'] : BBox.width;
-                    var width = isotype.attr['widthIcon']
-                    var parentNode = $(elementSelected).parent().get()[0]//.select(this.parentNode)
                     
-                    var parent = d3.select(parentNode).append('g').attr('class', 'imagesIsotope')
+                    var fO = null;
+                    // IF isotype does not exist
+                    if (!$(".imagesIsotope"+ isotype['variable'] + "_"+i+"_"+k).length){
+                         var elementSelected = elementsSelected[k]
+                         var BBox = $(elementSelected).get()[0].getBBox()
+
+                    
+                         var width = isotype.attr['widthIcon']
+                         var parentNode = $(elementSelected).parent().get()[0]//.select(this.parentNode)
+                         var parent = d3.select(parentNode).append('g').attr('class', 'imagesIsotope'+ isotype['variable'] + "_"+i+"_"+k)
                          .attr('transform', 'translate('+ BBox.x + ',' + BBox.y + ')')
 
-                    var fO = parent.append('foreignObject')
-                                   .attr('width', BBox.width)
-                                   .attr('height', BBox.height)
-
+                         fO = parent.append('foreignObject')
+                                        .attr('width', BBox.width)
+                                        .attr('height', BBox.height)
+                    }
+                     else {
+                         fO = d3.select(".imagesIsotope"+ isotype['variable'] + "_"+i+"_"+k).select('foreignObject')
+                         $(".imagesIsotope"+ isotype['variable'] + "_"+i+"_"+k+" > foreignObject").empty()
+                    }
+                    
+                    // console.log(fO)
                     var bodyForeign = fO.append("xhtml:body")
                     for (var k =0; k < variableValue; k++){
                          $(bodyForeign.node()).append('<img width="'+width+'" src="'+isotype.icon+'"  />')

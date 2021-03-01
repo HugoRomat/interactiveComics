@@ -367,21 +367,14 @@ class OverallApp extends React.Component {
             ],
             "operations": [
                 {
-                    "condition": ['movementVelocity', '>5'],
+                    
                     "trigger": "click",
                     "element": "panel_5",
                     "operation": "append",
                     "after": "panel_7",
-                    "newpanels": [ [["panel_8", "panel_9"],"panel_10"], ["panel_11"]]
+                    "newpanels": [ ["panel_8", "panel_9"],[["panel_10"]]]
                 },
-                {
-                    "condition": ['movementVelocity', '<5'],
-                    "trigger": "click",
-                    "element": "panel_5",
-                    "operation": "append",
-                    "after": "panel_7",
-                    "newpanels": [[[ "panel_8", "panel_9","panel_10"]]]
-                },
+
                 { 
                     'trigger': "click",
                     'operation': 'loadLayout',
@@ -409,7 +402,17 @@ class OverallApp extends React.Component {
                     'element': "panel_14",
                     'linked': ['panel_15']
                    
-                }
+                },
+
+
+                { 
+                    trigger: 'click',
+                    element: 'panel_4',
+                    operation: 'replace',
+                    after: 'panel_4',
+                    newpanels: ['panel_8', 'panel_9'], 
+                    flexwrap: false
+               }
                 // ,
                 // {
                 //     "operation": 'zoom', 
@@ -422,6 +425,269 @@ class OverallApp extends React.Component {
             
             ]
            }
+
+           this.state = {
+               "classes": [],
+               "currentLayout": "iniLayout",
+               "layout": [
+                 {
+                   "name": "iniLayout",
+                   "panels": [
+                     [
+                       0,
+                       [
+                         1,
+                         2
+                       ],
+                       3
+                     ],
+                     [
+                       4
+                     ],
+                     [
+                       5,
+                       6,
+                       7,
+                       8
+                     ],
+                     [10]
+                   ]
+                 }
+               ],
+               "variables": [
+                 {
+                   "name": "movementSpeed",
+                   "value": 0
+                 },
+                 {
+                   "name": "movementVelocity",
+                   "value": 0
+                 },
+                 {
+                   "name": "totalMovement",
+                   "value": 0,
+                   "what": [
+                     "(",
+                     "movementSpeed",
+                     "+",
+                     "movementVelocity",
+                     ")",
+                     "*1"
+                   ]
+                 },
+                 {
+                   "name": "totalkm",
+                   "value": 0,
+                   "what": [
+                     
+                     "movementSpeed", "*2000", "+", "movementVelocity", "*8000"
+                   ]
+                 },
+                 {
+                   "name": "earthTimes",
+                   "value": 0,
+                   "what": [
+                     
+                     "totalkm", "/","40000"
+                   ]
+                 },
+                 {
+                   "name": "totalTons",
+                   "value": 0,
+                   "what": [
+                     
+                     "totalkm", "/","1000"
+                   ]
+                 },
+                 {
+                   "name": "tonsMoreThanEarthEverage",
+                   "value": 0,
+                   "what": [
+                     
+                     "totalTons", "-","5"
+                   ]
+                 },
+                 {
+                   "name": "moreThanParisGoal",
+                   "value": 0,
+                   "what": [
+                     
+                     "totalTons", "-","1"
+                   ]
+                 },
+                 {
+                   "name": "numTrees",
+                   "value": 0,
+                   "what": [
+                     
+                     "totalTons", "*", "45"
+                   ]
+                 },
+                 {
+                   "name": "treeIcon",
+                   "value": 0,
+                   "what": [
+                     
+                     "numTrees", "/","10"
+                   ]
+                 },
+                 {
+                   "name": "numCows",
+                   "value": 0,
+                   "what": [
+                     
+                    "totalTons"
+                   ]
+                 }
+               ],
+               "panels": [
+                 {
+                   "id": 0,
+                   "url": "/CO2Footprint/inputPanel.svg",
+                   "sliders": [
+                     {
+                       "id": "slider_movementSpeed",
+                       "variable": "movementSpeed"
+                     },
+                     {
+                       "id": "slider_movementVelocity",
+                       "variable": "movementVelocity"
+                     }
+                   ]
+                 },
+                 {
+                   "id": 1,
+                   "url": "/CO2Footprint/totalKm.svg"
+                 },
+                 {
+                   "id": 2,
+                   "url": "/CO2Footprint/totalGlobe.svg"
+                 },
+                 {
+                   "id": 3,
+                   "url": "/CO2Footprint/CO2inTons.svg"
+                 },
+                 {
+                   "id": 4,
+                   "url": "/CO2Footprint/speechBubble.svg"
+                 },
+                 {
+                   "id": 5,
+                   "url": "/CO2Footprint/humanClicked_panel.svg"
+                 },
+                 {
+                   "id": 6,
+                   "url": "/CO2Footprint/tree_panel.svg"
+                 },
+                 {
+                   "id": 7,
+                   "url": "/CO2Footprint/cow_panel.svg"
+                 },
+                 {
+                   "id": 8,
+                   "url": "/CO2Footprint/averageCO2_panels.svg"
+                 },
+                 {
+                   "id": 9,
+                   "url": "/CO2Footprint/compareWithYouMore.svg"
+                 },
+                 {
+                   "id": 10,
+                   "url": "/CO2Footprint/parisHigher1ton.svg"
+                 },
+                 {
+                   "id": 11,
+                   "url": "/CO2Footprint/tree2Panels.svg"
+                 },
+                 {
+                   "id": 12,
+                   "url": "/CO2Footprint/human_panel.svg"
+                 },
+                 {
+                   "id": 13,
+                   "url": "/CO2Footprint/cows2Panels.svg"
+                 }
+               ],
+               "operations": [
+             
+                   { 
+                   "trigger": "click",
+                   "element": "panel_6",
+                   "operation": "replace",
+                   "after": "panel_7",
+                   "newpanels": ["panel_11"]
+                 },
+                 {
+                   "operation": "isotype",
+                   "variable": "totalMovement",
+                   "to": "planePlaceHolder",
+                   "attr": {
+                      "widthIcon": 35
+                   },
+                   "icon": "images/CO2Footprint/plane.svg"
+                  }
+                  ,
+                 {
+                   "operation": "isotype",
+                   "variable": "earthTimes",
+                   "to": "earthPlaceHolder",
+                   "attr": {
+                    "widthIcon": 80
+                   },
+                   "icon": "images/CO2Footprint/earth.svg"
+                  },
+                 {
+                   "operation": "isotype",
+                   "variable": "totalTons",
+                   "to": "fogPlaceHolder",
+                   "on": 0,
+                   "attr": {
+                    "widthIcon": 22
+                   },
+                   "icon": "images/CO2Footprint/fog.svg"
+                  },
+                 {
+                   "operation": "isotype",
+                   "variable": "tonsMoreThanEarthEverage",
+                   "to": "MoreThanEarthPlaceHolder",
+                   "on": 0,
+                   "attr": {
+                    "widthIcon": 9
+                   },
+                   "icon": "images/CO2Footprint/smallFog.svg"
+                  },
+                 {
+                   "operation": "isotype",
+                   "variable": "moreThanParisGoal",
+                   "to": "moreThanParisPlaceHolder",
+                   "on": 0,
+                   "attr": {
+                    "widthIcon": 38
+                   },
+                   "icon": "images/CO2Footprint/tonX.svg"
+                  },
+                 {
+                   "operation": "isotype",
+                   "variable": "treeIcon",
+                   "to": "TreesPlaceHolder",
+                   "on": 0,
+                   "attr": {
+                    "widthIcon": 4.5
+                   },
+                   "icon": "images/CO2Footprint/treeIcon.svg"
+                  },
+                 {
+                   "operation": "isotype",
+                   "variable": "numCows",
+                   "to": "cowsPlaceHolder",
+                   "on": 0,
+                   "attr": {
+                    "widthIcon": 15
+                   },
+                   "icon": "images/CO2Footprint/cowIcon.svg"
+                  }   
+               ]
+             }
     }
     componentDidMount(){
         

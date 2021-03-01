@@ -184,6 +184,8 @@ export class EventsPanels {
                 // var condition = event['newline'];
                 this.append(where, what)//, isFlex, newline)
             } else if (event.operation == 'replace' && isSatisfied){
+
+                // console.log('REPALCE')
                 var where = event['after'];
                 var what = event['newpanels'];
                 var isFlex = event['flexwrap'];
@@ -292,10 +294,10 @@ export class EventsPanels {
             } 
         }
 
-        if (isFlex == false){
+        // if (isFlex == false){
             arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1, ...what);
             this.stateApp.setState({layout: this.state.layout})
-        } 
+        // } 
     }
     remove(items, isFlex){
         console.log("====== REMOVE")
