@@ -101,6 +101,8 @@ export class EventsPanels {
         // if (idPanel[0] == '.') idSelector = d3.selectAll(".hand")
         idSelector = d3.select('.'+ idPanel)
 
+        idSelector.style('cursor', 'pointer')
+
         
         if (trigger == "click"){
             // console.log(idSelector, idPanel)

@@ -56,13 +56,14 @@ class App extends React.Component {
                for (var k in elementsSelected){
                     
                     var fO = null;
+                    var width = isotype.attr['widthIcon']
                     // IF isotype does not exist
                     if (!$(".imagesIsotope"+ isotype['variable'] + "_"+i+"_"+k).length){
                          var elementSelected = elementsSelected[k]
                          var BBox = $(elementSelected).get()[0].getBBox()
 
                     
-                         var width = isotype.attr['widthIcon']
+                         
                          var parentNode = $(elementSelected).parent().get()[0]//.select(this.parentNode)
                          var parent = d3.select(parentNode).append('g').attr('class', 'imagesIsotope'+ isotype['variable'] + "_"+i+"_"+k)
                          .attr('transform', 'translate('+ BBox.x + ',' + BBox.y + ')')
@@ -76,10 +77,13 @@ class App extends React.Component {
                          $(".imagesIsotope"+ isotype['variable'] + "_"+i+"_"+k+" > foreignObject").empty()
                     }
                     
-                    // console.log(fO)
                     var bodyForeign = fO.append("xhtml:body")
                     for (var k =0; k < variableValue; k++){
-                         $(bodyForeign.node()).append('<img width="'+width+'" src="'+isotype.icon+'"  />')
+
+                         var e = document.createElement("img");
+                         e.src = isotype.icon;
+                         e.width = width;
+                         bodyForeign.node().appendChild(e);
                     }
                }
               

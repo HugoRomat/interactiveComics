@@ -403,8 +403,6 @@ class OverallApp extends React.Component {
                     'linked': ['panel_15']
                    
                 },
-
-
                 { 
                     trigger: 'click',
                     element: 'panel_4',
