@@ -235,23 +235,30 @@ class OverallApp extends React.Component {
               ]
              }
             ],
-            currentLayout: 'smallLayout',
+            currentLayout: 'initialLayout',
             layout: [{
+              name: 'initialLayout',
+              panels: [
+                
+                  [17, 18],
+                  [5,6,7]
+              ]
+            }, {
                 name: 'smallLayout',
                 panels: [
+                  // [2]
                     [12, [14, 15]],
-                    
                     [ 0,[1,2],[3, 13]],
-                    [4],
-                    [5,6,7]
-                   ]
-            },{
-                name: 'secondLayout',
-                panels: [
-                    [12],
-                    [1, 2, 3]
-                ]
-                }],
+                    [4]
+                    
+                  ]
+              },{
+                  name: 'secondLayout',
+                  panels: [ 
+                  
+                    4, [2],[3], [13, [14, 15]]
+                  ]
+            }],
             
             "variables": [
              {
@@ -280,14 +287,14 @@ class OverallApp extends React.Component {
               "id": 0,
               "url": "/CO2Footprint/inputPanel.svg",
               "sliders": [
-                {
+                  {
                     "id": "slider_movementSpeed",
                     "variable": "movementSpeed"
-                   },
-                   {
+                  },
+                  {
                     "id": "slider_movementVelocity",
                     "variable": "movementVelocity"
-                   }
+                  }
                ]
              },
              {
@@ -363,7 +370,15 @@ class OverallApp extends React.Component {
                 "url": "/CO2Footprint/nysub3.svg",
                 "type": 'map',
                 "attr": {'width': '500px', 'height': '400px'}
-               }
+               },{
+                "id": 17,
+                "url": "/CO2Footprint/layout.svg"
+               },
+               
+               {
+                "id": 18,
+                "url": "/CO2Footprint/isotypes.svg"
+               },
             ],
             "operations": [
                 {
@@ -372,27 +387,14 @@ class OverallApp extends React.Component {
                     "element": "panel_5",
                     "operation": "append",
                     "after": "panel_7",
-                    "newpanels": [ ["panel_8", "panel_9"],[["panel_10"]]]
+                    "newpanels": [ "panel_8", ["panel_9"],["panel_10"]]
                 },
 
-                { 
-                    'trigger': "click",
-                    'operation': 'loadLayout',
-                    'element': "Layout2",
-                    'layout': "secondLayout"
-                 }
-                 ,
-                { 
-                    'trigger': "click",
-                    'operation': 'loadLayout',
-                    'element': "Layout1",
-                    'layout': "smallLayout"
-                 },
+               
                  {
                     operation: 'isotype', 
                     variable:'movementSpeed',
                     to: 'isotypePlaceHolder2',
-                    on: 0,
                     attr: {widthIcon: 35},
                     icon: 'images/bull.png'
                 },
@@ -410,7 +412,35 @@ class OverallApp extends React.Component {
                     after: 'panel_4',
                     newpanels: ['panel_8', 'panel_9'], 
                     flexwrap: false
-               }
+               },
+               { 
+                'trigger': "click",
+                'operation': 'loadLayout',
+                'element': "Layout2",
+                'layout': "secondLayout",
+                "after": "panel_18",
+                "group": "group2"
+             },
+               { 
+                'trigger': "click",
+                'operation': 'loadLayout',
+                'element': "Layout1",
+                'layout': "smallLayout",
+                "after": "panel_18",
+                "group": "group2"
+             }
+              // group: group1
+              // after: null | group-name
+            
+              //  "[operations]{ 
+              //   trigger: ""click"",
+              //   operation: loadLayout,
+              //   element: button2,
+              //   loadLayout: mediumLayout
+              //   group: group1
+              //   after: null | group-name
+              // }"
+
                 // ,
                 // {
                 //     "operation": 'zoom', 
@@ -603,18 +633,50 @@ class OverallApp extends React.Component {
                  },
                  {
                    "id": 13,
-                   "url": "/CO2Footprint/cows2Panels.svg"
-                 }
+                   "url": "/CO2Footprint/human_panel.svg"
+                 },
+                 {
+                  "id": 14,
+                  "url": "/CO2Footprint/tree2Panels.svg"
+                },
+                {
+                  "id": 15,
+                  "url": "/CO2Footprint/human_panel.svg"
+                }
                ],
                "operations": [
              
-                   { 
-                   "trigger": "click",
-                   "element": "panel_6",
-                   "operation": "replace",
-                   "after": "panel_7",
-                   "newpanels": ["panel_11"]
-                 },
+                //    { 
+                //    "trigger": "click",
+                //    "element": "panel_6",
+                //    "operation": "replace",
+                //    "after": "panel_7",
+                //    "newpanels": ["panel_11"]
+                //  },
+                { 
+                  'trigger': "click",
+                  'operation': 'loadLayout',
+                  'element': "panel_5",
+                  'layout': [[12, 13]],
+                  "after": "panel_6",
+                  "group": "group1"
+               },
+               { 
+                'trigger': "click",
+                'operation': 'loadLayout',
+                'element': "panel_6",
+                'layout': [[14]],
+                "after": "panel_6",
+                "group": "group1"
+             },
+             { 
+              'trigger': "click",
+              'operation': 'loadLayout',
+              'element': "panel_7",
+              'layout': [[15]],
+              "after": "panel_6",
+              "group": "group1"
+           },
                  {
                    "operation": "isotype",
                    "variable": "totalMovement",
@@ -638,7 +700,6 @@ class OverallApp extends React.Component {
                    "operation": "isotype",
                    "variable": "totalTons",
                    "to": "fogPlaceHolder",
-                   "on": 0,
                    "attr": {
                     "widthIcon": 22
                    },
@@ -648,7 +709,6 @@ class OverallApp extends React.Component {
                    "operation": "isotype",
                    "variable": "tonsMoreThanEarthEverage",
                    "to": "MoreThanEarthPlaceHolder",
-                   "on": 0,
                    "attr": {
                     "widthIcon": 9
                    },
@@ -658,7 +718,6 @@ class OverallApp extends React.Component {
                    "operation": "isotype",
                    "variable": "moreThanParisGoal",
                    "to": "moreThanParisPlaceHolder",
-                   "on": 0,
                    "attr": {
                     "widthIcon": 38
                    },
@@ -668,7 +727,6 @@ class OverallApp extends React.Component {
                    "operation": "isotype",
                    "variable": "treeIcon",
                    "to": "TreesPlaceHolder",
-                   "on": 0,
                    "attr": {
                     "widthIcon": 4.5
                    },
@@ -678,7 +736,6 @@ class OverallApp extends React.Component {
                    "operation": "isotype",
                    "variable": "numCows",
                    "to": "cowsPlaceHolder",
-                   "on": 0,
                    "attr": {
                     "widthIcon": 15
                    },
@@ -722,7 +779,7 @@ class OverallApp extends React.Component {
           return(
                <div>
                     
-                    <Split sizes={[30,70]} style={{display: 'flex'}}>
+                    <Split sizes={[5,95]} style={{display: 'flex'}}>
 
                         <div>
                               <button id="go" onMouseDown={this.renderComic}> GO</button>

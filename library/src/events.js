@@ -12,6 +12,7 @@ export class EventsPanels {
 
         
        this.layout = this.state.layout.find(x => x.name == this.state.currentLayout)
+       console.log(this.layout)
 
     } 
     setVariables(appTontext, state){
@@ -24,9 +25,10 @@ export class EventsPanels {
     }
     //Group operations
     init(){
+        //groupByElement
         var objectGrouped = _.groupBy(this.state.operations, "element");
         var keys = Object.keys(objectGrouped)
-
+        console.log(objectGrouped)
         // grouped by panel trigerring and panel
         for (var i in keys){
             var idPanel = keys[i]
@@ -35,7 +37,7 @@ export class EventsPanels {
             var keys2 = Object.keys(operationTrigger)
             for (var j in keys2){
                 var trigger = keys2[j];
-                // console.log(trigger)
+                
                 // if (trigger == "condition") this.setEventsCondition(operationTrigger[trigger])
                 if (trigger != 'undefined') this.setEvents(idPanel, trigger, operationTrigger[trigger])
             }
@@ -94,7 +96,7 @@ export class EventsPanels {
         return true;
     }
     setEvents(idPanel, trigger, event){
-        console.log(idPanel, trigger, event);
+        // console.log(idPanel, trigger, event);
         var that = this;
         var idSelector = null;
         // IF CLASS OR ID
@@ -173,7 +175,7 @@ export class EventsPanels {
                         mathematicalFunction += this.stateApp.state.variables[myIndex]['value'];
                     }
                 }
-                console.log(mathematicalFunction)
+                // console.log(mathematicalFunction)
                 isSatisfied = eval(mathematicalFunction);
                 if (!isSatisfied) idSelector.attr('isTriggered', 'false')
             }
@@ -213,7 +215,13 @@ export class EventsPanels {
                 // console.log('GO')
                 var element = event['element'];
                 var layout = event['layout'];
-                this.loadLayout(element, layout)
+                var where = event['after'];
+                var group = event['group']
+                // if (where == undefined) where = element
+
+                // console.log(where)
+                this.loadLayout(element, layout, where, group);
+                idSelector.attr('isTriggered', 'false')
             }
             if (event.operation == 'zoom' && isSatisfied){
                 var element = event['element'];
@@ -228,15 +236,48 @@ export class EventsPanels {
         console.log(element, layout)
 
     }
-    loadLayout(element, layout){
+    loadLayout(element, layout, where, group){
 
-        // this.stateApp.setState({currentLayout: []});
-        this.stateApp.setState({currentLayout: layout});
 
-        // console.log(this.stateApp.state.layout)
-        this.stateApp.reloadEvents();
+        if (where == null){
+            this.stateApp.setState({currentLayout: layout});
+            this.stateApp.reloadEvents();
+        } else {
+            var whereSplited = parseInt(where.split('_')[1]);
+            var indexes = [0,0];
+            var arrayArrangement = this.layout.panels;
+            for (var i= 0; i <  arrayArrangement.length; i++){
+                for (var j= 0; j <  arrayArrangement[i].length; j++){
+                        if (arrayArrangement[i][j] == whereSplited){indexes = [i,j];}
+                } 
+            }
+            console.log()
 
-        // console.log(element, layout)
+            //1 REMOVE ALL GROUP PANEL
+            var otherGroup = this.stateApp.state.operations.filter(x => x.group == group);
+            var indexes = [];
+            for (var i= 0; i <  otherGroup.length; i++){
+                var layoutTemp = []
+                if (Array.isArray(layout)) layoutTemp = otherGroup[i]['layout']
+                else layoutTemp = this.state.layout.find(x => x.name == otherGroup[i]['layout'])['panels'];
+                indexes = indexes.concat(layoutTemp.flat(5))
+            }
+            console.log(indexes)
+            this.remove(indexes)
+
+            //2 APPEND
+            var newLayout = []
+            if (Array.isArray(layout)) newLayout = layout
+            else newLayout = this.state.layout.find(x => x.name == layout)['panels']
+            
+            this.append(where, JSON.parse(JSON.stringify(newLayout)));
+
+        }
+        
+
+
+        // this.stateApp.setState({currentLayout: layout});
+        // this.stateApp.reloadEvents();
     }
     unhighlight(element, after, idSelector){
         // console.log(this.objectsAttributes)
@@ -303,7 +344,10 @@ export class EventsPanels {
     }
     remove(items, isFlex){
         console.log("====== REMOVE")
-        var itemsToRemove = this.splitArray(items);
+        var itemsToRemove = items;
+        if (items.flat(5)[0][0] != undefined) itemsToRemove = this.splitArray(items);
+
+        // var itemsToRemove = this.splitArray(items);
         itemsToRemove = itemsToRemove.flat(100);
         var allIndexes = []
         // console.log(itemsToRemove)
@@ -323,10 +367,11 @@ export class EventsPanels {
                     }
                     else if (arrayArrangement[i][j] == where){
                         indexes= [i,j]
+                        // console.log('GO')
                     }
                 } 
             }
-            allIndexes.push(indexes);
+            if (indexes.length > 0) allIndexes.push(JSON.parse(JSON.stringify(indexes)));
             // console.log(indexes)
         }
 
@@ -334,22 +379,30 @@ export class EventsPanels {
         allIndexes.sort(function(a, b) {
             return a[2] - b[2] || a[1] - b[1] || a[0] - b[0];
         });
-
+        // console.log('ARRAY ARRANGEMENT', arrayArrangement)
+        // console.log(indexes)
         // // NOW ITERATE TO REMOVE
         for (var i = allIndexes.length-1; i >= 0; i--){
             var allIndex = allIndexes[i]
+            // console.log(allIndex)
             if (allIndex.length == 3) arrayArrangement[allIndex[0]][allIndex[1]].splice(allIndex[2]);
-            else arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
+            else  arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
             
         }
+
+        // console.log(arrayArrangement)
       
         // // REMOVE IF EMPTY PANEL
         for (var i = arrayArrangement.length-1; i >= 0; i--){
-            for (var j = arrayArrangement[i].length-1; j >= 0; j--){
-                if (arrayArrangement[i][j].length == 0) arrayArrangement[i].splice(j, 1);
+            if (arrayArrangement[i].length == 0) arrayArrangement.splice(i, 1);
+            else {
+                for (var j = arrayArrangement[i].length-1; j >= 0; j--){
+                    if (arrayArrangement[i][j].length == 0) arrayArrangement[i].splice(j, 1);
+                }
             }
         }
-        // console.log(arrayArrangement)
+        // this.state.layout.panels = 
+        // console.log()
         this.stateApp.setState({layout: this.state.layout})
     }
     // append(where, what, isFlex){
@@ -377,25 +430,28 @@ export class EventsPanels {
            
             if (Array.isArray(what[i])){
                 // console.log(what[i])
-                for (var j = what[i].length-1; j >= 0; j--){
+                // for (var j = what[i].length-1; j >= 0; j--){
                     // console.log(what[i][j])
-                    if (lineToAvoid.indexOf(i) == -1 && Array.isArray(what[i][j])){
-                        // console.log('GO')
-                        // console.log(what[i] + 'is multi array'+ i)
-                        myNewLine.push(what.splice(i, 1));
-                        lineToAvoid.push(i);
-                    }
+                if (lineToAvoid.indexOf(i) == -1){
+                    // console.log('GO')
+                    // console.log(what[i] + 'is multi array'+ i)
+                    myNewLine.push(what.splice(i, 1));
+                    lineToAvoid.push(i);
                 }
+                // }
             } 
         }
 
-        console.log(what)
+        
         var where = parseInt(where.split('_')[1])
-        var what = this.splitArray(what);
-        console.log(where, what);
+        // console.log(what.flat(5))
+        
+        if (what.flat(5).length > 0 && what.flat(5)[0][0] != undefined) what = this.splitArray(what);
+        // console.log(where, what);
         // console.log(event);
         
         // indexes of the from array
+        // FOR THE WHERE
         var indexes = []
         var arrayArrangement = this.layout.panels;
         for (var i= 0; i <  arrayArrangement.length; i++){
@@ -411,26 +467,29 @@ export class EventsPanels {
             } 
         }
         if (indexes.length == 0) console.log('no INDEXES FOUND')
+        // console.log(indexes)
+        // console.log(myNewLine)
 
-
-        if (isFlex == undefined){
-            arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
+       if (isFlex == undefined){
+        //    console.log(what)
+            if (what.length > 0) arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
 
             // IF THERE IS A NEW LINE MENTIONNED
             if (myNewLine.length > 0){
                 console.log(myNewLine)
-                for (var i = myNewLine.length-1; i >= 0; i--){
-                    var element = this.splitArray(myNewLine[i][0]);
-                    // arrayArrangement.concat(element);
-                    arrayArrangement = [...arrayArrangement, element] 
-                    // console.log(element)
+                // for (var i = myNewLine.length-1; i >= 0; i--){
+                for (var i = 0; i < myNewLine.length; i++){
+                    var element = myNewLine[i][0];
+                    if (myNewLine[i][0].flat(5).length > 0 && myNewLine[i][0].flat(5)[0][0] != undefined) element = this.splitArray(myNewLine[i][0]);
+                    console.log("===================", element)
+                    arrayArrangement.splice(indexes[0][0]+1, 0, element);
+                    
+                    // arrayArrangement = [...arrayArrangement, element] 
                 }
-                
-                // arrayArrangement = arrayArrangement.concat(myArrayToAppend);
             }
             // console.log(arrayArrangement, this.state.layout)
-            this.layout.panels = arrayArrangement
-
+            this.layout.panels = arrayArrangement;
+            console.log(this.layout.panels )
 
             this.stateApp.setState({layout: this.state.layout})
 
@@ -512,94 +571,94 @@ export class EventsPanels {
 
 
 
-    setEvents2(){
-        d3.select('#cell_'+ event.on).attr('open', false);
+    // setEvents2(){
+    //     d3.select('#cell_'+ event.on).attr('open', false);
                 
 
-        if (event.type == 'remove'){
-            d3.select('#cell_'+ event.on).on(event.event, function(){
-                if (d3.select(this).attr('open') == 'false'){
-                    that.props.changeLayout('remove', event.action.from, event.action.to, event.action.width);
-                    d3.select(this).attr('open', true)
-                }
-            })
-        }
+    //     if (event.type == 'remove'){
+    //         d3.select('#cell_'+ event.on).on(event.event, function(){
+    //             if (d3.select(this).attr('open') == 'false'){
+    //                 that.props.changeLayout('remove', event.action.from, event.action.to, event.action.width);
+    //                 d3.select(this).attr('open', true)
+    //             }
+    //         })
+    //     }
 
-        if (event.type == 'append'){
+    //     if (event.type == 'append'){
             
-            d3.select('#cell_'+ event.on).on(event.event, function(){
-                if (event.backForth == true){
-                    if (d3.select(this).attr('open') == 'false'){
-                        that.props.changeLayout('append', event.action.from, event.action.to, event.action.width);
-                        d3.select(this).attr('open', true)
-                    } else {
-                        that.props.changeLayout('remove', event.action.to, event.action.from, event.action.width);
-                        d3.select(this).attr('open', false)
-                    }
-                } else{
-                    if (d3.select(this).attr('open') == 'false'){
-                        that.props.changeLayout(event.type, event.action.from, event.action.to, event.action.width);
-                        d3.select(this).attr('open', true)
-                    }
-                }
-            })
-        }
-        if (event.type == 'replace'){
+    //         d3.select('#cell_'+ event.on).on(event.event, function(){
+    //             if (event.backForth == true){
+    //                 if (d3.select(this).attr('open') == 'false'){
+    //                     that.props.changeLayout('append', event.action.from, event.action.to, event.action.width);
+    //                     d3.select(this).attr('open', true)
+    //                 } else {
+    //                     that.props.changeLayout('remove', event.action.to, event.action.from, event.action.width);
+    //                     d3.select(this).attr('open', false)
+    //                 }
+    //             } else{
+    //                 if (d3.select(this).attr('open') == 'false'){
+    //                     that.props.changeLayout(event.type, event.action.from, event.action.to, event.action.width);
+    //                     d3.select(this).attr('open', true)
+    //                 }
+    //             }
+    //         })
+    //     }
+    //     if (event.type == 'replace'){
             
-            d3.select('#cell_'+ event.on).attr('eventiteration', i).on(event.event, function(){
-                console.log('======', event)
-                var k = parseInt(d3.select(this).attr('eventiteration'));
-                if (events[k].backForth == true){
-                    if (d3.select(this).attr('open') == 'false'){
-                        that.props.changeLayout('append', events[k].action.from, events[k].action.to, events[k].action.width);
-                        that.props.changeLayout('remove', events[k].action.from, [], []);
-                        d3.select(this).attr('open', true)
-                    } else {
-                        that.props.changeLayout('append', events[k].action.to, events[k].action.from, events[k].action.width);
-                        that.props.changeLayout('remove', events[k].action.to, [], []);
-                        d3.select(this).attr('open', false)
-                    }
-                } else{
-                    if (d3.select(this).attr('open') == 'false'){
-                        that.props.changeLayout('append', events[k].action.from, events[k].action.to, events[k].action.width);
-                        that.props.changeLayout('remove', events[k].action.from, [], []);
-                        d3.select(this).attr('open', true)
-                    }
-                }
-            })
-        }
-        // console.log(event)
+    //         d3.select('#cell_'+ event.on).attr('eventiteration', i).on(event.event, function(){
+    //             console.log('======', event)
+    //             var k = parseInt(d3.select(this).attr('eventiteration'));
+    //             if (events[k].backForth == true){
+    //                 if (d3.select(this).attr('open') == 'false'){
+    //                     that.props.changeLayout('append', events[k].action.from, events[k].action.to, events[k].action.width);
+    //                     that.props.changeLayout('remove', events[k].action.from, [], []);
+    //                     d3.select(this).attr('open', true)
+    //                 } else {
+    //                     that.props.changeLayout('append', events[k].action.to, events[k].action.from, events[k].action.width);
+    //                     that.props.changeLayout('remove', events[k].action.to, [], []);
+    //                     d3.select(this).attr('open', false)
+    //                 }
+    //             } else{
+    //                 if (d3.select(this).attr('open') == 'false'){
+    //                     that.props.changeLayout('append', events[k].action.from, events[k].action.to, events[k].action.width);
+    //                     that.props.changeLayout('remove', events[k].action.from, [], []);
+    //                     d3.select(this).attr('open', true)
+    //                 }
+    //             }
+    //         })
+    //     }
+    //     // console.log(event)
 
-        if (event.type == 'isotype'){
-            console.log('HELLO', event);
-            // that.setState({})
-            // that.setState({isotype: event})
-            that.state.isotype.push(event);
-            this.setState({isotype: that.state.isotype})
-
-
-            setTimeout(function(){
-                // console.log('=====================')
-                for (var d in that.state.isotype){
-                    var isotype = that.state.isotype[d];
-
-                    var node = d3.select('.foreignClass_'+isotype.to).node()
-                    // console.log(node)
-                    // if (that.props.cellData.id == event.from){
-                    if ( node == null ) {
-                        console.log('EHHH')
-                        d3.select('#'+isotype.to).append('foreignObject').attr('class', 'foreignClass_'+isotype.to)
-                            .attr('width', '100%')
-                            .attr('height', '100%')
-                            .attr("x", 0).attr("y", 0)
-                    }
-                }
+    //     if (event.type == 'isotype'){
+    //         console.log('HELLO', event);
+    //         // that.setState({})
+    //         // that.setState({isotype: event})
+    //         that.state.isotype.push(event);
+    //         this.setState({isotype: that.state.isotype})
 
 
-            }, 1000)
+    //         setTimeout(function(){
+    //             // console.log('=====================')
+    //             for (var d in that.state.isotype){
+    //                 var isotype = that.state.isotype[d];
+
+    //                 var node = d3.select('.foreignClass_'+isotype.to).node()
+    //                 // console.log(node)
+    //                 // if (that.props.cellData.id == event.from){
+    //                 if ( node == null ) {
+    //                     console.log('EHHH')
+    //                     d3.select('#'+isotype.to).append('foreignObject').attr('class', 'foreignClass_'+isotype.to)
+    //                         .attr('width', '100%')
+    //                         .attr('height', '100%')
+    //                         .attr("x", 0).attr("y", 0)
+    //                 }
+    //             }
+
+
+    //         }, 1000)
             
-            // }
-        }
-    }
+    //         // }
+    //     }
+    // }
 }
 
