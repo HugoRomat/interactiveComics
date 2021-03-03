@@ -1,0 +1,9 @@
+<svg width="305" height="286" viewBox="0 0 305 286" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 4">
+<rect id="Rectangle 12" width="305" height="286" fill="#C4C4C4"/>
+<rect id="movementVelocity" x="105.5" y="48.5" width="47" height="43" fill="#C4C4C4" stroke="black"/>
+<rect id="totalMovement" x="209.5" y="48.5" width="47" height="43" fill="#C4C4C4" stroke="black"/>
+<rect id="movementSpeed" x="45.5" y="48.5" width="47" height="43" fill="#C4C4C4" stroke="black"/>
+<text id="=" fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="72" letter-spacing="0em"><tspan x="162" y="94.6094">=</tspan></text>
+</g>
+</svg>
