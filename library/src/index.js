@@ -478,10 +478,8 @@ class OverallApp extends React.Component {
                        7,
                        8
                      ],
-                     [10],
-                     [16],
-                     [17],
-                     [18]
+                     [10, 16],
+                     [17, 18]
                    ]
                  }
                ],

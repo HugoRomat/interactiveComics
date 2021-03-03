@@ -348,9 +348,8 @@ export class EventsPanels {
             } 
         }
 
-        // if (isFlex == false){
-            arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1, ...what);
-            this.stateApp.setState({layout: this.state.layout})
+        arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1, ...what);
+        this.stateApp.setState({layout: this.state.layout})
         // } 
     }
     remove(items, isFlex){
