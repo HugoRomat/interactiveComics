@@ -228,6 +228,13 @@ export class EventsPanels {
                 var linked = event['linked'];
                 this.zoom(element, linked)
             }
+
+            if (event.operation == 'hyperlink' && isSatisfied){
+                // var element = event['element'];
+                // var linked = event['linked'];
+                // this.link(element, linked)
+                // console.log('HELLO')
+            }
            
         }
 
@@ -266,11 +273,15 @@ export class EventsPanels {
             this.remove(indexes)
 
             //2 APPEND
-            var newLayout = []
-            if (Array.isArray(layout)) newLayout = layout
-            else newLayout = this.state.layout.find(x => x.name == layout)['panels']
+            console.log('APPENDING')
+            setTimeout(()=>{
+                var newLayout = []
+                if (Array.isArray(layout)) newLayout = layout
+                else newLayout = this.state.layout.find(x => x.name == layout)['panels']
+                
+                this.append(where, JSON.parse(JSON.stringify(newLayout)));
+            }, 100)
             
-            this.append(where, JSON.parse(JSON.stringify(newLayout)));
 
         }
         
@@ -343,67 +354,72 @@ export class EventsPanels {
         // } 
     }
     remove(items, isFlex){
-        console.log("====== REMOVE")
-        var itemsToRemove = items;
-        if (items.flat(5)[0][0] != undefined) itemsToRemove = this.splitArray(items);
 
-        // var itemsToRemove = this.splitArray(items);
-        itemsToRemove = itemsToRemove.flat(100);
-        var allIndexes = []
-        // console.log(itemsToRemove)
-        for (var e in itemsToRemove){
-            var where = itemsToRemove[e]
-            var indexes = []
-            var arrayArrangement = this.layout.panels;
-            for (var i = arrayArrangement.length-1; i >= 0; i--){
-                // console.log(arrayArrangement[i])
-                for (var j = arrayArrangement[i].length-1; j >= 0; j--){
-                    if (Array.isArray(arrayArrangement[i][j])){
-                        // console.log(arrayArrangement[i][j], where, arrayArrangement[i][j].indexOf(where))
-                        if (arrayArrangement[i][j].indexOf(where) > -1){
-                            indexes = [i,j, arrayArrangement[i][j].indexOf(where)]
-                            // console.log('inline', indexes)
+        return new Promise((resolve, reject) => {
+            console.log("====== REMOVE")
+            var itemsToRemove = items;
+            if (items.flat(5)[0][0] != undefined) itemsToRemove = this.splitArray(items);
+
+            // var itemsToRemove = this.splitArray(items);
+            itemsToRemove = itemsToRemove.flat(100);
+            var allIndexes = []
+            // console.log(itemsToRemove)
+            for (var e in itemsToRemove){
+                var where = itemsToRemove[e]
+                var indexes = []
+                var arrayArrangement = this.layout.panels;
+                for (var i = arrayArrangement.length-1; i >= 0; i--){
+                    // console.log(arrayArrangement[i])
+                    for (var j = arrayArrangement[i].length-1; j >= 0; j--){
+                        if (Array.isArray(arrayArrangement[i][j])){
+                            // console.log(arrayArrangement[i][j], where, arrayArrangement[i][j].indexOf(where))
+                            if (arrayArrangement[i][j].indexOf(where) > -1){
+                                indexes = [i,j, arrayArrangement[i][j].indexOf(where)]
+                                // console.log('inline', indexes)
+                            }
                         }
-                    }
-                    else if (arrayArrangement[i][j] == where){
-                        indexes= [i,j]
-                        // console.log('GO')
-                    }
-                } 
+                        else if (arrayArrangement[i][j] == where){
+                            indexes= [i,j]
+                            // console.log('GO')
+                        }
+                    } 
+                }
+                if (indexes.length > 0) allIndexes.push(JSON.parse(JSON.stringify(indexes)));
+                // console.log(indexes)
             }
-            if (indexes.length > 0) allIndexes.push(JSON.parse(JSON.stringify(indexes)));
+
+            // TO SORT THE ARRAY BY INDEX
+            allIndexes.sort(function(a, b) {
+                return a[2] - b[2] || a[1] - b[1] || a[0] - b[0];
+            });
+            // console.log('ARRAY ARRANGEMENT', arrayArrangement)
             // console.log(indexes)
-        }
+            // // NOW ITERATE TO REMOVE
+            for (var i = allIndexes.length-1; i >= 0; i--){
+                var allIndex = allIndexes[i]
+                // console.log(allIndex)
+                if (allIndex.length == 3) arrayArrangement[allIndex[0]][allIndex[1]].splice(allIndex[2]);
+                else  arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
+                
+            }
 
-        // TO SORT THE ARRAY BY INDEX
-        allIndexes.sort(function(a, b) {
-            return a[2] - b[2] || a[1] - b[1] || a[0] - b[0];
-        });
-        // console.log('ARRAY ARRANGEMENT', arrayArrangement)
-        // console.log(indexes)
-        // // NOW ITERATE TO REMOVE
-        for (var i = allIndexes.length-1; i >= 0; i--){
-            var allIndex = allIndexes[i]
-            // console.log(allIndex)
-            if (allIndex.length == 3) arrayArrangement[allIndex[0]][allIndex[1]].splice(allIndex[2]);
-            else  arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
-            
-        }
-
-        // console.log(arrayArrangement)
-      
-        // // REMOVE IF EMPTY PANEL
-        for (var i = arrayArrangement.length-1; i >= 0; i--){
-            if (arrayArrangement[i].length == 0) arrayArrangement.splice(i, 1);
-            else {
-                for (var j = arrayArrangement[i].length-1; j >= 0; j--){
-                    if (arrayArrangement[i][j].length == 0) arrayArrangement[i].splice(j, 1);
+            // console.log(arrayArrangement)
+        
+            // // REMOVE IF EMPTY PANEL
+            for (var i = arrayArrangement.length-1; i >= 0; i--){
+                if (arrayArrangement[i].length == 0) arrayArrangement.splice(i, 1);
+                else {
+                    for (var j = arrayArrangement[i].length-1; j >= 0; j--){
+                        if (arrayArrangement[i][j].length == 0) arrayArrangement[i].splice(j, 1);
+                    }
                 }
             }
-        }
-        // this.state.layout.panels = 
-        // console.log()
-        this.stateApp.setState({layout: this.state.layout})
+            // this.state.layout.panels = 
+            // console.log()
+            this.stateApp.setState({layout: this.state.layout})
+
+            resolve(true);
+        })
     }
     // append(where, what, isFlex){
     // SPlit and parse multidimensionnal array
@@ -489,7 +505,7 @@ export class EventsPanels {
             }
             // console.log(arrayArrangement, this.state.layout)
             this.layout.panels = arrayArrangement;
-            console.log(this.layout.panels )
+            // console.log(this.layout.panels)
 
             this.stateApp.setState({layout: this.state.layout})
 

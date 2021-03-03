@@ -211,6 +211,16 @@ class App extends React.Component {
                this.sliders.init();
                
           }, 1000)
+
+
+          // setTimeout(()=>{
+
+          //      var layout = this.state.layout.find(x => x.name == this.state.currentLayout);
+
+          //      layout.panels.splice(1, 0, [16]);
+          //      this.setState({layout: this.state.layout})
+        
+          // }, 2000)
           // this.handleClass();
      }
      reloadEvents(){
@@ -246,7 +256,7 @@ class App extends React.Component {
                                    var cellData = [];
                                    if (cell.length != undefined) cell.forEach((d)=> cellData.push(this.state.panels.find(x => x.id == d)))
                                    else cellData = this.state.panels.find(x => x.id == cell)
-                                   // console.log(cellData)
+                                   console.log(cell)
                                    // for (var i =0; i < )
                                    return ( 
                                         <Cell  

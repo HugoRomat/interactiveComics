@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 import { Resizable } from "re-resizable";
 import { Range } from 'react-range';
 import $ from 'jquery';
-
+import shallowCompare from 'react-addons-shallow-compare';
 
 class Cell extends React.Component {
     constructor(props) {
@@ -15,15 +15,21 @@ class Cell extends React.Component {
         this.slidersPosition = [];
         
     }
-    
+    shouldComponentUpdate(nextProps, nextState) {
+        var shouldI = shallowCompare(this, nextProps, nextState);
+        // console.log(this.props.cell, shouldI)
+        return shouldI;
+    }
+    componentWillUnmount(){
+        // console.log('DELETE ', this.props.cell)
+    }
     componentDidMount(){
         var that = this;
         
         // console.log(that.props)
+        // console.log('CREATE ', this.props.cell)
         if (that.props.cellData.url != undefined){
             this.loadingImage().then(()=> {
-
-
 
                 if (that.props.cellData['sliders'] != undefined){
                     that.props.cellData['sliders'].forEach((d,i) => {
@@ -83,34 +89,55 @@ class Cell extends React.Component {
     }
     loadingImage(){
         var that = this;
+
         return new Promise((resolve, reject) => {
             //.attr("viewBox", "0 0 700 500")
                 // .attr("preserveAspectRatio", "xMinYMin meet")
                 // console.log(that.props.cellData.url)
-            d3.svg("images/"+ that.props.cellData.url).then(function(xml) {
-                // var width = d3.select(xml.documentElement).attr('width')
-                // var height = d3.select(xml.documentElement).attr('height')
+            var url = that.props.cellData.url;
+            var extension = url.split(".").pop();
+            var firstCharact = url.substring(0, 3)
+            // console.log()
+            if (firstCharact != 'htt' && extension == 'svg'){
+                d3.svg("images/"+ that.props.cellData.url).then(function(xml) {
+                    // var width = d3.select(xml.documentElement).attr('width')
+                    // var height = d3.select(xml.documentElement).attr('height')
+    
+                    var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
+                    d3.select("#panel_"+ that.props.cellData.id).node().appendChild(DOM);
+    
+                    if (that.props.cellData.content != undefined){
+                        d3.select("#panel_"+ that.props.cellData.id).select('svg').selectAll('*').remove();
+                        $("#panel_"+ that.props.cellData.id).addClass('noBorder');
+                    }
+    
+                    var id = $("#panel_"+ that.props.cellData.id).attr('id')
+                    $("#panel_"+ that.props.cellData.id).addClass(id);
+                    // $(item).removeAttr('id');
+                    // console.log(that.props.cellData)
+                    // d3.select("#svg_"+ that.props.cellData.id).attr('width', width).attr('height', height)
+                    // console.log()
+                    // xml.documentElement.childNodes.forEach(element => {
+                    //     d3.select("#svg_"+ that.props.cellData.id).node().appendChild(element.cloneNode(true));
+                    // });
+                    // console.log('image loaded')
+                    resolve(true)
+                })
+            } 
+            if (firstCharact != 'htt' && (extension == 'png' || extension == 'jpg')) {
+                $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='images/"+  that.props.cellData.url +"'/>")
 
-                var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
-                d3.select("#panel_"+ that.props.cellData.id).node().appendChild(DOM);
-
-                if (that.props.cellData.content != undefined){
-                    d3.select("#panel_"+ that.props.cellData.id).select('svg').selectAll('*').remove();
-                    $("#panel_"+ that.props.cellData.id).addClass('noBorder');
-                }
 
                 var id = $("#panel_"+ that.props.cellData.id).attr('id')
                 $("#panel_"+ that.props.cellData.id).addClass(id);
-                // $(item).removeAttr('id');
-                // console.log(that.props.cellData)
-                // d3.select("#svg_"+ that.props.cellData.id).attr('width', width).attr('height', height)
-                // console.log()
-                // xml.documentElement.childNodes.forEach(element => {
-                //     d3.select("#svg_"+ that.props.cellData.id).node().appendChild(element.cloneNode(true));
-                // });
-                // console.log('image loaded')
+
                 resolve(true)
-            })
+
+            } 
+            if (firstCharact == 'htt'){
+                $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
+            }
+            
             
         })
     }

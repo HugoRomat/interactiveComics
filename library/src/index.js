@@ -462,10 +462,10 @@ class OverallApp extends React.Component {
                    "name": "iniLayout",
                    "panels": [
                      [
-                       0,
+                       1,
                        [
-                         1,
-                         2
+                         2,
+                         0
                        ],
                        3
                      ],
@@ -478,7 +478,10 @@ class OverallApp extends React.Component {
                        7,
                        8
                      ],
-                     [10]
+                     [10],
+                     [16],
+                     [17],
+                     [18]
                    ]
                  }
                ],
@@ -585,11 +588,11 @@ class OverallApp extends React.Component {
                  },
                  {
                    "id": 1,
-                   "url": "/CO2Footprint/totalKm.svg"
+                   "url": "graphies.jpg"
                  },
                  {
                    "id": 2,
-                   "url": "/CO2Footprint/totalGlobe.svg"
+                   "url": "https://drive.google.com/uc?id=0BwnYnOTc-UeCTVZabHRBeXZtT1U"
                  },
                  {
                    "id": 3,
@@ -642,6 +645,18 @@ class OverallApp extends React.Component {
                 {
                   "id": 15,
                   "url": "/CO2Footprint/human_panel.svg"
+                },
+                {
+                  "id": 16,
+                  "url": "/CO2Footprint/human_panel.svg"
+                },
+                {
+                  "id": 17,
+                  "url": "/CO2Footprint/human_panel.svg"
+                },
+                {
+                  "id": 18,
+                  "url": "tree.png"
                 }
                ],
                "operations": [
@@ -740,11 +755,19 @@ class OverallApp extends React.Component {
                     "widthIcon": 15
                    },
                    "icon": "images/CO2Footprint/cowIcon.svg"
-                  }   
+                  },
+                  { 
+                    operation: 'hyperlink',
+                    trigger: "click",
+                    element: 'panel_2',
+                    link: "panel_3"
+                  } 
                ]
              }
     }
     componentDidMount(){
+
+     
         
     }
     renderComic= () => {
