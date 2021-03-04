@@ -1,200 +1,351 @@
 {
-    "classes": [
-     {
-      "class": "countries",
-      "elements": [
-       ".france",
-       ".germany",
-       ".uk"
+  "currentLayout": "iniLayout",
+  "layout": [
+    {
+      "name": "iniLayout",
+      "panels": [
+        [
+          0,
+          [
+            1,
+            2
+          ],
+          3
+        ],
+        [
+          4
+        ],
+        [
+          5,
+          6,
+          7
+          
+        ]
       ]
-     },
-     {
-      "class": "hand",
-      "elements": [
-       ".handRight"
-      ]
-     },
-     {
-      "class": "countries-alliance-1",
-      "elements": [
-       ".france",
-       ".germany"
-      ]
-     },
-     {
-      "class": "countries-alliance-2",
-      "elements": [
-       ".uk",
-       ".russia"
-      ]
-     }
-    ],
-    "layout": {
-     "arrangment": [
-      [
-       0,
-       1,
-       2
-      ],
-      [
-       3,
-       4,
-       [
-        5,
-        6
-       ]
-      ]
-     ]
-    },
-    "variables": [
-     {
+    }
+  ],
+  "variables": [
+    {
       "name": "movementSpeed",
       "value": 0
-     },
-     {
+    },
+    {
       "name": "movementVelocity",
       "value": 0
-     },
-     {
+    },
+    {
       "name": "totalMovement",
       "value": 0,
       "what": [
-       "(",
-       "movementSpeed",
-       "+",
-       "movementVelocity",
-       ")",
-       "*10"
+        "(",
+        "movementSpeed",
+        "+",
+        "movementVelocity",
+        ")",
+        "*1"
       ]
-     }
-    ],
-    "panels": [
-     {
+    },
+    {
+      "name": "totalkm",
+      "value": 0,
+      "what": [
+        
+        "movementSpeed", "*2000", "+", "movementVelocity", "*8000"
+      ]
+    },
+    {
+      "name": "earthTimes",
+      "value": 0,
+      "what": [
+        
+        "totalkm", "/","40000"
+      ]
+    },
+    {
+      "name": "totalTons",
+      "value": 0,
+      "what": [
+        
+        "totalkm", "/","1000"
+      ]
+    },
+    {
+      "name": "tonsMoreThanEarthEverage",
+      "value": 0,
+      "what": [
+        
+        "totalTons", "-","5"
+      ]
+    },
+    {
+      "name": "moreThanParisGoal",
+      "value": 0,
+      "what": [
+        
+        "totalTons", "-","1"
+      ]
+    },
+    {
+      "name": "numTrees",
+      "value": 0,
+      "what": [
+        
+        "totalTons", "*", "45"
+      ]
+    },
+    {
+      "name": "treeIcon",
+      "value": 0,
+      "what": [
+        
+        "numTrees", "/","90"
+      ]
+    },
+    {
+      "name": "numCows",
+      "value": 0,
+      "what": [
+        
+       "totalTons"
+      ]
+    }
+  ],
+  "panels": [
+    {
       "id": 0,
-      "url": "/CO2Footprint/inputPanel.svg"
-     },
-     {
-      "id": 1,
-      "url": "Slider.svg",
+      "url": "/CO2Footprint/inputPanel.svg",
       "sliders": [
-       {
-        "id": "slider_movementSpeed",
-        "variable": "movementSpeed"
-       },
-       {
-        "id": "slider_movementVelocity",
-        "variable": "movementVelocity"
-       }
+        {
+          "id": "slider_movementSpeed",
+          "variable": "movementSpeed"
+        },
+        {
+          "id": "slider_movementVelocity",
+          "variable": "movementVelocity"
+        }
       ]
-     },
-     {
+    },
+    {
+      "id": 1,
+      "url": "/CO2Footprint/totalKm.svg"
+    },
+    {
       "id": 2,
-      "url": "handR.svg"
-     },
-     {
+      "url": "/CO2Footprint/totalGlobe.svg"
+    },
+    {
       "id": 3,
-      "url": "handL.svg"
-     },
-     {
+      "url": "/CO2Footprint/CO2inTons.svg"
+    },
+    {
       "id": 4,
-      "url": "handL.svg"
-     },
-     {
+      "url": "/CO2Footprint/speechBubble.svg"
+    },
+    {
       "id": 5,
-      "url": "handL.svg"
-     },
-     {
+      "url": "/CO2Footprint/human_panel.svg"
+    },
+    {
       "id": 6,
-      "url": "handL.svg"
-     },
-     {
+      "url": "/CO2Footprint/tree_panel.svg"
+    },
+    {
       "id": 7,
-      "url": "small.svg"
-     },
-     {
+      "url": "/CO2Footprint/cow_panel.svg"
+    },
+    {
       "id": 8,
-      "url": "small.svg"
-     },
-     {
+      "url": "/CO2Footprint/averageCO2_panels.svg"
+    },
+    {
       "id": 9,
-      "url": "handL.svg"
-     },
-     {
+      "url": "/CO2Footprint/compareWithYouMore.svg"
+    },
+    {
       "id": 10,
-      "url": "handL.svg"
-     },
-     {
+      "url": "/CO2Footprint/parisHigher1ton.svg"
+    },
+    {
       "id": 11,
-      "url": "small.svg"
-     },
-     {
+      "url": "/CO2Footprint/tree2Panels.svg"
+    },
+    {
       "id": 12,
-      "url": "small.svg"
-     },
-     {
+      "url": "/CO2Footprint/humanClicked_panel.svg"
+    },
+    {
       "id": 13,
-      "url": "small.svg"
-     },
-     {
+      "url": "/CO2Footprint/cows2Panels.svg"
+    },
+    {
       "id": 14,
-      "url": "small.svg"
-     },
-     {
+      "url": "/CO2Footprint/averageCO2Less_panels.svg"
+    },
+    {
       "id": 15,
-      "url": "small.svg"
-     }
-    ],
-    "operations": [
-     {
-      "trigger": "click",
-      "element": "panel_0",
-      "operation": "append",
-      "after": "panel_3",
-      "newpanels": [
-       [
-        "panel_11",
-        "panel_12"
-       ],
-       [
-        "panel_13",
-        "panel_14"
-       ]
-      ],
-      "flexwrap": true
-     },
-     {
-      "trigger": "click",
-      "element": "panel_4",
-      "operation": "replace",
-      "after": "panel_4",
-      "newpanels": [
-       "panel_12",
-       "panel_15"
-      ],
-      "flexwrap": false
-     },
-     {
-      "trigger": "mouseover",
-      "element": "hand",
-      "operation": "highlight",
-      "after": {
-       "style": {
-        "fill": "red",
-        "transform": "scale(1.5)"
-       },
-       "attr": []
-      },
-      "what": "handNew"
-     },
-     {
-      "type": "isotype",
-      "variable": "totalMovement",
-      "to": "isotypePlaceHolder",
-      "icon": "images/fog.png",
-      "attr": {
-       "widthIcon": 30,
-       "widthContainer": 200
-      }
-     }
+      "url": "/CO2Footprint/treeClicked_panel.svg"
+    },
+    {
+      "id": 16,
+      "url": "/CO2Footprint/cowClicked_panel.svg"
+    }
+  ],
+  "operations": [
+    
+  {
+   "trigger": "click",
+   "element": "panel_5",
+   "operation": "replace",
+   "replace": "panel_5",
+   "newpanels": [
+    "panel_12"
+   ]
+  },
+  {
+   "trigger": "click",
+   "element": "panel_6",
+   "operation": "replace",
+   "replace": "panel_6",
+   "newpanels": [
+    "panel_15"
+   ]
+  },
+  {
+   "trigger": "click",
+   "element": "panel_7",
+   "operation": "replace",
+   "replace": "panel_7",
+   "newpanels": [
+    "panel_16"
+   ]
+  },
+  {
+   "trigger": "click",
+   "condition": ["if", "totalTons", "< 5"],
+   "operation": "loadLayout",
+   "element": "panel_5",
+   "layout": [14,
+    [
+     
+     10
     ]
-   }
+   ],
+   "after": "panel_7",
+   "group": "group1"
+  }, 
+  {
+   "trigger": "click",
+   "condition": ["if", "totalTons", "> 5"],
+   "operation": "loadLayout",
+   "element": "panel_5",
+   "layout": [8,
+    [
+     
+     10
+    ]
+   ],
+   "after": "panel_7",
+   "group": "group2"
+  }, 
+ 
+  {
+   "trigger": "click",
+   "operation": "loadLayout",
+   "element": "panel_6",
+   "layout": [11,
+    [
+     
+     10
+    ]
+   ],
+   "after": "panel_7",
+   "group": "group2"
+  },
+{
+   "trigger": "click",
+   "operation": "loadLayout",
+   "element": "panel_5",
+   "layout": [13,
+    [
+     
+     10
+    ]
+   ],
+   "after": "panel_7",
+   "group": "group3"
+  }, 
+ 
+
+{
+"operation": "isotype",
+"variable": "totalMovement",
+"to": "planePlaceHolder",
+"attr": {
+"widthIcon": 35
+},
+"icon": "images/CO2Footprint/plane.svg"
+}
+,
+{
+"operation": "isotype",
+"variable": "earthTimes",
+"to": "earthPlaceHolder",
+"attr": {
+"widthIcon": 80
+},
+"icon": "images/CO2Footprint/earth.svg"
+},
+{
+"operation": "isotype",
+"variable": "totalTons",
+"to": "fogPlaceHolder",
+"on": 0,
+"attr": {
+"widthIcon": 22
+},
+"icon": "images/CO2Footprint/fog.svg"
+},
+{
+"operation": "isotype",
+"variable": "tonsMoreThanEarthEverage",
+"to": "MoreThanEarthPlaceHolder",
+"on": 0,
+"attr": {
+"widthIcon": 9
+},
+"icon": "images/CO2Footprint/smallFog.svg"
+},
+{
+"operation": "isotype",
+"variable": "moreThanParisGoal",
+"to": "moreThanParisPlaceHolder",
+"on": 0,
+"attr": {
+"widthIcon": 38
+},
+"icon": "images/CO2Footprint/tonX.svg"
+},
+{
+"operation": "isotype",
+"variable": "treeIcon",
+"to": "TreesPlaceHolder",
+"on": 0,
+"attr": {
+"widthIcon": 40
+},
+"icon": "images/CO2Footprint/9trees.svg"
+},
+{
+"operation": "isotype",
+"variable": "numCows",
+"to": "cowsPlaceHolder",
+"on": 0,
+"attr": {
+"widthIcon": 15
+},
+"icon": "images/CO2Footprint/cowIcon.svg"
+}
+]
+}
+ 
+
