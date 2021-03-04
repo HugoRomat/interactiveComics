@@ -27,21 +27,22 @@ body{
 
 .my-node-enter {
     opacity: 0;
-    /* width: 0px; */
+    width: 0px;
   }
   .my-node-enter-active {
     opacity: 1;
-    transition: opacity 2s, width 1s;
-    /* width: auto; */
+    transition: opacity 2s, height 1s;
+    width: 200px;
+    height: 100%;
   }
   .my-node-exit {
     opacity: 1;
-    /* width: auto; */
+    width: 200px;
   }
   .my-node-exit-active {
     opacity: 0;
-    transition: opacity 1s, width 1s;
-    /* width: 0px; */
+    transition: opacity 1s, height 1s;
+    height: 0px;
   }
 
 

@@ -590,11 +590,12 @@ class OverallApp extends React.Component {
                  },
                  {
                    "id": 2,
-                   "url": "https://drive.google.com/uc?id=0BwnYnOTc-UeCTVZabHRBeXZtT1U"
+                  //  "url": "https://drive.google.com/uc?id=0BwnYnOTc-UeCTVZabHRBeXZtT1U"
+                    "url": 'https://svgshare.com/i/UiD.svg'
                  },
                  {
                    "id": 3,
-                   "url": "/CO2Footprint/CO2inTons.svg"
+                   "url": "https://drive.google.com/uc?id=1biySw-DtngD4TBRNW8RpE_WCIC9le4eu"
                  },
                  {
                    "id": 4,

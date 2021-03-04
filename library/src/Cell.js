@@ -93,8 +93,8 @@ class Cell extends React.Component {
             var url = that.props.cellData.url;
             var extension = url.split(".").pop();
             var firstCharact = url.substring(0, 3)
-            // console.log()
-            if (firstCharact != 'htt' && extension == 'svg'){
+            // console.log(url, extension)
+            if (firstCharact != 'htt' && extension == 'svg') {
                 d3.svg("images/"+ that.props.cellData.url).then(function(xml) {
                     // var width = d3.select(xml.documentElement).attr('width')
                     // var height = d3.select(xml.documentElement).attr('height')
@@ -109,14 +109,6 @@ class Cell extends React.Component {
     
                     var id = $("#panel_"+ that.props.cellData.id).attr('id')
                     $("#panel_"+ that.props.cellData.id).addClass(id);
-                    // $(item).removeAttr('id');
-                    // console.log(that.props.cellData)
-                    // d3.select("#svg_"+ that.props.cellData.id).attr('width', width).attr('height', height)
-                    // console.log()
-                    // xml.documentElement.childNodes.forEach(element => {
-                    //     d3.select("#svg_"+ that.props.cellData.id).node().appendChild(element.cloneNode(true));
-                    // });
-                    // console.log('image loaded')
                     resolve(true)
                 })
             } 
@@ -130,9 +122,50 @@ class Cell extends React.Component {
                 resolve(true)
 
             } 
-            if (firstCharact == 'htt'){
-                $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
+            if (firstCharact == 'htt' && extension == 'svg') {
+                // console.log(that.props.cellData.url)
+                d3.svg(that.props.cellData.url).then(function(xml) {
+                    // var width = d3.select(xml.documentElement).attr('width')
+                    // var height = d3.select(xml.documentElement).attr('height')
+    
+                    var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
+                    d3.select("#panel_"+ that.props.cellData.id).node().appendChild(DOM);
+    
+                    if (that.props.cellData.content != undefined){
+                        d3.select("#panel_"+ that.props.cellData.id).select('svg').selectAll('*').remove();
+                        $("#panel_"+ that.props.cellData.id).addClass('noBorder');
+                    }
+    
+                    var id = $("#panel_"+ that.props.cellData.id).attr('id')
+                    $("#panel_"+ that.props.cellData.id).addClass(id);
+                    resolve(true)
+                })
+                // var ajax = new XMLHttpRequest();
+                // ajax.open("GET", that.props.cellData.url, true);
+                // ajax.send();
+                // ajax.onload = function(e) {
+                // var div = document.createElement("div");
+                // div.innerHTML = ajax.responseText;
+                // document.body.insertBefore(div, document.body.childNodes[0]);
+                // }
+                // $.ajax({
+                //     headers: { "Accept": "application/json"},
+                //     type: 'GET',
+                //     dataType: 'json',
+                //     url: that.props.cellData.url,
+                //     crossDomain: true,
+                //     beforeSend: function(xhr){
+                //         xhr.withCredentials = true;
+                //   },
+                //     success: function(data, textStatus, request){
+                //         console.log(data);
+                //     }
+                //  });
+
             }
+            // if (firstCharact == 'htt'){
+            //     $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
+            // }
             
             
         })
