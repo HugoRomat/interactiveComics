@@ -478,7 +478,7 @@ class OverallApp extends React.Component {
                        7,
                        8
                      ],
-                     [10, 16],
+                     [10],
                      [17, 18]
                    ]
                  }
@@ -670,24 +670,24 @@ class OverallApp extends React.Component {
                   'trigger': "click",
                   'operation': 'loadLayout',
                   'element': "panel_5",
-                  'layout': [[12, 13]],
-                  "after": "panel_6",
+                  'layout': [[12], 14],
+                  "after": "panel_7",
                   "group": "group1"
                },
                { 
                 'trigger': "click",
                 'operation': 'loadLayout',
                 'element': "panel_6",
-                'layout': [[14]],
-                "after": "panel_6",
+                'layout': [[13], [15], 11],
+                "after": "panel_7",
                 "group": "group1"
              },
              { 
               'trigger': "click",
               'operation': 'loadLayout',
               'element': "panel_7",
-              'layout': [[15]],
-              "after": "panel_6",
+              'layout': [[16]],
+              "after": "panel_7",
               "group": "group1"
            },
                  {

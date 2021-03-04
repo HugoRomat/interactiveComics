@@ -20,7 +20,7 @@ class App extends React.Component {
      constructor(props) {
           super(props);
           
-
+          this.mountedComponents = []
           this.state = this.props.json;
           this.events = new EventsPanels(this, this.state);
           this.sliders = new Slider(this, this.state);
@@ -203,16 +203,12 @@ class App extends React.Component {
      componentDidMount(){
           // when images will be loaded
           setTimeout(() =>{
-               this.createClasses();
-
                
+               
+          }, 3000)
+
+
           
-               this.events.init();
-               this.sliders.init();
-               
-          }, 1000)
-
-
           // setTimeout(()=>{
 
           //      var layout = this.state.layout.find(x => x.name == this.state.currentLayout);
@@ -223,18 +219,31 @@ class App extends React.Component {
           // }, 2000)
           // this.handleClass();
      }
-     reloadEvents(){
+     isMounted = (cellId, isIt) => {
+          var layout = this.state.layout.find(x => x.name == this.state.currentLayout);
+          // console.log(cellId)
 
-          setTimeout(() =>{
+          this.mountedComponents.push(cellId);
+          if (this.mountedComponents.length == layout.panels.flat(10).length-1){
+               
                this.createClasses();
-
-               this.events = new EventsPanels(this, this.state);
-               this.sliders = new Slider(this, this.state);
-          
                this.events.init();
                this.sliders.init();
+          }
+          // console.log(this.mountedComponents.length, layout.panels.flat(10).length)
+     }
+     reloadEvents(){
+
+          // setTimeout(() =>{
+          //      this.createClasses();
+
+          //      this.events = new EventsPanels(this, this.state);
+          //      this.sliders = new Slider(this, this.state);
+          
+          //      this.events.init();
+          //      this.sliders.init();
                
-          }, 1000)
+          // }, 1000)
           
      }
      // addColumn = () => {
@@ -248,15 +257,15 @@ class App extends React.Component {
           if (this.state.layout.length != 0){
                var layout = this.state.layout.find(x => x.name == this.state.currentLayout)
                // console.log(layout)
-               comicRendering = layout.panels.map((line, index) => ( 
-                    <div className="line" key={index}>
+               comicRendering = layout.panels.map((line, index) => (
+                    <div className="line" key={line.flat(5)[0]}>
                          {
                               line.map((cell, indexCell) => {
                                    // console.log(cell);
                                    var cellData = [];
                                    if (cell.length != undefined) cell.forEach((d)=> cellData.push(this.state.panels.find(x => x.id == d)))
                                    else cellData = this.state.panels.find(x => x.id == cell)
-                                   console.log(cell)
+                                   // console.log(cell)
                                    // for (var i =0; i < )
                                    return ( 
                                         <Cell  
@@ -271,11 +280,11 @@ class App extends React.Component {
                                              changeLayout={this.changeLayout}
                                              updateVariable={this.updateVariable}
                                              variables={this.state.variables}
+                                             isMounted={this.isMounted}
                                         /> 
                                    )
                               })
                          }
-     
                     </div>
                ))
           }

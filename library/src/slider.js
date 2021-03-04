@@ -29,7 +29,6 @@ export class Slider {
                 var idSlider = slider['id'];
                 if ($("."+ slider['id']).length) this.appendSlider(idPanel, idSlider, slider);
             }
-           
         }
         // console.log(panelSliders);
     }

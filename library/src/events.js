@@ -272,6 +272,8 @@ export class EventsPanels {
             console.log(indexes)
             this.remove(indexes)
 
+            console.log(this.state.layout[0]['panels'])
+
             //2 APPEND
             console.log('APPENDING')
             setTimeout(()=>{
@@ -280,7 +282,7 @@ export class EventsPanels {
                 else newLayout = this.state.layout.find(x => x.name == layout)['panels']
                 
                 this.append(where, JSON.parse(JSON.stringify(newLayout)));
-            }, 100)
+            }, 1000)
             
 
         }
@@ -366,7 +368,7 @@ export class EventsPanels {
             for (var e in itemsToRemove){
                 var where = itemsToRemove[e]
                 var indexes = []
-                var arrayArrangement = this.layout.panels;
+                var arrayArrangement = JSON.parse(JSON.stringify(this.layout.panels));
                 for (var i = arrayArrangement.length-1; i >= 0; i--){
                     // console.log(arrayArrangement[i])
                     for (var j = arrayArrangement[i].length-1; j >= 0; j--){
@@ -397,8 +399,17 @@ export class EventsPanels {
             for (var i = allIndexes.length-1; i >= 0; i--){
                 var allIndex = allIndexes[i]
                 // console.log(allIndex)
-                if (allIndex.length == 3) arrayArrangement[allIndex[0]][allIndex[1]].splice(allIndex[2]);
-                else  arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
+                if (allIndex.length == 3) {
+                    
+                    this.changePanelProp(arrayArrangement[allIndex[0]][allIndex[1]][allIndex[2]], 'visible', false);
+                    arrayArrangement[allIndex[0]][allIndex[1]].splice(allIndex[2]);
+                    // arrayArrangement[allIndex[0]][allIndex[1]][allIndex[2]]
+                }
+                else {
+                    
+                    this.changePanelProp(arrayArrangement[allIndex[0]][allIndex[1]], 'visible', false)
+                    arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
+                }
                 
             }
 
@@ -413,12 +424,24 @@ export class EventsPanels {
                     }
                 }
             }
-            // this.state.layout.panels = 
-            // console.log()
-            this.stateApp.setState({layout: this.state.layout})
+            
+            // console.log(arrayArrangement)
+            setTimeout(()=>{
+                this.layout.panels = arrayArrangement
+                this.stateApp.setState({layout: this.state.layout})
+            }, 1000)
+            // console.log(this.state.panels)
+            this.stateApp.setState({panels: this.state.panels})
+           
 
             resolve(true);
         })
+    }
+    changePanelProp(which, prop, value){
+        // console.log(which)
+        var panel = this.state.panels.find(x => x.id == which)
+        panel[prop] = value;
+        console.log(panel)
     }
     // append(where, what, isFlex){
     // SPlit and parse multidimensionnal array

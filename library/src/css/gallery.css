@@ -14,9 +14,38 @@ body{
     /* height: 100px; */
     height: 100%;
     overflow: hidden;
-    padding: 10px;
+    /* width: 100px;
+    height: 100px;
+    background-color: red; */
+    
+    /* padding: 10px; */
     /* margin-right: 10px; */
 }
+.sample{
+    background-color: red;
+}
+
+.my-node-enter {
+    opacity: 0;
+    /* width: 0px; */
+  }
+  .my-node-enter-active {
+    opacity: 1;
+    transition: opacity 1s, width 1s;
+    /* width: auto; */
+  }
+  .my-node-exit {
+    opacity: 1;
+    /* width: auto; */
+  }
+  .my-node-exit-active {
+    opacity: 0;
+    transition: opacity 1s, width 1s;
+    /* width: 0px; */
+  }
+
+
+
 .mapLayer{
     border: 1px solid black;
     width: 300px !important;

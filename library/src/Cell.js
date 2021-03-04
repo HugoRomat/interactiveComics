@@ -6,24 +6,34 @@ import { Resizable } from "re-resizable";
 import { Range } from 'react-range';
 import $ from 'jquery';
 import shallowCompare from 'react-addons-shallow-compare';
+import { CSSTransition, Transition } from 'react-transition-group';
 
 class Cell extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { values: [50], sliders: null, isotype: []  };
+        this.state = { values: [50], sliders: null, isotype: [], mounted: false };
         this.slidersPosition = [];
         
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        var shouldI = shallowCompare(this, nextProps, nextState);
-        // console.log(this.props.cell, shouldI)
-        return shouldI;
-    }
     componentWillUnmount(){
         // console.log('DELETE ', this.props.cell)
+
+        // $("#panel_"+ this.props.cell).fadeOut( "slow")
+        this.setState({ mounted: false});
+    }
+    shouldComponentUpdate(nextProps, nextState){
+        // if (nextProps)
+        if (nextProps.cellData.visible!=undefined && nextProps.cellData.visible == false && this.state.mounted == true){
+            console.log('GOOOOOOOOOOOOO')
+            this.setState({ mounted: false});
+        }
+        // console.log(nextProps.cellData.cell)
+        return true
     }
     componentDidMount(){
+        this.setState({ mounted: true});
+        // console.log('MOUNTING ', this.props.cell)
         var that = this;
         
         // console.log(that.props)
@@ -50,25 +60,11 @@ class Cell extends React.Component {
                     // $('.panel_'+ that.props.cellData.id)
                     console.log()
                 }
-                
-                // console.log(that.props.cellData.zoomable)
-                // if (that.props.cellData.zoomable != undefined && that.props.cellData.zoomable == true){
-                //     // console.log("HEYYYY")
 
-                //     d3.select()
-                // }
-        
-            // if (that.props.event != undefined ){
-            //     console.log( that.props.event)
-            //     for (var i in that.props.event){
-            //         var event =  that.props.event[i];
-            //         var events = that.props.event;
+                // console.log(this.props.cellData, this.props.cell)
+                this.props.isMounted(this.props.cell, true)
 
-            //         console.log(event)
-            //         // SET EVENTS IN PANEL
-            //     } 
-            // } 
-        });
+            });
         }
     }
     //replace itt with class
@@ -166,6 +162,9 @@ class Cell extends React.Component {
                         cellData={this.props.cellData[index]} 
                         key={cell}
                         variables={this.props.variables}
+
+                        isMounted={this.props.isMounted}
+
                     /> 
                 )
             })
@@ -187,17 +186,42 @@ class Cell extends React.Component {
         if (this.state.sliders != null){
            
         }
+        const defaultStyle = {
+            height: this.props.h + "%",
+            width: this.props.w
+        }
+        // const transitionStyle = {
+        //     entering: {opacity: 0.5},
+        //     entered: {opacity: 1},
+        //     exiting: {opacity: 0.5},
+        //     exited: {opacity: 0}
+        // }
 
           return(
+            <CSSTransition in={this.state.mounted} timeout={1000} classNames="my-node" >
+                <div> 
+                    <div className="panel" id={"panel_"+ this.props.cell} style={{...defaultStyle}}>
+                        {svg}
+                        {sliders}
+                        
+                        <div style={{position: 'absolute', fontSize: '60px', fontWeight: '900'}}> ID: {this.props.cell} </div>
+                         {/* <div className="dot"></div> */}
+                     </div>
+                 </div>
+          </CSSTransition>
 
-            
-            <div className="panel" id={"panel_"+ this.props.cell} style={{height: this.props.h + "%", width: this.props.w }}>
-                {svg}
-                {sliders}
-                
-                <div style={{position: 'absolute'}}> ID: {this.props.cell} </div>
-                {/* <div className="dot"></div> */}
-            </div>
+
+            // <CSSTransition in={this.state.mounted} timeout={10000} className="sample">
+            //     <div> 
+            //         <div className="panel" id={"panel_"+ this.props.cell} style={{...defaultStyle}}>
+            //             {svg}
+            //             {sliders}
+                        
+            //             <div style={{position: 'absolute'}}> ID: {this.props.cell} </div>
+            //             {/* <div className="dot"></div> */}
+            //         </div>
+            //     </div>
+            // </CSSTransition>
            
           );
     }
