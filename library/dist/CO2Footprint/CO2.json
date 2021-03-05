@@ -87,9 +87,9 @@
     "name": "tonsLessThanEarthEverage",
     "value": 0,
     "what": [
-      "5",
-      "-",
-      "totalTons"
+     "5",
+     "-",
+     "totalTons"
     ]
    },
    {
@@ -306,6 +306,16 @@
     },
     "icon": "images/CO2Footprint/smallFog.svg"
    },
+   {
+     "operation": "isotype",
+     "variable": "tonsLessThanEarthEverage",
+     "to": "LessThanEarthPlaceHolder",
+     "on": 0,
+     "attr": {
+      "widthIcon": 9
+     },
+     "icon": "images/CO2Footprint/smallFog.svg"
+    },
    {
     "operation": "isotype",
     "variable": "moreThanParisGoal",
