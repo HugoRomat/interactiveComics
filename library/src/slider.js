@@ -17,7 +17,7 @@ export class Slider {
         
         
         var panelSliders = this.stateApp.state.panels.filter((d) => d.sliders != undefined);
-        console.log(panelSliders)
+        // console.log(panelSliders)
         for (var index in panelSliders){
             var panel = panelSliders[index];
             var idPanel = panel['id'];

@@ -24,6 +24,9 @@ class App extends React.Component {
           this.state = this.props.json;
           this.events = new EventsPanels(this, this.state);
           this.sliders = new Slider(this, this.state);
+
+
+          this.isMounted_ = false;
      }
      // Change id to class
      createClasses(){
@@ -222,12 +225,14 @@ class App extends React.Component {
           // console.log(cellId)
 
           this.mountedComponents.push(cellId);
-          if (this.mountedComponents.length == layout.panels.flat(10).length-1){
+          if (this.mountedComponents.length == layout.panels.flat(10).length-1 && this.isMounted_ == false){
                
                setTimeout(() =>{
+                    console.log('GOOOOOOOOOOOOOOOOOOOOOOOOOOO')
                     this.createClasses();
                     this.events.init();
                     this.sliders.init();
+                    this.isMounted_ = true;
                
                }, 3000)
                
