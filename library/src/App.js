@@ -1,7 +1,7 @@
 import { geoEqualEarth } from 'd3';
 import React from 'react';
 import Cell from './Cell.js'
-
+import Hello from './Hello.js'
 import * as d3 from 'd3';
 import _ from 'underscore'
 import AceEditor from "react-ace";
@@ -14,6 +14,7 @@ import $ from 'jquery';
 import Split from 'react-split';
 import { EventsPanels } from "./events";
 import { Slider } from './slider.js';
+
 // import operator from 'operator';
 
 class App extends React.Component {
@@ -27,6 +28,7 @@ class App extends React.Component {
 
 
           this.isMounted_ = false;
+          this.panels = JSON.parse(JSON.stringify(this.state.panels));
      }
      // Change id to class
      createClasses(){
@@ -213,11 +215,13 @@ class App extends React.Component {
           // setTimeout(()=>{
 
           //      var layout = this.state.layout.find(x => x.name == this.state.currentLayout);
-
-          //      layout.panels.splice(1, 0, [16]);
+          //      layout.panels[0][0] = 2
+          //      // layout.panels[0].splice(0, 1, 16);
+          //      // layout.panels[0].splice(0, 1)//, 16);
           //      this.setState({layout: this.state.layout})
+          //      // console.log
         
-          // }, 2000)
+          // }, 3000)
           // this.handleClass();
      }
      isMounted = (cellId, isIt) => {
@@ -261,21 +265,24 @@ class App extends React.Component {
      // }
      
      render() {
+          
           var comicRendering = null;
           // console.log(this.state.panels, this.state.layout.arrangment)
           if (this.state.layout.length != 0){
                var layout = this.state.layout.find(x => x.name == this.state.currentLayout)
                // console.log(layout)
                comicRendering = layout.panels.map((line, index) => (
-                    <div className="line" key={line.flat(5)[0]}>
+                    // <div className="line" key={line.flat(5)[0]}>
+                    <div className="line" key={index}>
                          {
                               line.map((cell, indexCell) => {
                                    // console.log(cell);
                                    var cellData = [];
-                                   if (cell.length != undefined) cell.forEach((d)=> cellData.push(this.state.panels.find(x => x.id == d)))
-                                   else cellData = this.state.panels.find(x => x.id == cell)
-                                   // console.log(cell)
-                                   // for (var i =0; i < )
+                                   if (cell.length != undefined) cell.forEach((d)=> cellData.push(this.panels.find(x => x.id == d)))
+                                   else cellData = this.panels.find(x => x.id == cell)
+                                   // console.log(this.panels)
+                                   var id = (Array.isArray(cell)) ? cell.join() : cell;
+                                   console.log(id)
                                    return ( 
                                         <Cell  
                                              // h="100"
@@ -284,7 +291,7 @@ class App extends React.Component {
                                              // w={'auto'}
                                              cell={cell} 
                                              cellData={cellData}
-                                             key={cell}
+                                             key={id}
                                              // event={event}
                                              changeLayout={this.changeLayout}
                                              updateVariable={this.updateVariable}
@@ -296,6 +303,16 @@ class App extends React.Component {
                          }
                     </div>
                ))
+               // comicRendering = layout.panels.map((line, index) => (
+               //      <div className="line" key={index}>
+               //      {
+               //           line.map((cell, indexCell) => {
+               //                return <Hello name={cell} key={cell}/>
+               //           })
+               //      }
+               //      </div>
+
+               // ))
           }
           
 

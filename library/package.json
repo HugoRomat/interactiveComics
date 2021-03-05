@@ -28,6 +28,7 @@
     "file-loader": "^6.2.0",
     "fs": "0.0.1-security",
     "http-proxy-middleware": "^1.0.6",
+    "immutability-helper": "^3.1.1",
     "nodemon": "^2.0.7",
     "operator": "^1.8.0",
     "re-resizable": "^6.9.0",

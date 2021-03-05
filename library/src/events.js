@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { useThumbOverlap } from 'react-range';
 import { select } from 'd3';
 import $ from 'jquery';
+import update from 'immutability-helper';
 
 export class EventsPanels { 
     constructor(appTontext, state){
@@ -350,16 +351,25 @@ export class EventsPanels {
         console.log(where, what);
         
         var indexes = [];
-        var arrayArrangement = this.layout.panels;
+        var arrayArrangement = JSON.parse(JSON.stringify(this.layout.panels));
         for (var i= 0; i <  arrayArrangement.length; i++){
             for (var j= 0; j <  arrayArrangement[i].length; j++){
                     if (arrayArrangement[i][j] == where){indexes.push([i,j])}
             } 
         }
+        console.log(indexes)
+        // Object.assign([], array, {2: newItem});
+        // const newArray = Object.assign([...array], {2: 'item2'});
 
+       
+        // this.state
         arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1, ...what);
+        // arrayArrangement[2][0] = [16]
+        this.layout.panels = arrayArrangement
+
+        // console.log(this.layout.panels)
         this.stateApp.setState({layout: this.state.layout})
-        // } 
+
     }
     remove(items, isFlex){
 
@@ -434,8 +444,8 @@ export class EventsPanels {
             
             // console.log(arrayArrangement)
             // setTimeout(()=>{
-                this.layout.panels = arrayArrangement
-                this.stateApp.setState({layout: this.state.layout})
+            this.layout.panels = arrayArrangement;
+            this.stateApp.setState({layout: this.state.layout})
             // }, 1000)
             // console.log(this.state.panels)
             // this.stateApp.setState({panels: this.state.panels})

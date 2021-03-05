@@ -28,12 +28,26 @@ class Cell extends React.Component {
             console.log('GOOOOOOOOOOOOO')
             this.setState({ mounted: false});
         }
-        // console.log(nextProps.cellData.cell)
+        // console.log(JSON.parse(JSON.stringify(nextProps)), JSON.parse(JSON.stringify(this.props)))
+        // console.log(this.shallowEqual(nextProps, this.props), this.props.cell)
+        // console.log(this.state, nextState )
         return true
     }
+    shallowEqual = (objA, objB) => {
+        if (!objA || !objB) {
+          return objA === objB
+        }
+        var fi
+        return !Boolean(Object.keys(Object.assign({}, objA, objB)).find((key) => {
+            console.log(objA[key] !== objB[key])
+            return objA[key] !== objB[key]
+        }))
+      }
     componentDidMount(){
+
+        
         this.setState({ mounted: true});
-        // console.log('MOUNTING ', this.props.cell)
+        console.log('MOUNTING ', this.props.cell)
         var that = this;
         
         // console.log(that.props)

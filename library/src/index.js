@@ -1036,6 +1036,29 @@ class OverallApp extends React.Component {
                 "after": "panel_7",
                 "group": "group1"
                },
+
+               {
+                "trigger": "click",
+                "operation": "loadLayout",
+                "element": "panel_7",
+                "layout": [
+                 13,
+                 [
+                  10
+                 ]
+                ],
+                "after": "panel_7",
+                "group": "group1"
+               },
+
+               { 
+                trigger: 'click',
+                element: 'panel_5',
+                operation: 'replace',
+                replace: 'panel_5',
+                newpanels: ['panel_15'], 
+                flexwrap: false
+           },
                {
                 "operation": "isotype",
                 "variable": "totalMovement",
