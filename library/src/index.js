@@ -784,9 +784,10 @@ class OverallApp extends React.Component {
                   4
                  ],
                  [
-                  5,
-                  6,
-                  7
+                  5
+                  // ,
+                  // 6,
+                  // 7
                  ]
                 ]
                }
@@ -1133,9 +1134,9 @@ class OverallApp extends React.Component {
 
 
         
-          console.log(this.props.JSONfile)  
+          console.log(this.props.json)  
 
-          if (this.props.JSONfile != undefined) this.state = this.props.JSONfilel
+          if (this.props.json != undefined) this.state = this.props.json
             
     }
     componentDidMount(){
