@@ -232,6 +232,8 @@ class App extends React.Component {
                     this.createClasses();
                     this.events.init();
                     this.sliders.init();
+
+                    this.sliders.update()
                     this.isMounted_ = true;
                
                }, 3000)

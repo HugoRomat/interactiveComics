@@ -13,6 +13,15 @@ export class Slider {
         this.state = JSON.parse(JSON.stringify(state));
         this.stateApp = appContext;
     }
+    update(){
+        console.log('UPDATE SALIDERS VALUE')
+        $(".sliderInputCustom").each(function() {
+            var value = $(this).trigger("input");
+            // console.log(value)
+            // $(this).val(value+1)
+        });
+        // $("#slide").val(parseInt($("#slide").val())+30);  
+    }
     init(){
         
         
@@ -52,7 +61,7 @@ export class Slider {
 
         fO.append("xhtml:body")
         .html(`<div class="slidecontainer">
-                <input type="range" min="0" max="10" value="0" class="slider" id="`+id+`" step="1">
+                <input type="range" min="0" max="10" value="0" class="sliderInputCustom" id="`+id+`" step="1">
             </div>`)
             $("#"+id).off("input change mouseup")
 

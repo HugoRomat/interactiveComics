@@ -236,8 +236,14 @@ export class EventsPanels {
                 // this.link(element, linked)
                 // console.log('HELLO')
             }
+
+            
            
         }
+        setTimeout(()=>{
+            this.stateApp.sliders.update()
+        }, 500)
+        
 
     }
     zoom(element, layout){

@@ -9,10 +9,16 @@ module.exports = env => {
     entry: [
       "./src/index.js", 
     ],
+    // output: {
+    //   path: path.resolve(__dirname, "dist"),
+    //   filename: "[name].js",
+    //   library: 'inkspace'
+    // },
     output: {
-      path: path.resolve(__dirname, "dist"),
+      libraryTarget: 'umd',
       filename: "[name].js",
-      library: 'inkspace'
+      path: path.resolve(__dirname, "dist"),
+      library: 'interactiveComics'
     },
     devServer: {
       contentBase: "./dist",
