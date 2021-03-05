@@ -27,6 +27,7 @@ class App extends React.Component {
      }
      // Change id to class
      createClasses(){
+          console.log(this.state)
           this.state.classes.forEach((item)=>{
                // console.log(item)
                item.elements.forEach((id)=>{
@@ -202,10 +203,7 @@ class App extends React.Component {
      }
      componentDidMount(){
           // when images will be loaded
-          setTimeout(() =>{
-               
-               
-          }, 3000)
+          
 
 
           
@@ -226,9 +224,13 @@ class App extends React.Component {
           this.mountedComponents.push(cellId);
           if (this.mountedComponents.length == layout.panels.flat(10).length-1){
                
-               this.createClasses();
-               this.events.init();
-               this.sliders.init();
+               setTimeout(() =>{
+                    this.createClasses();
+                    this.events.init();
+                    this.sliders.init();
+               
+               }, 3000)
+               
           }
           // console.log(this.mountedComponents.length, layout.panels.flat(10).length)
      }

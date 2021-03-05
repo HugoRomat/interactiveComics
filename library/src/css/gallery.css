@@ -31,17 +31,17 @@ body{
   }
   .my-node-enter-active {
     opacity: 1;
-    transition: opacity 2s, height 1s;
-    width: 200px;
+    transition: opacity 1s, width 1s;
+    width: auto;
     height: 100%;
   }
   .my-node-exit {
     opacity: 1;
-    width: 200px;
+    width: auto;
   }
   .my-node-exit-active {
     opacity: 0;
-    transition: opacity 1s, height 1s;
+    transition: opacity 1s, width 1s;
     height: 0px;
   }
 

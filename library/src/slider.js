@@ -52,7 +52,7 @@ export class Slider {
 
         fO.append("xhtml:body")
         .html(`<div class="slidecontainer">
-                <input type="range" min="1" max="10" value="2" class="slider" id="`+id+`" step="1">
+                <input type="range" min="0" max="10" value="0" class="slider" id="`+id+`" step="1">
             </div>`)
             $("#"+id).off("input change mouseup")
 

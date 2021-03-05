@@ -140,34 +140,17 @@ class Cell extends React.Component {
                     $("#panel_"+ that.props.cellData.id).addClass(id);
                     resolve(true)
                 })
-                // var ajax = new XMLHttpRequest();
-                // ajax.open("GET", that.props.cellData.url, true);
-                // ajax.send();
-                // ajax.onload = function(e) {
-                // var div = document.createElement("div");
-                // div.innerHTML = ajax.responseText;
-                // document.body.insertBefore(div, document.body.childNodes[0]);
-                // }
-                // $.ajax({
-                //     headers: { "Accept": "application/json"},
-                //     type: 'GET',
-                //     dataType: 'json',
-                //     url: that.props.cellData.url,
-                //     crossDomain: true,
-                //     beforeSend: function(xhr){
-                //         xhr.withCredentials = true;
-                //   },
-                //     success: function(data, textStatus, request){
-                //         console.log(data);
-                //     }
-                //  });
-
             }
-            // if (firstCharact == 'htt'){
-            //     $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
-            // }
-            
-            
+            if (firstCharact == 'htt' && (extension == 'png' || extension == 'jpg')) {
+                $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
+
+
+                var id = $("#panel_"+ that.props.cellData.id).attr('id')
+                $("#panel_"+ that.props.cellData.id).addClass(id);
+
+                resolve(true)
+
+            } 
         })
     }
     
@@ -231,7 +214,7 @@ class Cell extends React.Component {
         // }
 
           return(
-            <CSSTransition in={this.state.mounted} timeout={1000} classNames="my-node" >
+            <CSSTransition in={this.state.mounted} timeout={500} classNames="my-node" >
                 <div> 
                     <div className="panel" id={"panel_"+ this.props.cell} style={{...defaultStyle}}>
                         {svg}

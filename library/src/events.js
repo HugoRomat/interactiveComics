@@ -37,7 +37,7 @@ export class EventsPanels {
             var keys2 = Object.keys(operationTrigger)
             for (var j in keys2){
                 var trigger = keys2[j];
-                
+                // console.log(operationTrigger[trigger])
                 // if (trigger == "condition") this.setEventsCondition(operationTrigger[trigger])
                 if (trigger != 'undefined') this.setEvents(idPanel, trigger, operationTrigger[trigger])
             }
@@ -96,7 +96,7 @@ export class EventsPanels {
         return true;
     }
     setEvents(idPanel, trigger, event){
-        // console.log(idPanel, trigger, event);
+        console.log(idPanel, trigger, event);
         var that = this;
         var idSelector = null;
         // IF CLASS OR ID
@@ -107,9 +107,9 @@ export class EventsPanels {
 
         
         if (trigger == "click"){
-            // console.log(idSelector, idPanel)
+            console.log(idSelector, trigger)
             idSelector.on(trigger, function(d, i){
-                // console.log('clicl')
+                console.log('clicl')
                 var isTriggered = d3.select(this).attr('isTriggered')
                 if (isTriggered == 'false'){
                     d3.select(this).attr('isTriggered', 'true')
@@ -190,10 +190,11 @@ export class EventsPanels {
             } else if (event.operation == 'replace' && isSatisfied){
 
                 // console.log('REPALCE')
-                var where = event['after'];
-                var what = event['newpanels'];
+                var replace = event['replace'];
+                var newpanels = event['newpanels'];
                 var isFlex = event['flexwrap'];
-                this.replace(where, what, isFlex)
+                // console.log(event)
+                this.replace(replace, newpanels, isFlex)
             } else if (event.operation == 'highlight' && reverse == undefined && isSatisfied){
                 var element = event['element'];
                 var after = event['after'];
@@ -276,13 +277,13 @@ export class EventsPanels {
 
             //2 APPEND
             console.log('APPENDING')
-            setTimeout(()=>{
+            // setTimeout(()=>{
                 var newLayout = []
                 if (Array.isArray(layout)) newLayout = layout
                 else newLayout = this.state.layout.find(x => x.name == layout)['panels']
                 
                 this.append(where, JSON.parse(JSON.stringify(newLayout)));
-            }, 1000)
+            // }, 1000)
             
 
         }
@@ -337,7 +338,7 @@ export class EventsPanels {
 
     }
     replace(where, what, isFlex){
-        // console.log('replace')
+        console.log('replace', where, what)
         var where = parseInt(where.split('_')[1])
         var what = this.splitArray(what);
         console.log(where, what);
@@ -401,13 +402,13 @@ export class EventsPanels {
                 // console.log(allIndex)
                 if (allIndex.length == 3) {
                     
-                    this.changePanelProp(arrayArrangement[allIndex[0]][allIndex[1]][allIndex[2]], 'visible', false);
+                    // this.changePanelProp(arrayArrangement[allIndex[0]][allIndex[1]][allIndex[2]], 'visible', false);
                     arrayArrangement[allIndex[0]][allIndex[1]].splice(allIndex[2]);
                     // arrayArrangement[allIndex[0]][allIndex[1]][allIndex[2]]
                 }
                 else {
                     
-                    this.changePanelProp(arrayArrangement[allIndex[0]][allIndex[1]], 'visible', false)
+                    // this.changePanelProp(arrayArrangement[allIndex[0]][allIndex[1]], 'visible', false)
                     arrayArrangement[allIndex[0]].splice(allIndex[1], 1);
                 }
                 
@@ -426,12 +427,12 @@ export class EventsPanels {
             }
             
             // console.log(arrayArrangement)
-            setTimeout(()=>{
+            // setTimeout(()=>{
                 this.layout.panels = arrayArrangement
                 this.stateApp.setState({layout: this.state.layout})
-            }, 1000)
+            // }, 1000)
             // console.log(this.state.panels)
-            this.stateApp.setState({panels: this.state.panels})
+            // this.stateApp.setState({panels: this.state.panels})
            
 
             resolve(true);
@@ -439,9 +440,9 @@ export class EventsPanels {
     }
     changePanelProp(which, prop, value){
         // console.log(which)
-        var panel = this.state.panels.find(x => x.id == which)
-        panel[prop] = value;
-        console.log(panel)
+        // var panel = this.state.panels.find(x => x.id == which)
+        // panel[prop] = value;
+        // console.log(panel)
     }
     // append(where, what, isFlex){
     // SPlit and parse multidimensionnal array
