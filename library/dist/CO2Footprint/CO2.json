@@ -298,21 +298,21 @@
    },
    {
     "operation": "isotype",
-    "variable": "tonsMoreThanEarthEverage",
+    "variable": "totalTons",
     "to": "MoreThanEarthPlaceHolder",
     "on": 0,
     "attr": {
-     "widthIcon": 9
+     "widthIcon": 6
     },
     "icon": "images/CO2Footprint/smallFog.svg"
    },
    {
      "operation": "isotype",
-     "variable": "tonsLessThanEarthEverage",
+     "variable": "totalTons",
      "to": "LessThanEarthPlaceHolder",
      "on": 0,
      "attr": {
-      "widthIcon": 9
+      "widthIcon": 6
      },
      "icon": "images/CO2Footprint/smallFog.svg"
     },
