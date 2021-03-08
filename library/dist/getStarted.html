@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+  "currentLayout": "init",
+  "layout": [
+   {
+      "name": "init",
+      "panels": [[1,2]]
+   }
+  ],
+  "lasses": [],
+  "operations":[],
+  "panels":[
+  {
+      "id": 1,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/price.svg"
+  },
+  {
+      "id": 2,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/units.svg"
+  },
+  {
+      "id": 3,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a.svg"
+  },
+  {
+      "id": 4,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b.svg"
+  },
+  {
+      "id": 5,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c.svg"
+  },
+  {
+      "id": 6,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a-small.svg"
+  },
+  {
+      "id": 7,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b-small.svg"
+  },
+  {
+      "id": 8,
+      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c-small.svg"
+  }
+],
+"operations":[
+  {   
+    trigger: 'mouseover', 
+    element: 'a',
+    operation: 'highlight', // highlights same element across all other panels 
+    after: {style: {'fill': 'red'}, attr:[]}
+  },
+  {
+     "trigger": "click",
+     "element": "a",
+     "operation": "append",
+     "after": 2,
+     "newpanels": [[3]]
+  }
+]
+  
+ }
+   interactiveComics.start(JSONFile)
+   console.log()
+ </script>
+</html>

@@ -90,6 +90,8 @@ class Cell extends React.Component {
             // console.log(id)
             $(item).addClass(id);
             $(item).removeAttr('id');
+
+            $(item).removeAttr('filter');
             // console.log(id)
             // if ($(item).hasClass("panel")){
             //     console.log('HELLO')
@@ -234,7 +236,7 @@ class Cell extends React.Component {
                         {svg}
                         {sliders}
                         
-                        {/* <div style={{position: 'absolute', fontSize: '60px', fontWeight: '900'}}> ID: {this.props.cell} </div> */}
+                        <div style={{position: 'absolute', fontSize: '60px', fontWeight: '900'}}> ID: {this.props.cell} </div>
                          {/* <div className="dot"></div> */}
                      </div>
                  </div>

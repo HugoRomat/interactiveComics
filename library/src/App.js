@@ -33,15 +33,21 @@ class App extends React.Component {
      // Change id to class
      createClasses(){
           console.log(this.state)
-          this.state.classes.forEach((item)=>{
-               // console.log(item)
-               item.elements.forEach((id)=>{
-                    $(id).addClass(item.class);
-                    // d3.select(id).attr('class', item.class)
-                    // console.log(id)
+          if (this.state.classes != undefined){
+               this.state.classes.forEach((item)=>{
+                    // console.log(item)
+                    item.elements.forEach((id)=>{
+                         $(id).addClass(item.class);
+                         // d3.select(id).attr('class', item.class)
+                         // console.log(id)
+                    })
+     
                })
+          }
 
-          })
+          // REMOVE ALL FILTER ATTRIBUTES
+
+         
      }
      updateIsotype(){
           var isotypes = this.state.operations.filter((d)=> d.operation == 'isotype');
@@ -282,7 +288,7 @@ class App extends React.Component {
                                    else cellData = this.panels.find(x => x.id == cell)
                                    // console.log(this.panels)
                                    var id = (Array.isArray(cell)) ? cell.join() : cell;
-                                   console.log(id)
+                                   // console.log(id)
                                    return ( 
                                         <Cell  
                                              // h="100"

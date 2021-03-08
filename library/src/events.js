@@ -102,13 +102,13 @@ export class EventsPanels {
         var idSelector = null;
         // IF CLASS OR ID
         // if (idPanel[0] == '.') idSelector = d3.selectAll(".hand")
-        idSelector = d3.select('.'+ idPanel)
+        idSelector = d3.selectAll('.'+ idPanel)
 
         idSelector.style('cursor', 'pointer')
-
+        idSelector.attr('isTriggered', 'false')
         
         if (trigger == "click"){
-            console.log(idSelector, trigger)
+            // console.log(idSelector, trigger)
             idSelector.on(trigger, function(d, i){
                 console.log('clicl')
                 var isTriggered = d3.select(this).attr('isTriggered')
@@ -147,8 +147,18 @@ export class EventsPanels {
 
         // console.log(trigger, event.operation)
         if (trigger == 'mouseover'){
+            
+            // console.log(idSelector)
+            idSelector.on('mouseenter', function(d, i){
+
+                var isTriggered = d3.select(this).attr('isTriggered')
+                // console.log('goooo', isTriggered)
+                if (isTriggered == 'false'){
+                    that.populateEvent(event, idSelector, false);
+                    d3.select(this).attr('isTriggered', 'true')
+                } 
+            })
             idSelector.on('mouseout', function(d, i){
-                // that.getToInitial();
                 var isTriggered = d3.select(this).attr('isTriggered')
                 if (isTriggered == 'true'){
                     that.populateEvent(event, idSelector, true);
@@ -196,12 +206,13 @@ export class EventsPanels {
                 var isFlex = event['flexwrap'];
                 // console.log(event)
                 this.replace(replace, newpanels, isFlex)
-            } else if (event.operation == 'highlight' && reverse == undefined && isSatisfied){
+            } else if (event.operation == 'highlight' && reverse == false && isSatisfied){
                 var element = event['element'];
                 var after = event['after'];
                 var what = event['what']
-                // console.log(what)
-                var selector = d3.selectAll('.'+what)
+                // console.log('highlight')
+                if (what == undefined) var selector = d3.selectAll('.'+element)
+                else var selector = d3.selectAll('.'+what)
                 this.highlight(element, after, selector)
             }
             if (event.operation == 'highlight' && reverse == true && isSatisfied){
@@ -209,7 +220,11 @@ export class EventsPanels {
                 var element = event['element'];
                 var after = event['after'];
                 var what = event['what']
-                var selector = d3.selectAll('.'+what)
+
+                if (what == undefined) var selector = d3.selectAll('.'+element)
+                else var selector = d3.selectAll('.'+what)
+                // console.log('non highlight')
+                
                 this.unhighlight(element, after, selector)
             }
 
@@ -302,12 +317,16 @@ export class EventsPanels {
     }
     unhighlight(element, after, idSelector){
         // console.log(this.objectsAttributes)
+        
+        
+        
         var nodes = idSelector.nodes();
         for (var k in nodes){
             var nodeInterface = nodes[k];
             // console.log(this.objectsAttributes[element])
             
             var childNodesInterface = nodeInterface.getElementsByTagName("*");
+            // console.log(childNodesInterface)
             var items = this.objectsAttributes[element][k].getElementsByTagName("*");
             // console.log(childNodesInterface, items)
             for (var i = items.length; i--;) {
@@ -336,7 +355,14 @@ export class EventsPanels {
             
         }
         for (var key in after.style){
+            // console.log(idSelector.node(), key, after.style[key])
             idSelector.selectAll('*').style(key, after.style[key])
+            idSelector.style(key, after.style[key])
+        }
+        for (var key in after.attr){
+            // console.log(idSelector.node(), key, after.style[key])
+            idSelector.selectAll('*').attr(key, after.style[key])
+            idSelector.attr(key, after.style[key])
         }
         //.cloneNode(true);
         // console.log(elementDOM)
@@ -498,7 +524,7 @@ export class EventsPanels {
         }
 
         
-        var where = parseInt(where.split('_')[1])
+        if (where.length > 0 && where[0][0] != undefined) where = parseInt(where.split('_')[1])
         // console.log(what.flat(5))
         
         if (what.flat(5).length > 0 && what.flat(5)[0][0] != undefined) what = this.splitArray(what);
