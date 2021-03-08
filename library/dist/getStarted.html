@@ -13,16 +13,14 @@
 
 <script>
    var JSONFile = {
-  "currentLayout": "init",
-  "layout": [
+"currentLayout": "init", 
+"layout": [
    {
       "name": "init",
       "panels": [[1,2]]
    }
-  ],
-  "lasses": [],
-  "operations":[],
-  "panels":[
+],
+"panels":[
   {
       "id": 1,
       "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/price.svg"
@@ -55,23 +53,58 @@
       "id": 8,
       "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c-small.svg"
   }
-],
+], 
 "operations":[
   {   
-    trigger: 'mouseover', 
-    element: 'a',
-    operation: 'highlight', // highlights same element across all other panels 
-    after: {style: {'fill': 'red'}, attr:[]}
+     "trigger": "mouseover", 
+     "element": "a",
+     "operation": "highlight", 
+     "after": {"style": {"fill": "red", "stroke": "red"}}
+  },
+  {   
+     "trigger": "mouseover", 
+     "element": "b",
+     "operation": "highlight", 
+     "after": {"style": {"fill": "blue"}}
+  },
+    {   
+     "trigger": "mouseover", 
+     "element": "c",
+     "operation": "highlight", 
+     "after": {"style": {"fill": "orange"}}
   },
   {
-     "trigger": "click",
-     "element": "a",
-     "operation": "append",
-     "after": 2,
-     "newpanels": [[3]]
+   "trigger": "click",
+   "element": "a",
+   "operation": "loadLayout",
+   "after": "panel_2",
+   "group": "group1",
+   "layout": [[3]]
+  },
+  {
+   "trigger": "click",
+   "element": "b",
+   "operation": "loadLayout",
+   "after": "panel_2",
+   "group": "group1",
+   "layout": [[4]]
+  },
+  {
+   "trigger": "click",
+   "element": "c",
+   "operation": "loadLayout",
+   "after": "panel_2",
+   "group": "group1",
+   "layout": [[5]]
+  },
+  {
+   "trigger": "click",
+   "element": "compare",
+   "operation": "append",
+   "after": 2,
+   "layout": [[6,7,8]]
   }
 ]
-  
  }
  console.log(JSONFile)
    interactiveComics.start(JSONFile)
