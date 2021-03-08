@@ -244,7 +244,7 @@ export class EventsPanels {
                 idSelector.attr('isTriggered', 'false')
 
                 setTimeout(()=>{
-                    this.stateApp.sliders.update()
+                   
                 }, 500)
             }
             if (event.operation == 'zoom' && isSatisfied){
@@ -264,6 +264,7 @@ export class EventsPanels {
            
         }
         setTimeout(()=>{
+           this.stateApp.sliders.update()
            this.init();
            console.log('init started')
 
