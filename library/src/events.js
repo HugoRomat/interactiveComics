@@ -264,7 +264,8 @@ export class EventsPanels {
            
         }
         setTimeout(()=>{
-           this.init()
+           this.init();
+           console.log('init started')
 
         }, 1000)
 
