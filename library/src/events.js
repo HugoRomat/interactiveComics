@@ -103,7 +103,7 @@ export class EventsPanels {
         // IF CLASS OR ID
         // if (idPanel[0] == '.') idSelector = d3.selectAll(".hand")
         idSelector = d3.selectAll('.'+ idPanel)
-
+        console.log(idSelector)
         idSelector.style('cursor', 'pointer')
         idSelector.attr('isTriggered', 'false')
         
@@ -196,9 +196,10 @@ export class EventsPanels {
             if (event.operation == 'append' && isSatisfied){
                 var where = event['after'];
                 var what = event['newpanels'];
-                var isFlex = event['flexwrap'];
-                var newline = event['newline'];
+                // var isFlex = event['flexwrap'];
+                // var newline = event['newline'];
                 // var condition = event['newline'];
+                console.log(what,where)
                 this.append(where, what)//, isFlex, newline)
             } else if (event.operation == 'replace' && isSatisfied){
 
@@ -262,8 +263,10 @@ export class EventsPanels {
             
            
         }
-        
-        
+        setTimeout(()=>{
+           this.init()
+
+        }, 1000)
 
     }
     zoom(element, layout){
