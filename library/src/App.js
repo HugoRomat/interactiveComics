@@ -278,8 +278,8 @@ class App extends React.Component {
                var layout = this.state.layout.find(x => x.name == this.state.currentLayout)
                // console.log(layout)
                comicRendering = layout.panels.map((line, index) => (
-                    // <div className="line" key={line.flat(5)[0]}>
-                    <div className="line" key={index}>
+                    <div className="line" key={line.flat(5)[0]}>
+                    {/* <div className="line" key={index}> */}
                          {
                               line.map((cell, indexCell) => {
                                    // console.log(cell);

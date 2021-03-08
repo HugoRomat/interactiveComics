@@ -14,7 +14,7 @@ export class Slider {
         this.stateApp = appContext;
     }
     update(){
-        console.log('UPDATE SALIDERS VALUE')
+        // console.log('UPDATE SALIDERS VALUE')
         $(".sliderInputCustom").each(function() {
             var value = $(this).trigger("input");
             // console.log(value)

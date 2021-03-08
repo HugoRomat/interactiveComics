@@ -24,12 +24,23 @@ export class EventsPanels {
 
         
     }
-    //Group operations
-    init(){
+    appendEventsToPanels(what){
+        var arrayFlettened = what.flat(10);
+        // console.log(arrayFlettened)
+        for (var i in arrayFlettened){
+            var element = arrayFlettened[i]
+            
+            this.init('panel_'+element)
+        }
+        // console.log(arrayFlettened)
+    }
+    // Group operations
+    // parent to init only in one panel
+    init(parent){
         //groupByElement
         var objectGrouped = _.groupBy(this.state.operations, "element");
         var keys = Object.keys(objectGrouped)
-        console.log(objectGrouped)
+        
         // grouped by panel trigerring and panel
         for (var i in keys){
             var idPanel = keys[i]
@@ -40,51 +51,52 @@ export class EventsPanels {
                 var trigger = keys2[j];
                 // console.log(operationTrigger[trigger])
                 // if (trigger == "condition") this.setEventsCondition(operationTrigger[trigger])
-                if (trigger != 'undefined') this.setEvents(idPanel, trigger, operationTrigger[trigger])
+                // console.log(idPanel, trigger, operationTrigger[trigger])
+                if (trigger != 'undefined') this.setEvents(idPanel, trigger, operationTrigger[trigger], parent)
             }
         }
     }
-    setCondition(){
-        var conditions = this.state.operations.filter((d)=> d.trigger == 'condition');
-        this.setEventsCondition(conditions);
-        // console.log(conditions)
-    }
-    setEventsCondition(conditions){
-        // console.log(conditions);
-        for (var i in conditions){
-            var mathematicalFunction = "";
-            var condition = conditions[i];
-            for (var j in condition['condition']){
-                var item = condition['condition'][j];
-                // console.log(item, j)
-                var myIndex = this.stateApp.state.variables.findIndex(x => x.name == item);
-                // // console.log(item, this.state.variables[item], this.state.variables)
-                if (myIndex == -1){
-                    mathematicalFunction += item
-                } else {
-                    mathematicalFunction += this.stateApp.state.variables[myIndex]['value'];
-                }
-            }
-            var isSatisfied = eval(mathematicalFunction);
+    // setCondition(){
+    //     var conditions = this.state.operations.filter((d)=> d.trigger == 'condition');
+    //     this.setEventsCondition(conditions);
+    //     // console.log(conditions)
+    // }
+    // setEventsCondition(conditions){
+    //     // console.log(conditions);
+    //     for (var i in conditions){
+    //         var mathematicalFunction = "";
+    //         var condition = conditions[i];
+    //         for (var j in condition['condition']){
+    //             var item = condition['condition'][j];
+    //             // console.log(item, j)
+    //             var myIndex = this.stateApp.state.variables.findIndex(x => x.name == item);
+    //             // // console.log(item, this.state.variables[item], this.state.variables)
+    //             if (myIndex == -1){
+    //                 mathematicalFunction += item
+    //             } else {
+    //                 mathematicalFunction += this.stateApp.state.variables[myIndex]['value'];
+    //             }
+    //         }
+    //         var isSatisfied = eval(mathematicalFunction);
             
-            if (isSatisfied){
-                if (condition.operation == "append") {
-                    var arePresent = this.arePresent(condition.newpanels);
-                    if (arePresent == false) this.append(condition.after,condition.newpanels, false);
-                }
-                else if (condition.operation == "remove") {
-                    var arePresent = this.arePresent(condition.panel);
-                    // console.log(arePresent)
-                    if (arePresent == true) this.remove(condition.panel, false);
-                }
-            }
-            // console.log(isSatisfied)
-            // console.log(eval(mathematicalFunction))
-        }
-        // console.log(eval(mathematicalFunction))
+    //         if (isSatisfied){
+    //             if (condition.operation == "append") {
+    //                 var arePresent = this.arePresent(condition.newpanels);
+    //                 if (arePresent == false) this.append(condition.after,condition.newpanels, false);
+    //             }
+    //             else if (condition.operation == "remove") {
+    //                 var arePresent = this.arePresent(condition.panel);
+    //                 // console.log(arePresent)
+    //                 if (arePresent == true) this.remove(condition.panel, false);
+    //             }
+    //         }
+    //         // console.log(isSatisfied)
+    //         // console.log(eval(mathematicalFunction))
+    //     }
+    //     // console.log(eval(mathematicalFunction))
         
-    //    variable.value = eval(mathematicalFunction)
-    }
+    // //    variable.value = eval(mathematicalFunction)
+    // }
     arePresent(panels){
         var mypanels = panels.flat(100);
         // var areThere = []
@@ -96,14 +108,24 @@ export class EventsPanels {
         }
         return true;
     }
-    setEvents(idPanel, trigger, event){
+    setEvents(idPanel, trigger, event, parent){
         console.log(idPanel, trigger, event);
         var that = this;
         var idSelector = null;
         // IF CLASS OR ID
         // if (idPanel[0] == '.') idSelector = d3.selectAll(".hand")
-        idSelector = d3.selectAll('.'+ idPanel)
-        console.log(idSelector)
+
+        // If there is a prent or not
+        // To constrain the selection
+
+        
+        if (parent == undefined ) idSelector = d3.selectAll('.'+ idPanel)
+        else idSelector = d3.select('.'+parent).selectAll('.'+ idPanel)
+
+        // var sentence = '.'+parent + ' .'+ idPanel
+        console.log(idSelector, parent, idPanel)
+        // console.log($('.'+parent + ' .'+ idPanel).get()[0])
+        // console.log($('.panel_3 .compare').get()[0])
         idSelector.style('cursor', 'pointer')
         idSelector.attr('isTriggered', 'false')
         
@@ -199,8 +221,11 @@ export class EventsPanels {
                 // var isFlex = event['flexwrap'];
                 // var newline = event['newline'];
                 // var condition = event['newline'];
-                console.log(what,where)
-                this.append(where, what)//, isFlex, newline)
+                console.log(what,where);
+                this.append(where, JSON.parse(JSON.stringify(what)));//, isFlex, newline)
+                setTimeout(()=>{
+                    this.appendEventsToPanels(what);
+                }, 500)
             } else if (event.operation == 'replace' && isSatisfied){
 
                 // console.log('REPALCE')
@@ -241,11 +266,15 @@ export class EventsPanels {
 
                 // console.log(where)
                 this.loadLayout(element, layout, where, group);
+                setTimeout(()=>{
+                    this.appendEventsToPanels(JSON.parse(JSON.stringify(layout)));
+                }, 500)
+                
                 idSelector.attr('isTriggered', 'false')
 
-                setTimeout(()=>{
+                // setTimeout(()=>{
                    
-                }, 500)
+                // }, 500)
             }
             if (event.operation == 'zoom' && isSatisfied){
                 var element = event['element'];
@@ -265,8 +294,8 @@ export class EventsPanels {
         }
         setTimeout(()=>{
            this.stateApp.sliders.update()
-           this.init();
-           console.log('init started')
+        //    this.init();
+        //    console.log('init started')
 
         }, 1000)
 
@@ -545,6 +574,9 @@ export class EventsPanels {
         // console.log(what.flat(5))
         
         if (what.flat(5).length > 0 && what.flat(5)[0][0] != undefined) what = this.splitArray(what);
+
+        
+
         // console.log(where, what);
         // console.log(event);
         
@@ -590,7 +622,6 @@ export class EventsPanels {
             // console.log(this.layout.panels)
 
             this.stateApp.setState({layout: this.state.layout})
-
 
 
         } 
