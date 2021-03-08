@@ -110,10 +110,12 @@ export class EventsPanels {
         if (trigger == "click"){
             // console.log(idSelector, trigger)
             idSelector.on(trigger, function(d, i){
-                console.log('clicl')
+                
                 var isTriggered = d3.select(this).attr('isTriggered')
+                console.log(isTriggered)
                 if (isTriggered == 'false'){
                     d3.select(this).attr('isTriggered', 'true')
+                    
                     that.populateEvent(event, idSelector);
                 }
                 
@@ -147,22 +149,22 @@ export class EventsPanels {
 
         // console.log(trigger, event.operation)
         if (trigger == 'mouseover'){
-            
+            idSelector.attr('isTriggered' + trigger, 'false')
             // console.log(idSelector)
             idSelector.on('mouseenter', function(d, i){
 
-                var isTriggered = d3.select(this).attr('isTriggered')
+                var isTriggered = d3.select(this).attr('isTriggered' + trigger)
                 // console.log('goooo', isTriggered)
                 if (isTriggered == 'false'){
                     that.populateEvent(event, idSelector, false);
-                    d3.select(this).attr('isTriggered', 'true')
+                    d3.select(this).attr('isTriggered' + trigger, 'true')
                 } 
             })
             idSelector.on('mouseout', function(d, i){
-                var isTriggered = d3.select(this).attr('isTriggered')
+                var isTriggered = d3.select(this).attr('isTriggered' + trigger)
                 if (isTriggered == 'true'){
                     that.populateEvent(event, idSelector, true);
-                    d3.select(this).attr('isTriggered', 'false')
+                    d3.select(this).attr('isTriggered' + trigger, 'false')
                 }
             })
         }
@@ -172,7 +174,7 @@ export class EventsPanels {
         for (var i in events){
             var event = events[i];
 
-            console.log(event)
+            // console.log(event)
             var isSatisfied = true;
             if (event.condition != undefined){
                 var mathematicalFunction = "";
@@ -239,6 +241,10 @@ export class EventsPanels {
                 // console.log(where)
                 this.loadLayout(element, layout, where, group);
                 idSelector.attr('isTriggered', 'false')
+
+                setTimeout(()=>{
+                    this.stateApp.sliders.update()
+                }, 500)
             }
             if (event.operation == 'zoom' && isSatisfied){
                 var element = event['element'];
@@ -256,9 +262,7 @@ export class EventsPanels {
             
            
         }
-        setTimeout(()=>{
-            this.stateApp.sliders.update()
-        }, 500)
+        
         
 
     }
@@ -316,27 +320,33 @@ export class EventsPanels {
         // this.stateApp.reloadEvents();
     }
     unhighlight(element, after, idSelector){
-        // console.log(this.objectsAttributes)
+       
         
         
         
         var nodes = idSelector.nodes();
+        // if (this.objectsAttributes.length > 0){
+            
+        // }
         for (var k in nodes){
             var nodeInterface = nodes[k];
             // console.log(this.objectsAttributes[element])
             
             var childNodesInterface = nodeInterface.getElementsByTagName("*");
-            // console.log(childNodesInterface)
-            var items = this.objectsAttributes[element][k].getElementsByTagName("*");
-            // console.log(childNodesInterface, items)
-            for (var i = items.length; i--;) {
-                var itemWithoutCSS = items[i];
-                var itemInterface = childNodesInterface[i];
-                // console.log($(itemWithoutCSS).attr('style'))
-                // console.log($(itemInterface).attr('style'))
-                itemInterface.style.cssText = $(itemWithoutCSS).attr('style')
+            // console.log()
+            if (this.objectsAttributes[element][k] != undefined){
+                var items = this.objectsAttributes[element][k].getElementsByTagName("*");
+                // console.log(childNodesInterface, items)
+                for (var i = items.length; i--;) {
+                    var itemWithoutCSS = items[i];
+                    var itemInterface = childNodesInterface[i];
+                    // console.log($(itemWithoutCSS).attr('style'))
+                    // console.log($(itemInterface).attr('style'))
+                    itemInterface.style.cssText = $(itemWithoutCSS).attr('style')
+                }
+                nodeInterface.style.cssText = $(this.objectsAttributes[element][k]).attr('style')
             }
-            nodeInterface.style.cssText = $(this.objectsAttributes[element][k]).attr('style')
+            
         }
         this.objectsAttributes[element] = []
     
@@ -364,6 +374,8 @@ export class EventsPanels {
             idSelector.selectAll('*').attr(key, after.style[key])
             idSelector.attr(key, after.style[key])
         }
+
+        // console.log(this.objectsAttributes[0])
         //.cloneNode(true);
         // console.log(elementDOM)
         // REMOVE CLASS OF THE FICTIVE ELEMENT 
