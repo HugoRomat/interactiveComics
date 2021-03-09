@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+    "currentLayout": "init", 
+    "layout":[
+        {
+            "name": "init", 
+            "panels": [[1],[2,3]]
+        }    
+    ],
+    "panels":[
+    	{
+    		"id": 1,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/top.svg"
+    	},
+    	{
+    		"id": 2,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
+    	},
+    	{
+    		"id": 3,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/B.svg"
+    	},
+    	{
+    		"id": 4,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/Aopened.svg"
+    	},
+    	{
+    		"id": 5,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/Bopened.svg"
+    	},
+    	{
+    		"id": 6,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/LongVersionAll.svg"
+    	}      
+    ],
+    "operations": [
+		{
+			"trigger": "click",
+			"element": "short",
+			"operation": "loadLayout",
+			"group": "group1",
+			"after": "panel_1",
+			"layout": [[2,3]]
+		},
+		{
+			"trigger": "click",
+			"element": "medium",
+			"operation": "loadLayout",
+			"group": "group1",
+			"after": "panel_1",
+			"layout": [[4,5]]
+		},
+		{
+			"trigger": "click",
+			"element": "long",
+			"operation": "loadLayout",
+			"group": "group1",
+			"after": "panel_1",
+			"layout": [[6]]
+		}
+    ]
+}
+
+ console.log(JSONFile)
+   interactiveComics.start(JSONFile)
+
+ </script>
+</html>
