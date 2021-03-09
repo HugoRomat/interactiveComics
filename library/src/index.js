@@ -1186,8 +1186,12 @@ class OverallApp extends React.Component {
                                         // mouseup = css resize end
                                         document.addEventListener("mouseup", e => (
                                         editorInstance.resize()
-                                        ));
+                                      ));
                                    }}
+                                   onInput={d => {
+                                      // this.renderComic();
+                                   }}
+
                                    ref="aceEditor"
                                    mode="java"
                                    theme="monokai"

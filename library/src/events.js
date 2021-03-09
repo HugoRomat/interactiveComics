@@ -29,8 +29,8 @@ export class EventsPanels {
         // console.log(arrayFlettened)
         for (var i in arrayFlettened){
             var element = arrayFlettened[i]
-            console.log(element)
-            this.init('panel_'+element)
+            // console.log(element)
+            this.init(element)
         }
         // console.log(arrayFlettened)
     }
@@ -41,6 +41,7 @@ export class EventsPanels {
         var objectGrouped = _.groupBy(this.state.operations, "element");
         var keys = Object.keys(objectGrouped)
         
+        console.log(objectGrouped)
         // grouped by panel trigerring and panel
         for (var i in keys){
             var idPanel = keys[i];
@@ -324,12 +325,12 @@ export class EventsPanels {
             this.stateApp.setState({currentLayout: layout});
             this.stateApp.reloadEvents();
         } else {
-            var whereSplited = parseInt(where.split('_')[1]);
+            // var whereSplited = where//parseInt(where.split('_')[1]);
             var indexes = [0,0];
             var arrayArrangement = this.layout.panels;
             for (var i= 0; i <  arrayArrangement.length; i++){
                 for (var j= 0; j <  arrayArrangement[i].length; j++){
-                        if (arrayArrangement[i][j] == whereSplited){indexes = [i,j];}
+                        if (arrayArrangement[i][j] == where){indexes = [i,j];}
                 } 
             }
             console.log()
@@ -439,8 +440,8 @@ export class EventsPanels {
     }
     replace(where, what, isFlex){
         console.log('replace', where, what)
-        var where = parseInt(where.split('_')[1])
-        var what = this.splitArray(what);
+        // var where = parseInt(where.split('_')[1])
+        // var what = this.splitArray(what);
         console.log(where, what);
         
         var indexes = [];
@@ -469,7 +470,7 @@ export class EventsPanels {
         return new Promise((resolve, reject) => {
             console.log("====== REMOVE")
             var itemsToRemove = items;
-            if (items.flat(5)[0][0] != undefined) itemsToRemove = this.splitArray(items);
+            // if (items.flat(5)[0][0] != undefined) itemsToRemove = this.splitArray(items);
 
             // var itemsToRemove = this.splitArray(items);
             itemsToRemove = itemsToRemove.flat(100);
@@ -591,10 +592,10 @@ export class EventsPanels {
         }
 
         
-        if (where.length > 0 && where[0][0] != undefined) where = parseInt(where.split('_')[1])
-        // console.log(what.flat(5))
+        // if (where.length > 0 && where[0][0] != undefined) where = parseInt(where.split('_')[1])
+        // // console.log(what.flat(5))
         
-        if (what.flat(5).length > 0 && what.flat(5)[0][0] != undefined) what = this.splitArray(what);
+        // if (what.flat(5).length > 0 && what.flat(5)[0][0] != undefined) what = this.splitArray(what);
 
         
 
@@ -631,7 +632,7 @@ export class EventsPanels {
                 // for (var i = myNewLine.length-1; i >= 0; i--){
                 for (var i = 0; i < myNewLine.length; i++){
                     var element = myNewLine[i][0];
-                    if (myNewLine[i][0].flat(5).length > 0 && myNewLine[i][0].flat(5)[0][0] != undefined) element = this.splitArray(myNewLine[i][0]);
+                    // if (myNewLine[i][0].flat(5).length > 0 && myNewLine[i][0].flat(5)[0][0] != undefined) element = this.splitArray(myNewLine[i][0]);
                     console.log("===================", element)
                     arrayArrangement.splice(indexes[0][0]+1, 0, element);
                     
@@ -643,8 +644,6 @@ export class EventsPanels {
             // console.log(this.layout.panels)
 
             this.stateApp.setState({layouts: this.state.layouts})
-
-
         } 
         //EVERYTNIGN THAT IS BEFORE null and new line
         /*else {

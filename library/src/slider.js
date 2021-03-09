@@ -68,7 +68,7 @@ export class Slider {
         console.log(idPanel, idInput, input);
 
         var that = this;
-        var selection = d3.select('#panel_'+ idPanel).select('svg')//;
+        var selection = d3.select('#'+ idPanel).select('svg')//;
         var BBox = selection.select('.'+idInput).node().getBBox();
 
         var parent = selection.append('g').attr('class', 'slider')
@@ -105,7 +105,7 @@ export class Slider {
     appendSlider(idPanel, idSlider, slider){
         console.log(idPanel, idSlider, slider);
         var that = this;
-        var selection = d3.select('#panel_'+ idPanel).select('svg')//;
+        var selection = d3.select('#'+ idPanel).select('svg')//;
         console.log(selection)
         var BBox = selection.select('.'+idSlider).node().getBBox();
         // console.log(BBox)

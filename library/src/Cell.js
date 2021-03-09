@@ -70,7 +70,7 @@ class Cell extends React.Component {
                     console.log(that.props.cellData)
                     // $('.panel_'+ that.props.cellData.id).addClass('mapLayer');
                     for (var key in that.props.cellData.attr){
-                        d3.select('.panel_'+ that.props.cellData.id).style(key, that.props.cellData.attr[key])
+                        d3.select('.'+ that.props.cellData.id).style(key, that.props.cellData.attr[key])
                     }
                     // $('.panel_'+ that.props.cellData.id)
                     console.log()
@@ -143,24 +143,25 @@ class Cell extends React.Component {
                     // var height = d3.select(xml.documentElement).attr('height')
     
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
-                    d3.select("#panel_"+ that.props.cellData.id).node().appendChild(DOM);
+                    // console.log(d3.select("#panel_"+ that.props.cellData.id).node(), "panel_"+ that.props.cellData.id)
+                    d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
     
                     if (that.props.cellData.content != undefined){
-                        d3.select("#panel_"+ that.props.cellData.id).select('svg').selectAll('*').remove();
-                        $("#panel_"+ that.props.cellData.id).addClass('noBorder');
+                        d3.select("#"+ that.props.cellData.id).select('svg').selectAll('*').remove();
+                        $("#"+ that.props.cellData.id).addClass('noBorder');
                     }
     
-                    var id = $("#panel_"+ that.props.cellData.id).attr('id')
-                    $("#panel_"+ that.props.cellData.id).addClass(id);
+                    var id = $("#"+ that.props.cellData.id).attr('id')
+                    $("#"+ that.props.cellData.id).addClass(id);
                     resolve(true)
                 })
             } 
             if (firstCharact != 'htt' && (extension == 'png' || extension == 'jpg')) {
-                $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='images/"+  that.props.cellData.url +"'/>")
+                $("#"+ that.props.cellData.id).append("<img width='400px' src='images/"+  that.props.cellData.url +"'/>")
 
 
-                var id = $("#panel_"+ that.props.cellData.id).attr('id')
-                $("#panel_"+ that.props.cellData.id).addClass(id);
+                var id = $("#"+ that.props.cellData.id).attr('id')
+                $("#"+ that.props.cellData.id).addClass(id);
 
                 resolve(true)
 
@@ -172,24 +173,24 @@ class Cell extends React.Component {
                     // var height = d3.select(xml.documentElement).attr('height')
     
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
-                    d3.select("#panel_"+ that.props.cellData.id).node().appendChild(DOM);
+                    d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
     
                     if (that.props.cellData.content != undefined){
-                        d3.select("#panel_"+ that.props.cellData.id).select('svg').selectAll('*').remove();
-                        $("#panel_"+ that.props.cellData.id).addClass('noBorder');
+                        d3.select("#"+ that.props.cellData.id).select('svg').selectAll('*').remove();
+                        $("#"+ that.props.cellData.id).addClass('noBorder');
                     }
     
-                    var id = $("#panel_"+ that.props.cellData.id).attr('id')
-                    $("#panel_"+ that.props.cellData.id).addClass(id);
+                    var id = $("#"+ that.props.cellData.id).attr('id')
+                    $("#"+ that.props.cellData.id).addClass(id);
                     resolve(true)
                 })
             }
             if (firstCharact == 'htt' && (extension == 'png' || extension == 'jpg')) {
-                $("#panel_"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
+                $("#"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
 
 
-                var id = $("#panel_"+ that.props.cellData.id).attr('id')
-                $("#panel_"+ that.props.cellData.id).addClass(id);
+                var id = $("#"+ that.props.cellData.id).attr('id')
+                $("#"+ that.props.cellData.id).addClass(id);
 
                 resolve(true)
 
@@ -203,16 +204,16 @@ class Cell extends React.Component {
         let sliders;
         // let isotype;
 
-
+        // console.log(this.props.cell)
         // IF NOTHING ELSE
-        if (this.props.cell.length == undefined) {
+        if (!Array.isArray(this.props.cell)) {
             // svg = <svg id={"svg_"+ this.props.cellData.id} style={{float: 'left'}}></svg>
             //<img src={"images/"+ this.props.cellData.url} />
   
         } else {
             // var height = 100/this.props.cell.length;
             svg = this.props.cell.map((cell, index) => {
-                // console.log(this.props.cellData)
+                
                 return ( 
                     <Cell 
                         // h={height} 
@@ -259,7 +260,7 @@ class Cell extends React.Component {
           return(
             <CSSTransition in={this.state.mounted} timeout={500} classNames="my-node" >
                 <div> 
-                    <div className="panel" id={"panel_"+ this.props.cell} style={{...defaultStyle}}>
+                    <div className="panel" id={this.props.cell} style={{...defaultStyle}}>
                         {svg}
                         {sliders}
                         

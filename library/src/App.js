@@ -235,9 +235,11 @@ class App extends React.Component {
      }
      isMounted = (cellId, isIt) => {
           var layout = this.state.layouts.find(x => x.name == this.state.currentLayout);
-          // console.log(cellId)
-
+          
           this.mountedComponents.push(cellId);
+          // console.log(this.mountedComponents.length, layout.panels.flat(10).length-1, this.isMounted_ == false)
+
+          
           if (this.mountedComponents.length == layout.panels.flat(10).length-1 && this.isMounted_ == false){
                
                setTimeout(() =>{
@@ -294,9 +296,9 @@ class App extends React.Component {
                               line.map((cell, indexCell) => {
                                    // console.log(cell);
                                    var cellData = [];
-                                   if (cell.length != undefined) cell.forEach((d)=> cellData.push(this.panels.find(x => x.id == d)))
+                                   if (Array.isArray(cell)) cell.forEach((d)=> cellData.push(this.panels.find(x => x.id == d)))
                                    else cellData = this.panels.find(x => x.id == cell)
-                                   // console.log(this.panels)
+                                   // console.log(cellData)
                                    var id = (Array.isArray(cell)) ? cell.join() : cell;
                                    // console.log(id)
                                    return ( 
