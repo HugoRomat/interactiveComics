@@ -7,6 +7,7 @@ import { Range } from 'react-range';
 import $ from 'jquery';
 import shallowCompare from 'react-addons-shallow-compare';
 import { CSSTransition, Transition } from 'react-transition-group';
+import { uuidv4 } from './helper';
 
 class Cell extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class Cell extends React.Component {
 
         
         this.setState({ mounted: true});
-        // console.log('MOUNTING ', this.props.cell)
+        console.log('MOUNTING ', this.props.cell)
         var that = this;
         
         // console.log(that.props)
@@ -83,18 +84,18 @@ class Cell extends React.Component {
     }
     //replace itt with class
     replaceClass(DOMelement){
-        var mask = {};
-        var elementMask = {};
+        var masks = {};
+        var elementsMask = {};
         var items = DOMelement.getElementsByTagName("*");
         for (var i = items.length; i--;) {
             var item = items[i];
 
             //TO DEAL WITH MASKS
             if (item.tagName == 'g' && item.getAttribute("mask") != null){
-                elementMask[item.getAttribute("mask").slice(5).slice(0,-1)] = item
+                elementsMask[item.getAttribute("mask").slice(5).slice(0,-1)] = item
             }
             if (item.tagName == 'mask'){
-                mask[$(item).attr('id')] = item;
+                masks[$(item).attr('id')] = item;
             }
 
             // TO DEAL WITH CLASSES
@@ -114,10 +115,17 @@ class Cell extends React.Component {
             //     console.log('HELLO')
             // }
         }
-
-        console.log(elementMask, mask)
+        for (var m in masks){
+            var mask = masks[m];
+            if (elementsMask[m] != undefined){
+                var newNameMask = m+'_'+uuidv4();
+                $(mask).attr('id',newNameMask);
+                $(elementsMask[m]).attr('mask','url(#'+newNameMask+')');
+            }
+        }
         return DOMelement;
     }
+    
     loadingImage(){
         var that = this;
 
