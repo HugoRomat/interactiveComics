@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+    "currentLayout": "init", 
+    "layouts":[
+        {
+            "name": "init", 
+            "panels": [[1],[2,3]]
+        }    
+    ],
+    "panels":[
+    	{
+    		"id": 1,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/top.svg"
+    	},
+    	{
+    		"id": 2,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
+    	},
+    	{
+    		"id": 3,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/B.svg"
+    	},
+    	{
+    		"id": 4,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/Bopened.svg"
+    	},
+    	{
+    		"id": 5,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/LongVersionAll.svg"
+    	},
+    	{
+    		"id": 21,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/panel1836.svg"
+    	},
+    	{
+    		"id": 22,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/panel1837.svg"
+    	},
+    	{
+    		"id": 23,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/panel1873-1879.svg"
+    	},
+    	{
+    		"id": 24,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/panel1882-1914.svg"
+    	},
+    	{
+    		"id": 25,
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/panel1907-1918.svg"
+    	}                        
+    ],
+    "operations": [
+		{
+			"trigger": "click",
+			"element": "short",
+			"operation": "loadLayout",
+			"group": "group1",
+			"after": "panel_1",
+			"layout": [[2,3]]
+		},
+		{
+			"trigger": "click",
+			"element": "medium",
+			"operation": "loadLayout",
+			"group": "group1",
+			"after": "panel_1",
+			"layout": [[21,22],[23,24,25],[4]]
+		},
+		{
+			"trigger": "click",
+			"element": "long",
+			"operation": "loadLayout",
+			"group": "group1",
+			"after": "panel_1",
+			"layout": [[5]]
+		}
+    ]
+}
+
+
+ console.log(JSONFile)
+   interactiveComics.start(JSONFile)
+
+ </script>
+</html>
