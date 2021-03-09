@@ -83,20 +83,39 @@ class Cell extends React.Component {
     }
     //replace itt with class
     replaceClass(DOMelement){
+        var mask = {};
+        var elementMask = {};
         var items = DOMelement.getElementsByTagName("*");
         for (var i = items.length; i--;) {
             var item = items[i];
-            var id = $(item).attr('id')
-            // console.log(id)
-            $(item).addClass(id);
-            $(item).removeAttr('id');
 
-            $(item).removeAttr('filter');
+            //TO DEAL WITH MASKS
+            if (item.tagName == 'g' && item.getAttribute("mask") != null){
+                elementMask[item.getAttribute("mask").slice(5).slice(0,-1)] = item
+            }
+            if (item.tagName == 'mask'){
+                mask[$(item).attr('id')] = item;
+            }
+
+            // TO DEAL WITH CLASSES
+            if (item.tagName != 'mask'){
+                var id = $(item).attr('id')
+                // console.log(id)
+                if (id != undefined) id = id.replace(/ /g,"_");
+                // console.log(id)
+                $(item).addClass(id);
+                $(item).removeAttr('id');
+    
+                $(item).removeAttr('filter');
+            }
+            
             // console.log(id)
             // if ($(item).hasClass("panel")){
             //     console.log('HELLO')
             // }
         }
+
+        console.log(elementMask, mask)
         return DOMelement;
     }
     loadingImage(){
@@ -228,7 +247,7 @@ class Cell extends React.Component {
         //     exiting: {opacity: 0.5},
         //     exited: {opacity: 0}
         // }
-        console.log(this.props.debug)
+        // console.log(this.props.debug)
           return(
             <CSSTransition in={this.state.mounted} timeout={500} classNames="my-node" >
                 <div> 

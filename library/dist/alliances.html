@@ -14,12 +14,14 @@
 <script>
    var JSONFile = {
     "currentLayout": "init", 
-    "layout":[
+    "layouts":[
         {
             "name": "init", 
             "panels": [[1],[2,3]]
         }    
     ],
+	'debug': true,
+	'gutter': 10,
     "panels":[
     	{
     		"id": 1,
@@ -27,7 +29,7 @@
     	},
     	{
     		"id": 2,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
+    		"url": "A.svg"
     	},
     	{
     		"id": 3,
@@ -70,6 +72,21 @@
 			"group": "group1",
 			"after": "panel_1",
 			"layout": [[6]]
+		},
+		// {
+		// 	"operation": 'zoom', 
+		// 	"trigger": "zoom",
+		// 	'element': "panel_2",
+		// 	'linked': ['groupToDrag']
+		// },
+		{
+			"trigger": "click",
+			"element": "Group_1",
+			"operation": "replace",
+			"replace": "panel_2",
+			"newpanels": [
+				"panel_4"
+			]
 		}
     ]
 }

@@ -29,7 +29,7 @@ export class EventsPanels {
         // console.log(arrayFlettened)
         for (var i in arrayFlettened){
             var element = arrayFlettened[i]
-            
+            console.log(element)
             this.init('panel_'+element)
         }
         // console.log(arrayFlettened)
@@ -120,7 +120,7 @@ export class EventsPanels {
         return true;
     }
     setEvents(idPanel, trigger, event, parent){
-        console.log(idPanel, trigger, event);
+        console.log(idPanel, trigger, event, parent);
         var that = this;
         var idSelector = null;
         // IF CLASS OR ID
@@ -129,8 +129,9 @@ export class EventsPanels {
         // If there is a prent or not
         // To constrain the selection
 
-        
+        // IF THE PANEL HAS BEEN RELOADED
         if (parent == undefined ) idSelector = d3.selectAll('.'+ idPanel)
+        else if (idPanel == parent) idSelector = d3.select('.'+ idPanel)
         else idSelector = d3.select('.'+parent).selectAll('.'+ idPanel)
 
         // var sentence = '.'+parent + ' .'+ idPanel
@@ -164,15 +165,16 @@ export class EventsPanels {
             // }
             // console.log()
             var myEvent = event[0]
-            console.log(myEvent)
-            idSelector.call(d3.zoom().on("zoom", function () {
+            // console.log(idSelector.nodes())
+            // console.log(idPanel)
 
+            idSelector.call(d3.zoom().on("zoom", function () {
                 for (var i in myEvent['linked']){
                     var idPanel = myEvent['linked'][i]
-                    d3.select('.'+idPanel).select('svg').attr("transform", d3.event.transform)
+                    var tagName = d3.select('.'+idPanel).node().tagName;
+                    if (tagName == 'DIV') d3.select('.'+idPanel).select('svg').attr("transform", d3.event.transform)
+                    else d3.select('.'+idPanel).attr("transform", d3.event.transform)
                 }
-                idSelector.select('svg').attr("transform", d3.event.transform)
-               
             }))
 
 
