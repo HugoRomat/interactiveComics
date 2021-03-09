@@ -13,6 +13,7 @@
 
 <script>
    var JSONFile = {
+<<<<<<< HEAD
 "currentLayout": "init", 
 "layouts": [
    {
@@ -23,57 +24,87 @@
 "debug": true,
 "gutter": '10',
 "panels":[
+=======
+ "currentLayout": "init",
+ "layout": [
   {
-      "id": 1,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/price.svg"
-  },
-  {
-      "id": 2,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/units.svg"
-  },
-  {
-      "id": 3,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a.svg"
-  },
-  {
-      "id": 4,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b.svg"
-  },
-  {
-      "id": 5,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c.svg"
-  },
-  {
-      "id": 6,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a-small.svg"
-  },
-  {
-      "id": 7,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b-small.svg"
-  },
-  {
-      "id": 8,
-      "url":"https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c-small.svg"
+   "name": "init",
+   "panels": [
+    [
+     1,
+     2
+    ]
+   ]
   }
-], 
-"operations":[
-  {   
-     "trigger": "mouseover", 
-     "element": "a",
-     "operation": "highlight", 
-     "after": {"style": {"fill": "red", "stroke": "red"}}
+ ],
+ "panels": [
+>>>>>>> 9f2d080f0252e6a4901f029e95a33d8055172ba5
+  {
+   "id": 1,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/price.svg"
   },
-  {   
-     "trigger": "mouseover", 
-     "element": "b",
-     "operation": "highlight", 
-     "after": {"style": {"fill": "blue"}}
+  {
+   "id": 2,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/units.svg"
   },
-    {   
-     "trigger": "mouseover", 
-     "element": "c",
-     "operation": "highlight", 
-     "after": {"style": {"fill": "orange"}}
+  {
+   "id": 3,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a.svg"
+  },
+  {
+   "id": 4,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b.svg"
+  },
+  {
+   "id": 5,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c.svg"
+  },
+  {
+   "id": 6,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a-small.svg"
+  },
+  {
+   "id": 7,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b-small.svg"
+  },
+  {
+   "id": 8,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c-small.svg"
+  }
+ ],
+ "operations": [
+  {
+   "trigger": "mouseover",
+   "element": "a",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "red",
+     "stroke": "red"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "b",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "blue",
+     "stroke": "blue"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "c",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "orange",
+     "stroke": "blue"
+    }
+   }
   },
   {
    "trigger": "click",
@@ -81,7 +112,11 @@
    "operation": "loadLayout",
    "after": "panel_2",
    "group": "group1",
-   "layout": [[3]]
+   "layout": [
+    [
+     3
+    ]
+   ]
   },
   {
    "trigger": "click",
@@ -89,7 +124,11 @@
    "operation": "loadLayout",
    "after": "panel_2",
    "group": "group1",
-   "layout": [[4]]
+   "layout": [
+    [
+     4
+    ]
+   ]
   },
   {
    "trigger": "click",
@@ -97,17 +136,28 @@
    "operation": "loadLayout",
    "after": "panel_2",
    "group": "group1",
-   "layout": [[5]]
+   "layout": [
+    [
+     5
+    ]
+   ]
   },
   {
    "trigger": "click",
    "element": "compare",
-   "operation": "append",
-   "after": 2,
-   "newpanels": [[6,7,8]]
+   "operation": "loadLayout",
+   "group": "group1",
+   "after": "panel_2",
+   "layout": [
+    [
+     6,
+     7,
+     8
+    ]
+   ]
   }
-]
- }
+ ]
+}
  console.log(JSONFile)
    interactiveComics.start(JSONFile)
 
