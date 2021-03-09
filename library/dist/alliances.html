@@ -13,125 +13,194 @@
 
 <script>
    var JSONFile = {
-    "gutter":20,
-    "currentLayout": "init", 
-    "layouts":[
-        {
-            "name": "init", 
-            "panels": [[1],[2],[3]]
-        }    
+ "gutter": 20,
+ "currentLayout": "init",
+ "layouts": [
+  {
+   "name": "init",
+   "panels": [
+    [
+     1
     ],
-    "panels":[
-    	{
-    		"id": 1,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/top.svg"
-    	},
-    	{
-    		"id": 2,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
-    	},
-    	{
-    		"id": 3,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.a.io/main/comics/alliances/B.svg"
-    	},
-    	{
-    		"id": 4,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/Aopened.svg"
-    	},
-    	{
-    		"id": 5,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/Bopened.svg"
-    	},
-    	{
-    		"id": 6,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/LongVersionAll.svg"
-    	}                      
+    [
+     2
     ],
-    "operations": [
-		{
-			"trigger": "click",
-			"element": "short",
-			"operation": "loadLayout",
-			"group": "group1",
-			"after": "panel_1",
-			"layout": [[2],[3]]
-		},
-		{
-			"trigger": "click",
-			"element": "medium",
-			"operation": "loadLayout",
-			"group": "group1",
-			"after": "panel_1",
-			"layout": [[4],[5]]
-		},
-		{
-			"trigger": "click",
-			"element": "long",
-			"operation": "loadLayout",
-			"group": "group1",
-			"after": "panel_1",
-			"layout": [[6]]
-		},{   
-    		"trigger": "mouseover", 
-    		"element": "uk",
-    		"operation": "highlight", 
-    		"after": {"style": {"fill": "gray"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "ger",
-    		"operation": "highlight", 
-    		"after": {"style": {"fill": "gray"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "fr",
-    		"operation": "highlight", 
-    	    "after": {"style": {"fill": "gray"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "it",
-    		"operation": "highlight", 
-    	    "after": {"style": {"fill": "gray"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "rus",
-    		"operation": "highlight", 
-    	    "after": {"style": {"fill": "gray"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "aus",
-    		"operation": "highlight", 
-    	    "after": {"style": {"fill": "gray"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "be",
-    		"operation": "highlight", 
-    	    "after": {"style": {"fill": "gray"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "three-emperors",
-    		"operation": "highlight", 
-    	    "after": {"style": {"stroke": "black"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "triple-alliance",
-    		"operation": "highlight", 
-    	    "after": {"style": {"stroke": "black"}}
-  		},
-  		{   
-    		"trigger": "mouseover", 
-    		"element": "triple-entente",
-    		"operation": "highlight", 
-    	    "after": {"style": {"stroke": "black"}}
-  		}
+    [
+     3
     ]
+   ]
+  }
+ ],
+ "panels": [
+  {
+   "id": 1,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/top.svg"
+  },
+  {
+   "id": 2,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
+  },
+  {
+   "id": 3,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/B.svg"
+  },
+  {
+   "id": 4,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/Aopened.svg"
+  },
+  {
+   "id": 5,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/Bopened.svg"
+  },
+  {
+   "id": 6,
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/LongVersionAll.svg"
+  }
+ ],
+ "operations": [
+  {
+   "trigger": "click",
+   "element": "short",
+   "operation": "loadLayout",
+   "group": "group1",
+   "after": 1,
+   "layout": [
+    [
+     2
+    ],
+    [
+     3
+    ]
+   ]
+  },
+  {
+   "trigger": "click",
+   "element": "medium",
+   "operation": "loadLayout",
+   "group": "group1",
+   "after": 1,
+   "layout": [
+    [
+     4
+    ],
+    [
+     5
+    ]
+   ]
+  },
+  {
+   "trigger": "click",
+   "element": "long",
+   "operation": "loadLayout",
+   "group": "group1",
+   "after": 1,
+   "layout": [
+    [
+     6
+    ]
+   ]
+  },
+  {
+   "trigger": "mouseover",
+   "element": "uk",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "gray"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "ger",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "gray"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "fr",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "gray"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "it",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "gray"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "rus",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "gray"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "aus",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "gray"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "be",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "gray"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "three-emperors",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "stroke": "black"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "triple-alliance",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "stroke": "black"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "triple-entente",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "stroke": "black"
+    }
+   }
+  }
+ ]
 }
 
 
