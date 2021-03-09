@@ -13,15 +13,14 @@
 
 <script>
    var JSONFile = {
+    "gutter":20,
     "currentLayout": "init", 
     "layouts":[
         {
             "name": "init", 
-            "panels": [[1],[2,3]]
+            "panels": [[1],[2],[3]]
         }    
     ],
-	'debug': true,
-	'gutter': 10,
     "panels":[
     	{
     		"id": 1,
@@ -29,11 +28,11 @@
     	},
     	{
     		"id": 2,
-    		"url": "A.svg"
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
     	},
     	{
     		"id": 3,
-    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/B.svg"
+    		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.a.io/main/comics/alliances/B.svg"
     	},
     	{
     		"id": 4,
@@ -46,7 +45,7 @@
     	{
     		"id": 6,
     		"url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/LongVersionAll.svg"
-    	}      
+    	}                      
     ],
     "operations": [
 		{
@@ -55,7 +54,7 @@
 			"operation": "loadLayout",
 			"group": "group1",
 			"after": "panel_1",
-			"layout": [[2,3]]
+			"layout": [[2],[3]]
 		},
 		{
 			"trigger": "click",
@@ -63,7 +62,7 @@
 			"operation": "loadLayout",
 			"group": "group1",
 			"after": "panel_1",
-			"layout": [[4,5]]
+			"layout": [[4],[5]]
 		},
 		{
 			"trigger": "click",
@@ -72,24 +71,69 @@
 			"group": "group1",
 			"after": "panel_1",
 			"layout": [[6]]
-		},
-		// {
-		// 	"operation": 'zoom', 
-		// 	"trigger": "zoom",
-		// 	'element': "panel_2",
-		// 	'linked': ['groupToDrag']
-		// },
-		{
-			"trigger": "click",
-			"element": "Group_1",
-			"operation": "replace",
-			"replace": "panel_2",
-			"newpanels": [
-				"panel_4"
-			]
-		}
+		},{   
+    		"trigger": "mouseover", 
+    		"element": "uk",
+    		"operation": "highlight", 
+    		"after": {"style": {"fill": "gray"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "ger",
+    		"operation": "highlight", 
+    		"after": {"style": {"fill": "gray"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "fr",
+    		"operation": "highlight", 
+    	    "after": {"style": {"fill": "gray"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "it",
+    		"operation": "highlight", 
+    	    "after": {"style": {"fill": "gray"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "rus",
+    		"operation": "highlight", 
+    	    "after": {"style": {"fill": "gray"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "aus",
+    		"operation": "highlight", 
+    	    "after": {"style": {"fill": "gray"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "be",
+    		"operation": "highlight", 
+    	    "after": {"style": {"fill": "gray"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "three-emperors",
+    		"operation": "highlight", 
+    	    "after": {"style": {"stroke": "black"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "triple-alliance",
+    		"operation": "highlight", 
+    	    "after": {"style": {"stroke": "black"}}
+  		},
+  		{   
+    		"trigger": "mouseover", 
+    		"element": "triple-entente",
+    		"operation": "highlight", 
+    	    "after": {"style": {"stroke": "black"}}
+  		}
     ]
 }
+
 
  console.log(JSONFile)
    interactiveComics.start(JSONFile)
