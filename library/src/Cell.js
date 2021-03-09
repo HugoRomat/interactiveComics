@@ -47,7 +47,7 @@ class Cell extends React.Component {
 
         
         this.setState({ mounted: true});
-        console.log('MOUNTING ', this.props.cell)
+        // console.log('MOUNTING ', this.props.cell)
         var that = this;
         
         // console.log(that.props)
@@ -194,7 +194,7 @@ class Cell extends React.Component {
                         cellData={this.props.cellData[index]} 
                         key={cell}
                         variables={this.props.variables}
-
+                        debug={this.props.debug}
                         isMounted={this.props.isMounted}
 
                     /> 
@@ -228,7 +228,7 @@ class Cell extends React.Component {
         //     exiting: {opacity: 0.5},
         //     exited: {opacity: 0}
         // }
-
+        console.log(this.props.debug)
           return(
             <CSSTransition in={this.state.mounted} timeout={500} classNames="my-node" >
                 <div> 
@@ -236,7 +236,9 @@ class Cell extends React.Component {
                         {svg}
                         {sliders}
                         
-                        <div style={{position: 'absolute', fontSize: '60px', fontWeight: '900'}}> ID: {this.props.cell} </div>
+                        { (this.props.debug != undefined && this.props.debug == true) ?
+                            <div style={{position: 'absolute', fontSize: '60px', fontWeight: '900'}}> ID: {this.props.cell} </div> : (null)
+                        }
                          {/* <div className="dot"></div> */}
                      </div>
                  </div>

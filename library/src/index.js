@@ -768,7 +768,7 @@ class OverallApp extends React.Component {
 
              this.state = {
               "currentLayout": "iniLayout",
-              "layout": [
+              "layouts": [
                {
                 "name": "iniLayout",
                 "panels": [

@@ -24,7 +24,7 @@ export class Slider {
     }
     init(){
         
-        
+        /**** SLIDERS */
         var panelSliders = this.stateApp.state.panels.filter((d) => d.sliders != undefined);
         // console.log(panelSliders)
         for (var index in panelSliders){
@@ -39,7 +39,68 @@ export class Slider {
                 if ($("."+ slider['id']).length) this.appendSlider(idPanel, idSlider, slider);
             }
         }
+
+
+
+        /***** INPUT *******/
+        var panelInput = this.stateApp.state.panels.filter((d) => d.input != undefined);
+        // console.log(panelSliders)
+        for (var index in panelInput){
+            var panel = panelInput[index];
+            var idPanel = panel['id'];
+            console.log(idPanel)
+            for (var indexInput in panel['input']){
+                var input = panel['input'][indexInput];
+                
+                // console.log(slider);
+                var idInput = input['id'];
+                // console.log(input, idInput)
+                if ($("."+ input['id']).length) this.appendInput(idPanel, idInput, input);
+            }
+        }
+
+
+
+
         // console.log(panelSliders);
+    }
+    appendInput(idPanel, idInput, input){
+        console.log(idPanel, idInput, input);
+
+        var that = this;
+        var selection = d3.select('#panel_'+ idPanel).select('svg')//;
+        var BBox = selection.select('.'+idInput).node().getBBox();
+
+        var parent = selection.append('g').attr('class', 'slider')
+                .attr('transform', 'translate('+ BBox.x + ',' + BBox.y + ')')
+        var fO = parent.append('foreignObject')
+                .attr('width', BBox.width)
+                .attr('height', BBox.height)
+
+        var id = this.uuidv4();
+
+        fO.append("xhtml:body")
+        .html(`<div class="slidecontainer">
+                <input type="text" id="`+id+`" name="name" minlength="4" maxlength="10" size="10">
+            </div>`)
+            $("#"+id).off("input change mouseup")
+
+            // console.log(id)
+            $("#"+id).on("input",(e)=>{
+                
+                // if (e.target.value)
+                var value = parseInt(e.target.value);
+                if (Number.isNaN(value)) value=0
+                
+                that.stateApp.updateVariable(input.variable, value, false);
+            
+            });
+            // $("#"+id).on("mouseup",(e)=>{
+            //     that.stateApp.updateVariable(input.variable, e.target.value, true);
+            // });
+
+
+
     }
     appendSlider(idPanel, idSlider, slider){
         console.log(idPanel, idSlider, slider);
@@ -59,9 +120,13 @@ export class Slider {
         var id = this.uuidv4();
                 // .attr('y', '10')
 
+        var min = (slider.min) ? slider.min : 0;
+        var max = (slider.max) ? slider.max : 10;
+        var initValue = min;
+
         fO.append("xhtml:body")
         .html(`<div class="slidecontainer">
-                <input type="range" min="0" max="10" value="0" class="sliderInputCustom" id="`+id+`" step="1">
+                <input type="range" min="`+min+`" max="`+max+`" value="`+initValue+`" class="sliderInputCustom" id="`+id+`" step="1">
             </div>`)
             $("#"+id).off("input change mouseup")
 
@@ -112,100 +177,3 @@ export class Slider {
         return id;
     }
 }
-    // slider (selection, BBox, slider) {
-    //     var that = this;
-    //     console.log(BBox)
-    //     var width = BBox.width,
-    //         value = 0.5, /* Domain assumes to be [0 - 1] */
-    //         event,
-    //         x = 0,
-    //         y = 0;
-    //     var lastValue = 0;
-    //     var sliderValue= 0
-
-    //     var parent = selection.append('g').attr('class', 'slider')
-    //     .attr('transform', 'translate('+ BBox.x + ',' + BBox.y + ')')
-
-    //     //Line to represent the current value
-    //     var valueLine = parent.append("line")
-    //         .attr("x1", x)
-    //         .attr("x2", x + (width * value))
-    //         .attr("y1", y)
-    //         .attr("y2", y)
-    //         .style('stroke', "black")
-    //         .style('stroke-linecap', "round")
-    //         .style('stroke-width', 8)
-
-    //     //Line to show the remaining value
-    //     var emptyLine = parent.append("line")
-    //         .attr("x1", x + (width * value))
-    //         .attr("x2", x + width)
-    //         .attr("y1", y)
-    //         .attr("y2", y)
-    //         .style("stroke", "#ECECEC")
-    //         .style("stroke-linecap", "round")
-    //         .style("stroke-width", 8)
-
-    //         // parent.append("circle")
-    //         // .attr('cx', 0)
-    //         // .attr('cy', 0)
-    //         // .attr('r', 10)
-    //         // .attr('fill', 'red')
-            
-
-    //     var drag = d3.drag().on("drag", function() {
-    //             var newX = d3.mouse(this)[0];
-
-                
-    //             if (newX < x)
-    //                 newX = x;
-    //             else if (newX > x + width)
-    //                 newX = x + width;
-
-    //             value = (newX - x) / width;
-
-    //             console.log(Math.abs(lastValue - value))
-    //             if (Math.abs(lastValue - value) > 0.1){
-    //                 value = lastValue + 0.1
-    //                 lastValue = value;
-
-
-                    
-    //                 valueCircle.attr("cx", newX);
-    //                 valueLine.attr("x2", x + (width * value));
-    //                 emptyLine.attr("x1", x + (width * value));
-
-    //                 if (event)
-    //                     event();
-
-    //                 d3.event.sourceEvent.stopPropagation();
-
-    //                 // UPDATE THE STATE WITH THE NEW VARIABLE VALUE
-    //                 that.stateApp.updateVariable(slider.variable, value, false);
-    //             }
-                
-    //             // that.stateApp.state.variables[slider.variable] = value;
-    //         })
-    //         .on("end", function() {
-    //             that.stateApp.updateVariable(slider.variable, value, true);
-    //         })
-
-    //         //Draggable circle to represent the current value
-    //         var valueCircle = parent.append("circle")
-    //             .attr("cx", x + (width * value))
-    //             .attr("cy", y)
-    //             .attr("r", 20)
-
-    //             .style("stroke", "black")
-    //             .style("stroke-width", 1.0)
-    //             .style("fill", "white")
-                
-    //             .call(drag);
-        
-    // }
-    // computeValue() {
-        
-        
-    // }
-// }  
-

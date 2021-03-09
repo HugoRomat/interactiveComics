@@ -11,8 +11,8 @@ export class EventsPanels {
         this.stateApp = appTontext;
         this.objectsAttributes = {}
 
-        
-       this.layout = this.state.layout.find(x => x.name == this.state.currentLayout)
+    console.log(this.state)
+       this.layout = this.state.layouts.find(x => x.name == this.state.currentLayout)
        console.log(this.layout)
 
     } 
@@ -43,7 +43,13 @@ export class EventsPanels {
         
         // grouped by panel trigerring and panel
         for (var i in keys){
-            var idPanel = keys[i]
+            var idPanel = keys[i];
+
+            
+            
+            // if (this.isNumeric(idPanel)) idPanel='panel_'+idPanel
+           
+            // console.log(idPanel)
             var operationPanelById = objectGrouped[idPanel];
             var operationTrigger = _.groupBy(operationPanelById, "trigger");
             var keys2 = Object.keys(operationTrigger)
@@ -56,47 +62,52 @@ export class EventsPanels {
             }
         }
     }
-    // setCondition(){
-    //     var conditions = this.state.operations.filter((d)=> d.trigger == 'condition');
-    //     this.setEventsCondition(conditions);
-    //     // console.log(conditions)
-    // }
-    // setEventsCondition(conditions){
-    //     // console.log(conditions);
-    //     for (var i in conditions){
-    //         var mathematicalFunction = "";
-    //         var condition = conditions[i];
-    //         for (var j in condition['condition']){
-    //             var item = condition['condition'][j];
-    //             // console.log(item, j)
-    //             var myIndex = this.stateApp.state.variables.findIndex(x => x.name == item);
-    //             // // console.log(item, this.state.variables[item], this.state.variables)
-    //             if (myIndex == -1){
-    //                 mathematicalFunction += item
-    //             } else {
-    //                 mathematicalFunction += this.stateApp.state.variables[myIndex]['value'];
-    //             }
-    //         }
-    //         var isSatisfied = eval(mathematicalFunction);
+    isNumeric(str) {
+        if (typeof str != "string") return false // we only process strings!  
+        return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+               !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+    }
+    setCondition(){
+        var conditions = this.state.operations.filter((d)=> d.trigger == 'condition');
+        this.setEventsCondition(conditions);
+        // console.log(conditions)
+    }
+    setEventsCondition(conditions){
+        // console.log(conditions);
+        for (var i in conditions){
+            var mathematicalFunction = "";
+            var condition = conditions[i];
+            for (var j in condition['condition']){
+                var item = condition['condition'][j];
+                // console.log(item, j)
+                var myIndex = this.stateApp.state.variables.findIndex(x => x.name == item);
+                // // console.log(item, this.state.variables[item], this.state.variables)
+                if (myIndex == -1){
+                    mathematicalFunction += item
+                } else {
+                    mathematicalFunction += this.stateApp.state.variables[myIndex]['value'];
+                }
+            }
+            var isSatisfied = eval(mathematicalFunction);
             
-    //         if (isSatisfied){
-    //             if (condition.operation == "append") {
-    //                 var arePresent = this.arePresent(condition.newpanels);
-    //                 if (arePresent == false) this.append(condition.after,condition.newpanels, false);
-    //             }
-    //             else if (condition.operation == "remove") {
-    //                 var arePresent = this.arePresent(condition.panel);
-    //                 // console.log(arePresent)
-    //                 if (arePresent == true) this.remove(condition.panel, false);
-    //             }
-    //         }
-    //         // console.log(isSatisfied)
-    //         // console.log(eval(mathematicalFunction))
-    //     }
-    //     // console.log(eval(mathematicalFunction))
+            if (isSatisfied){
+                if (condition.operation == "append") {
+                    var arePresent = this.arePresent(condition.newpanels);
+                    if (arePresent == false) this.append(condition.after,condition.newpanels, false);
+                }
+                else if (condition.operation == "remove") {
+                    var arePresent = this.arePresent(condition.panel);
+                    // console.log(arePresent)
+                    if (arePresent == true) this.remove(condition.panel, false);
+                }
+            }
+            // console.log(isSatisfied)
+            // console.log(eval(mathematicalFunction))
+        }
+        // console.log(eval(mathematicalFunction))
         
-    // //    variable.value = eval(mathematicalFunction)
-    // }
+    //    variable.value = eval(mathematicalFunction)
+    }
     arePresent(panels){
         var mypanels = panels.flat(100);
         // var areThere = []
@@ -123,7 +134,7 @@ export class EventsPanels {
         else idSelector = d3.select('.'+parent).selectAll('.'+ idPanel)
 
         // var sentence = '.'+parent + ' .'+ idPanel
-        console.log(idSelector, parent, idPanel)
+        // console.log(idSelector, parent, idPanel)
         // console.log($('.'+parent + ' .'+ idPanel).get()[0])
         // console.log($('.panel_3 .compare').get()[0])
         idSelector.style('cursor', 'pointer')
@@ -327,20 +338,20 @@ export class EventsPanels {
             for (var i= 0; i <  otherGroup.length; i++){
                 var layoutTemp = []
                 if (Array.isArray(layout)) layoutTemp = otherGroup[i]['layout']
-                else layoutTemp = this.state.layout.find(x => x.name == otherGroup[i]['layout'])['panels'];
+                else layoutTemp = this.state.layouts.find(x => x.name == otherGroup[i]['layout'])['panels'];
                 indexes = indexes.concat(layoutTemp.flat(5))
             }
             console.log(indexes)
             this.remove(indexes)
 
-            console.log(this.state.layout[0]['panels'])
+            console.log(this.state.layouts[0]['panels'])
 
             //2 APPEND
             console.log('APPENDING')
             // setTimeout(()=>{
                 var newLayout = []
                 if (Array.isArray(layout)) newLayout = layout
-                else newLayout = this.state.layout.find(x => x.name == layout)['panels']
+                else newLayout = this.state.layouts.find(x => x.name == layout)['panels']
                 
                 this.append(where, JSON.parse(JSON.stringify(newLayout)));
             // }, 1000)
@@ -400,8 +411,16 @@ export class EventsPanels {
         }
         for (var key in after.style){
             // console.log(idSelector.node(), key, after.style[key])
-            idSelector.selectAll('*').style(key, after.style[key])
-            idSelector.style(key, after.style[key])
+            idSelector.selectAll('*').each(function(){
+                var node = d3.select(this).node()
+                if (node.tagName == 'path' && key == 'fill') d3.select(this).style('stroke', after.style[key])
+                else d3.select(this).style(key, after.style[key])
+            })
+            idSelector.each(function(){
+                var node = d3.select(this).node()
+                if (node.tagName == 'path'  && key == 'fill') d3.select(this).style('stroke', after.style[key])
+                else d3.select(this).style(key, after.style[key])
+            })
         }
         for (var key in after.attr){
             // console.log(idSelector.node(), key, after.style[key])
@@ -440,7 +459,7 @@ export class EventsPanels {
         this.layout.panels = arrayArrangement
 
         // console.log(this.layout.panels)
-        this.stateApp.setState({layout: this.state.layout})
+        this.stateApp.setState({layouts: this.state.layouts})
 
     }
     remove(items, isFlex){
@@ -517,7 +536,7 @@ export class EventsPanels {
             // console.log(arrayArrangement)
             // setTimeout(()=>{
             this.layout.panels = arrayArrangement;
-            this.stateApp.setState({layout: this.state.layout})
+            this.stateApp.setState({layouts: this.state.layouts})
             // }, 1000)
             // console.log(this.state.panels)
             // this.stateApp.setState({panels: this.state.panels})
@@ -621,7 +640,7 @@ export class EventsPanels {
             this.layout.panels = arrayArrangement;
             // console.log(this.layout.panels)
 
-            this.stateApp.setState({layout: this.state.layout})
+            this.stateApp.setState({layouts: this.state.layouts})
 
 
         } 

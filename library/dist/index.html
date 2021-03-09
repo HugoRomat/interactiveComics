@@ -14,7 +14,7 @@
 <script>
    var JSONFile = {
   "currentLayout": "iniLayout",
-  "layout": [
+  "layouts": [
    {
     "name": "iniLayout",
     "panels": [
@@ -148,9 +148,12 @@
     "sliders": [
      {
       "id": "slider_movementSpeed",
-      "variable": "movementSpeed"
-     },
-     {
+      "variable": "movementSpeed",
+      "min": 0, 
+      "max":5
+     }
+    ],
+    "input": [{
       "id": "slider_movementVelocity",
       "variable": "movementVelocity"
      }
@@ -359,7 +362,13 @@
      "widthIcon": 15
     },
     "icon": "images/CO2Footprint/cowIcon.svg"
-   }
+   },
+   {
+    "operation": 'zoom', 
+    "trigger": "zoom",
+    'element': "panel_1",
+    'linked': ['panel_2']
+}
   ]
  }
    interactiveComics.start(JSONFile)

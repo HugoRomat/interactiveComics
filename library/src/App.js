@@ -165,7 +165,7 @@ class App extends React.Component {
      changeLayout = (event, from, to, width) => {
           console.log(event, from, to, width)
           var indexes = []
-          var arrayArrangement = this.state.layout.arrangment;
+          var arrayArrangement = this.state.layouts.arrangment;
           for (var k in from){
                var d = from[k]
                for (var i= 0; i <  arrayArrangement.length; i++){
@@ -198,8 +198,8 @@ class App extends React.Component {
                }
           }
           
-          console.log(this.state.layout)
-          this.setState({layout: this.state.layout})
+          console.log(this.state.layouts)
+          this.setState({layouts: this.state.layouts})
      }
      // shouldComponentUpdate(nextProps, nextState) {
      //      if (this.state.variables != nextState.variables){
@@ -229,9 +229,10 @@ class App extends React.Component {
         
           // }, 3000)
           // this.handleClass();
+          
      }
      isMounted = (cellId, isIt) => {
-          var layout = this.state.layout.find(x => x.name == this.state.currentLayout);
+          var layout = this.state.layouts.find(x => x.name == this.state.currentLayout);
           // console.log(cellId)
 
           this.mountedComponents.push(cellId);
@@ -245,8 +246,15 @@ class App extends React.Component {
 
                     this.sliders.update()
                     this.isMounted_ = true;
+
+                    if (this.state.gutter != undefined) {
+                         var style = $('<style>.panel { margin: '+ this.state.gutter+'px; }</style>');
+                         $('html > head').append(style);
+
+                         // $('.panel').css('margin', this.state.gutter+'px')
+                    }
                
-               }, 3000)
+               }, 500)
                
           }
           // console.log(this.mountedComponents.length, layout.panels.flat(10).length)
@@ -274,8 +282,8 @@ class App extends React.Component {
           
           var comicRendering = null;
           // console.log(this.state.panels, this.state.layout.arrangment)
-          if (this.state.layout.length != 0){
-               var layout = this.state.layout.find(x => x.name == this.state.currentLayout)
+          if (this.state.layouts.length != 0){
+               var layout = this.state.layouts.find(x => x.name == this.state.currentLayout)
                // console.log(layout)
                comicRendering = layout.panels.map((line, index) => (
                     <div className="line" key={line.flat(5)[0]}>
@@ -298,6 +306,7 @@ class App extends React.Component {
                                              cell={cell} 
                                              cellData={cellData}
                                              key={id}
+                                             debug={this.state.debug}
                                              // event={event}
                                              changeLayout={this.changeLayout}
                                              updateVariable={this.updateVariable}
