@@ -13,46 +13,45 @@
 
 <script>
    var JSONFile = {
-"currentLayout": "init", 
-"layouts": [
-   {
-      "name": "init",
-      "panels": [[1,2]]
-   }
-],
-"debug": true,
-"gutter": '10',
-"panels":[
+ "gutter": 20,
+ "currentLayout": "init",
+ "layouts": [
   {
-   "id": 1,
+   "name": "init",
+   "panels": [["p_price","p_units"]]
+  }
+ ],
+ "panels": [
+  {
+   "id": "p_price",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/price.svg"
   },
   {
-   "id": 2,
+   "id": "p_units",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/units.svg"
   },
   {
-   "id": 3,
+   "id": "p_sales-a",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a.svg"
   },
   {
-   "id": 4,
+   "id": "p_sales-b",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b.svg"
   },
   {
-   "id": 5,
+   "id": "p_sales-c",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c.svg"
   },
   {
-   "id": 6,
+   "id": "p_sales-a-small",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a-small.svg"
   },
   {
-   "id": 7,
+   "id": "p_sales-b-small",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b-small.svg"
   },
   {
-   "id": 8,
+   "id": "p_sales-c-small",
    "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c-small.svg"
   }
  ],
@@ -94,54 +93,37 @@
    "trigger": "click",
    "element": "a",
    "operation": "loadLayout",
-   "after": "panel_2",
+   "after": "p_units",
    "group": "group1",
-   "layout": [
-    [
-     3
-    ]
-   ]
+   "layout": [["p_sales-a"]]
   },
   {
    "trigger": "click",
    "element": "b",
    "operation": "loadLayout",
-   "after": "panel_2",
+   "after": "p_units",
    "group": "group1",
-   "layout": [
-    [
-     4
-    ]
-   ]
+   "layout": [["p_sales-b"]]
   },
   {
    "trigger": "click",
    "element": "c",
    "operation": "loadLayout",
-   "after": "panel_2",
+   "after": "p_units",
    "group": "group1",
-   "layout": [
-    [
-     5
-    ]
-   ]
+   "layout": [["p_sales-c"]]
   },
   {
    "trigger": "click",
    "element": "compare",
    "operation": "loadLayout",
    "group": "group1",
-   "after": "panel_2",
-   "layout": [
-    [
-     6,
-     7,
-     8
-    ]
-   ]
+   "after": "p_units",
+   "layout": [["p_sales-a-small","p_sales-b-small","p_sales-c-small"]]
   }
  ]
 }
+
  console.log(JSONFile)
    interactiveComics.start(JSONFile)
 
