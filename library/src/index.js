@@ -1148,19 +1148,19 @@ class OverallApp extends React.Component {
         for (var key in this.state){
             this.setState({[key]: []})
         }
-        // setTimeout(() => {
-        //     // console.log(JSON.parse(this.refs.aceEditor.editor.getValue()))
-        //     this.setState(JSON.parse(this.refs.aceEditor.editor.getValue())); 
+        setTimeout(() => {
+            // console.log(JSON.parse(this.refs.aceEditor.editor.getValue()))
+            this.setState(JSON.parse(this.refs.aceEditor.editor.getValue())); 
 
-        //     this.refs.aceEditor.editor.commands.addCommand({
-        //       name: 'save',
-        //       bindKey: {win: "Ctrl-S", "mac": "Cmd-S"},
-        //       exec: function(editor) {
-        //           console.log("saving", editor.session.getValue())
-        //       }
-        //     })
+            // this.refs.aceEditor.editor.commands.addCommand({
+            //   name: 'save',
+            //   bindKey: {win: "Ctrl-S", "mac": "Cmd-S"},
+            //   exec: function(editor) {
+            //       console.log("saving", editor.session.getValue())
+            //   }
+            // })
 
-        // }, 1000)
+        }, 1000)
 
         // setTimeout(() =>{
         //      this.createClasses();
