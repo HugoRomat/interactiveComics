@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+            "classes": [       ],
+            currentLayout: 'initialLayout',
+            layouts: [{
+              name: 'initialLayout',
+              panels: [
+                  ['aral'],
+                  ['a1', 'a3', 'a5', 'a7'],
+                  ['a9', 'a11', 'a13', 'a14']
+                  
+              ]
+            }],
+            "gutter": 10,
+            'scale':0.5,
+            "variables": [
+            ],
+            "panels": [
+            {
+              "id": "aral",
+              "url": "titleAral.svg",
+             },
+            {
+              "id": "a1",
+              "url": "aral2001.svg",
+             },
+            {
+              "id": "a3",
+              "url": "aral2003.svg",
+             },
+             
+             {
+              "id": "a5",
+              "url": "aral2005.svg"
+             },
+             {
+                "id": 'a7',
+                "url": "aral2007.svg"
+               },
+               {
+                "id": 'a9',
+                "url": "aral2009.svg"
+               },
+               {
+                "id": 'a11',
+                "url": "aral2011.svg"
+               },
+               {
+                "id": 'a13',
+                "url": "aral2013.svg"
+               },
+               {
+                "id": 'a14',
+                "url": "aral2014.svg"
+               }
+            ],
+            "operations": [ 
+               {
+                  "operation": 'zoom', 
+                  "trigger": "zoom",
+                  'element': "a1",
+                  'linked': ['a1', 'a3', 'a5', 'a7', 'a9', 'a11', 'a13', 'a14']
+               }
+        ]
+    }
+   interactiveComics.start(JSONFile)
+   console.log()
+ </script>
+</html>

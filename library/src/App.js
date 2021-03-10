@@ -252,7 +252,12 @@ class App extends React.Component {
                     this.isMounted_ = true;
 
                     if (this.state.gutter != undefined) {
-                         var style = $('<style>.panel { margin: '+ this.state.gutter+'px; }</style>');
+                         var style = $(`<style>
+                         
+                              .panel { margin: `+ this.state.gutter+`px; }
+                              .line {margin: `+(this.state.gutter)+`px; }
+                         
+                         }</style>`);
                          $('html > head').append(style);
                     }
                     if (this.state.scale != undefined) {
