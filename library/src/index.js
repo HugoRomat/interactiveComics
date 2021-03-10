@@ -1148,10 +1148,19 @@ class OverallApp extends React.Component {
         for (var key in this.state){
             this.setState({[key]: []})
         }
-        setTimeout(() => {
-            // console.log(JSON.parse(this.refs.aceEditor.editor.getValue()))
-            this.setState(JSON.parse(this.refs.aceEditor.editor.getValue())); 
-        }, 1000)
+        // setTimeout(() => {
+        //     // console.log(JSON.parse(this.refs.aceEditor.editor.getValue()))
+        //     this.setState(JSON.parse(this.refs.aceEditor.editor.getValue())); 
+
+        //     this.refs.aceEditor.editor.commands.addCommand({
+        //       name: 'save',
+        //       bindKey: {win: "Ctrl-S", "mac": "Cmd-S"},
+        //       exec: function(editor) {
+        //           console.log("saving", editor.session.getValue())
+        //       }
+        //     })
+
+        // }, 1000)
 
         // setTimeout(() =>{
         //      this.createClasses();
@@ -1190,6 +1199,9 @@ class OverallApp extends React.Component {
                                    }}
                                    onInput={d => {
                                       // this.renderComic();
+                                   }}
+                                   onKeyDown={e => {
+                                    console.log(e)
                                    }}
 
                                    ref="aceEditor"

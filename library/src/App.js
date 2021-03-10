@@ -237,7 +237,7 @@ class App extends React.Component {
           var layout = this.state.layouts.find(x => x.name == this.state.currentLayout);
           
           this.mountedComponents.push(cellId);
-          // console.log(this.mountedComponents.length, layout.panels.flat(10).length-1, this.isMounted_ == false)
+          console.log(this.mountedComponents.length == layout.panels.flat(10).length-1, this.isMounted_ == false)
 
           
           if (this.mountedComponents.length == layout.panels.flat(10).length-1 && this.isMounted_ == false){
@@ -254,8 +254,9 @@ class App extends React.Component {
                     if (this.state.gutter != undefined) {
                          var style = $('<style>.panel { margin: '+ this.state.gutter+'px; }</style>');
                          $('html > head').append(style);
-
-                         // $('.panel').css('margin', this.state.gutter+'px')
+                    }
+                    if (this.state.scale != undefined) {
+                         $('.app').css('transform', 'scale('+this.state.scale+')')
                     }
                
                }, 500)
