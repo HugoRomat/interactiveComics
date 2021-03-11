@@ -13,339 +13,39 @@
 
 <script>
    var JSONFile = {
-  "currentLayout": "iniLayout",
-  "layouts": [
-   {
-    "name": "iniLayout",
-    "panels": [
-     [ 'panel0', [ 'panel1', 'panel2' ], 'panel3' ],
-     [ 'panel4' ],
-     [ 'panel5', 'panel6', 'panel7' ]
-    ]
-   }
-  ],
-  "classes": [],
-  "variables": [
-   {
-    "name": "movementSpeed",
-    "value": 0
-   },
-   {
-    "name": "movementVelocity",
-    "value": 0
-   },
-   {
-    "name": "totalMovement",
-    "value": 0,
-    "what": [
-     "(",
-     "movementSpeed",
-     "+",
-     "movementVelocity",
-     ")",
-     "*1"
-    ]
-   },
-   {
-    "name": "totalkm",
-    "value": 0,
-    "what": [
-     "movementSpeed",
-     "*2000",
-     "+",
-     "movementVelocity",
-     "*8000"
-    ]
-   },
-   {
-    "name": "earthTimes",
-    "value": 0,
-    "what": [
-     "totalkm",
-     "/",
-     "40000"
-    ]
-   },
-   {
-    "name": "totalTons",
-    "value": 0,
-    "what": [
-     "totalkm",
-     "/",
-     "1000"
-    ]
-   },
-   {
-    "name": "tonsMoreThanEarthEverage",
-    "value": 0,
-    "what": [
-     "totalTons",
-     "-",
-     "5"
-    ]
-   },
-   {
-    "name": "tonsLessThanEarthEverage",
-    "value": 0,
-    "what": [
-     "5",
-     "-",
-     "totalTons"
-    ]
-   },
-   {
-    "name": "moreThanParisGoal",
-    "value": 0,
-    "what": [
-     "totalTons",
-     "-",
-     "1"
-    ]
-   },
-   {
-    "name": "numTrees",
-    "value": 0,
-    "what": [
-     "totalTons",
-     "*",
-     "45"
-    ]
-   },
-   {
-    "name": "treeIcon",
-    "value": 0,
-    "what": [
-     "numTrees",
-     "/",
-     "90"
-    ]
-   },
-   {
-    "name": "numCows",
-    "value": 0,
-    "what": [
-     "totalTons"
-    ]
-   }
-  ],
-  "panels": [
-   {
-    "id": 'panel0',
-    "url": "/CO2Footprint/inputPanel.svg",
-    "sliders": [
-     {
-      "id": "slider_movementSpeed",
-      "variable": "movementSpeed",
-      "min": 0, 
-      "max":5
-     }
-    ],
-    "input": [{
-      "id": "slider_movementVelocity",
-      "variable": "movementVelocity"
-     }
-    ]
-   },
-   {
-    "id": "panel1",
-    "url": "/CO2Footprint/totalKm.svg"
-   },
-   {
-    "id": "panel2",
-    "url": "/CO2Footprint/totalGlobe.svg"
-   },
-   {
-    "id": "panel3",
-    "url": "/CO2Footprint/CO2inTons.svg"
-   },
-   {
-    "id": "panel4",
-    "url": "/CO2Footprint/speechBubble.svg"
-   },
-   {
-    "id": "panel5",
-    "url": "/CO2Footprint/human_panel.svg"
-   },
-   {
-    "id": "panel6",
-    "url": "/CO2Footprint/tree_panel.svg"
-   },
-   {
-    "id": "panel7",
-    "url": "/CO2Footprint/cow_panel.svg"
-   },
-   {
-    "id": "panel8",
-    "url": "/CO2Footprint/averageCO2_panels.svg"
-   },
-   {
-    "id": "panel9",
-    "url": "/CO2Footprint/compareWithYouMore.svg"
-   },
-   {
-    "id": "panel10",
-    "url": "/CO2Footprint/parisHigher1ton.svg"
-   },
-   {
-    "id": "panel11",
-    "url": "/CO2Footprint/tree2Panels.svg"
-   },
-   {
-    "id": "panel12",
-    "url": "/CO2Footprint/humanClicked_panel.svg"
-   },
-   {
-    "id": "panel13",
-    "url": "/CO2Footprint/cows2Panels.svg"
-   },
-   {
-    "id": "panel14",
-    "url": "/CO2Footprint/averageCO2Less_panels.svg"
-   },
-   {
-    "id": "panel15",
-    "url": "/CO2Footprint/treeClicked_panel.svg"
-   },
-   {
-    "id": "panel16",
-    "url": "/CO2Footprint/cowClicked_panel.svg"
-   }
-  ],
-  "operations": [
-   {
-    "trigger": "click",
-    "condition": [
-     "totalTons",
-     " < 5"
-    ],
-    "operation": "loadLayout",
-    "element": "panel5",
-    "layout": [
-    "panel14",
-     [
-     "panel10"
-     ]
-    ],
-    "after": "panel7",
-    "group": "group1"
-   },
-   {
-    "trigger": "click",
-    "condition": [
-     "totalTons",
-     "> 5"
-    ],
-    "operation": "loadLayout",
-    "element": "panel5",
-    "layout": [
-    "panel8",
-     [
-     "panel10"
-     ]
-    ],
-    "after": "panel7",
-    "group": "group1"
-   },
-   {
-    "trigger": "click",
-    "operation": "loadLayout",
-    "element": "panel6",
-    "layout": [
-    "panel11",
-     [
-     "panel10"
-     ]
-    ],
-    "after": "panel7",
-    "group": "group1"
-   },
-   {
-    "trigger": "click",
-    "operation": "loadLayout",
-    "element": "panel7",
-    "layout": [
-    "panel13",
-     [
-     "panel10"
-     ]
-    ],
-    "after": "panel7",
-    "group": "group1"
-   },
-   {
-    "operation": "isotype",
-    "variable": "totalMovement",
-    "to": "planePlaceHolder",
-    "attr": {
-     "widthIcon": 35
-    },
-    "icon": "images/CO2Footprint/plane.svg"
-   },
-   {
-    "operation": "isotype",
-    "variable": "earthTimes",
-    "to": "earthPlaceHolder",
-    "attr": {
-     "widthIcon": 80
-    },
-    "icon": "images/CO2Footprint/earth.svg"
-   },
-   {
-    "operation": "isotype",
-    "variable": "totalTons",
-    "to": "fogPlaceHolder",
-    "attr": {
-     "widthIcon": 22
-    },
-    "icon": "images/CO2Footprint/fog.svg"
-   },
-   {
-    "operation": "isotype",
-    "variable": "totalTons",
-    "to": "MoreThanEarthPlaceHolder",
-    "attr": {
-     "widthIcon": 6
-    },
-    "icon": "images/CO2Footprint/smallFog.svg"
-   },
-   {
-     "operation": "isotype",
-     "variable": "totalTons",
-     "to": "LessThanEarthPlaceHolder",
-     "attr": {
-      "widthIcon": 6
-     },
-     "icon": "images/CO2Footprint/smallFog.svg"
-    },
-   {
-    "operation": "isotype",
-    "variable": "moreThanParisGoal",
-    "to": "moreThanParisPlaceHolder",
-    "attr": {
-     "widthIcon": 38
-    },
-    "icon": "images/CO2Footprint/tonX.svg"
-   },
-   {
-    "operation": "isotype",
-    "variable": "treeIcon",
-    "to": "TreesPlaceHolder",
-    "attr": {
-     "widthIcon": 40
-    },
-    "icon": "images/CO2Footprint/9trees.svg"
-   },
-   {
-    "operation": "isotype",
-    "variable": "numCows",
-    "to": "cowsPlaceHolder",
-    "attr": {
-     "widthIcon": 15
-    },
-    "icon": "images/CO2Footprint/cowIcon.svg"
-   }
-  ]
- }
+	"gutter": 0,
+	"currentLayout": "init",
+	"layouts":[
+		{
+			"name":"init",
+			"panels":[["title"],["humans","carbon"]]
+		}
+	],
+	"panels":[
+		{
+			"id": "title",
+			"url": "https://interactivedatacomics.github.io/tutorials/title.svg"
+		},{
+			"id": "humans",
+			"url": "https://interactivedatacomics.github.io/tutorials/human.svg"
+		},{
+			"id": "carbon",
+			"url": "https://interactivedatacomics.github.io/tutorials/carbon.svg"
+		},{
+			"id": "ozone",
+			"url": "https://interactivedatacomics.github.io/tutorials/ozone.svg"
+		},{
+			"id": "methane",
+			"url": "https://interactivedatacomics.github.io/tutorials/methane.svg"
+		},{
+			"id": "water",
+			"url": "https://interactivedatacomics.github.io/tutorials/water.svg"
+		},{
+			"id": "oceans",
+			"url": "https://interactivedatacomics.github.io/tutorials/oceans.svg"
+		}
+	]
+}
    interactiveComics.start(JSONFile)
    console.log()
  </script>

@@ -99,7 +99,8 @@ class Cell extends React.Component {
             }
 
             // TO DEAL WITH CLASSES
-            if (item.tagName != 'mask'){
+
+            if (item.tagName != 'mask' && item.tagName != 'pattern' && item.tagName != 'image'){
                 var id = $(item).attr('id')
                 // console.log(id)
                 if (id != undefined) id = id.replace(/ /g,"_");
@@ -108,6 +109,29 @@ class Cell extends React.Component {
                 $(item).removeAttr('id');
     
                 $(item).removeAttr('filter');
+            }
+
+            if (item.tagName == 'image'){
+                // console.log(item)
+                var newID = 'image-'+uuidv4();
+                var id = $(item).attr('id')
+                for (var j = items.length; j--;) {
+                    var itemNew = items[j];
+                    if ($(itemNew).attr( "xlink:href" ) == '#'+ id) $(itemNew).attr( "xlink:href",  '#' + newID)
+                }
+                $(item).attr('id',newID);
+            }
+
+
+            if (item.tagName == 'pattern'){
+                // console.log(item)
+                var newID = 'pattern-'+uuidv4();
+                var id = $(item).attr('id')
+                for (var j = items.length; j--;) {
+                    var itemNew = items[j];
+                    if ($(itemNew).attr( "fill" ) == 'url(#'+ id + ')') $(itemNew).attr( "fill",  'url(#'+ newID + ')')
+                }
+                $(item).attr('id',newID);
             }
             
             // console.log(id)

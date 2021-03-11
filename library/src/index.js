@@ -1185,7 +1185,7 @@ class OverallApp extends React.Component {
           return(
                <div>
                     
-                    <Split sizes={[5,95]} style={{display: 'flex'}}>
+                    <Split sizes={[30,70]} style={{display: 'flex'}}>
 
                         <div>
                               <button id="go" onMouseDown={this.renderComic}> GO</button>
