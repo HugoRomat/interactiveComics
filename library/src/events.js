@@ -247,7 +247,14 @@ export class EventsPanels {
                 var newpanels = event['newpanels'];
                 var isFlex = event['flexwrap'];
                 // console.log(event)
-                this.replace(replace, newpanels, isFlex)
+                this.replace(replace, JSON.parse(JSON.stringify(newpanels)), isFlex)
+
+
+                setTimeout(()=>{
+                    this.appendEventsToPanels(newpanels);
+                }, 500)
+
+
             } else if (event.operation == 'highlight' && reverse == false && isSatisfied){
                 var element = event['element'];
                 var after = event['after'];
