@@ -13,6 +13,10 @@ import $ from 'jquery';
 import Split from 'react-split';
 import e from 'cors';
 
+import { VscRunAll } from 'react-icons/vsc';
+import { AiOutlineShareAlt } from 'react-icons/ai';
+import { ImEmbed2 } from 'react-icons/im';
+
 
 class OverallApp extends React.Component {
     constructor(props) {
@@ -1131,19 +1135,77 @@ class OverallApp extends React.Component {
               ]
              }
              
+          var url_string = window.location.href;
+          var url = new URL(url_string);
+          var c = url.searchParams.get("JSON");
+          // console.log(c)
+          if (c != null) this.state = JSON.parse(c)
+          else if (this.props.json != undefined) this.state = this.props.json   
 
 
-        
-          console.log(this.props.json)  
-
-          if (this.props.json != undefined) this.state = this.props.json
-            
+          if (c!=null) {
+            this.state.coding = url.searchParams.get("coding");
+          }
     }
     componentDidMount(){
+      // console.log(this.state.codin)
+     if (this.state.coding == 'false'){
+      $('#editor').css('display', 'none');
+      $('#editor').css('width', '0px');
+      $('#container').css('width', '100%');
+      
 
-     
-        
+      // 
+     }
+
+    //  console.log($('#editor').css('width'))
+    //  $('#buttons').css('left', 'calc(30% - 34px)');
     }
+    share = () => {
+      var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/alliances.html?JSON=";
+      // var URLCombined = "http://127.0.0.1:8080?JSON=";
+      URLCombined += JSON.stringify(this.state);
+      URLCombined += "&coding=true"
+      this.textToClipboard(URLCombined);
+
+
+      $('#copied').fadeIn(200).delay(0).fadeOut(200)
+    }
+    embedComic= () => {
+
+      // http://127.0.0.1:8080/alliances.html
+      console.log(window.location.href)
+      // var url_string = "http://www.example.com/t.html?JSON=m2-m3-m4-m5"; //window.location.href
+      // var url = new URL(url_string);
+      // var c = url.searchParams.get("JSON");
+      // console.log(c);
+
+      var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/alliances.html?JSON=";
+      // var URLCombined = "http://127.0.0.1:8080?JSON=";
+      URLCombined += JSON.stringify(this.state);
+      URLCombined += "&coding=false"
+
+      var iFrame = `
+      <iframe id="InteractiveComics"
+        title="InteractiveComics"
+        width="300"
+        height="200"
+        src='`+URLCombined+`'>
+      </iframe>
+    `;
+
+    console.log(iFrame);
+    this.textToClipboard(iFrame);
+    $('#copied').fadeIn(200).delay(0).fadeOut(200)
+    }
+    textToClipboard (text) {
+      var dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+  }
     renderComic= () => {
         for (var key in this.state){
             this.setState({[key]: []})
@@ -1182,13 +1244,25 @@ class OverallApp extends React.Component {
 
    }
     render() {
+
+      // console.log(this.state.coding)
+      // var size = (this.state.coding == 'false') ? [0,100] : [0, 100]
+
+      // console.log(size)
           return(
                <div>
-                    
-                    <Split sizes={[30,70]} style={{display: 'flex'}}>
+                    <Split sizes={[30, 70]} style={{display: 'flex'}}>
 
-                        <div>
-                              <button id="go" onMouseDown={this.renderComic}> GO</button>
+                        <div id="editor">
+                          <div id="buttons">
+                              <button id="go" className="boutton" onMouseDown={this.renderComic}> <VscRunAll size={28}/> </button>
+                              <button id="embed" className="boutton" onMouseDown={this.embedComic}> <ImEmbed2 size={28}/></button>
+                              <button id="share" className="boutton" onMouseDown={this.share}> <AiOutlineShareAlt size={28}/></button>
+
+                              <div id="copied" >Copied in clipboard</div>
+
+                          </div>
+                              
                               <AceEditor
                                    onLoad={editorInstance => {
                                         editorInstance.container.style.resize = "both";

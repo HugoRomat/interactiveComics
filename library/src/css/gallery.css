@@ -109,25 +109,53 @@ body{
     position: relative; */
     /* height: 100%; */
 }
-#go{
-    background-color: grey;
-    position: absolute;
-    z-index: 100;
+/* #go{
+    left: 10px;
+}
+#share{
+    left: 70px;
+}
+#embed{
+    left: 130px;
+} */
+#copied{
+    font-size: 30px;
+    background: lightblue;
+    border-radius: 10px;
     padding: 10px;
+    margin-left: 30px;
+    display: none;
+    opacity: 0.7;
+}
+#buttons{
+    position: absolute;
+    display: flex;
+    left: 378px;
+    flex-direction: row;
+    top: 10px;
+    z-index: 100;
+}
+.boutton{
+    background-color: grey;
+    /* position: absolute; */
+    
+    /* padding: 10px; */
     /* padding-bottom: 5px; */
     /* padding-top: 5px; */
     border: none;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     text-align: center;
     text-decoration: none;
     /* display: inline-block; */
-    font-size: 21px;
+    /* font-size: 21px; */
     outline: none;
     cursor: pointer;
-    /* top: 5px; */
-    margin: 10px;
-}
+    margin: 5px;
 
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
 .add{
     cursor: pointer;
     font-size: 80px;
