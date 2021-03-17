@@ -278,7 +278,7 @@ export class EventsPanels {
                 this.unhighlight(element, after, selector)
             }
 
-            if (event.operation == 'loadLayout' && isSatisfied && reverse == false){
+            if (event.operation == 'loadLayout' && isSatisfied && (reverse == false || reverse == undefined)){
                 // console.log('GO')
                 var element = event['element'];
                 var layout = event['layout'];

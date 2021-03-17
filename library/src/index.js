@@ -1140,7 +1140,7 @@ class OverallApp extends React.Component {
           var url_string = window.location.href;
           var url = new URL(url_string);
           var c = url.searchParams.get("JSON");
-          // console.log(c)
+          // TO DECODE THE JSON
           if (c != null) {
             codec('lzma').decompress(c).then(json => { console.log(json); this.wait = true; this.setState(json);})
             
@@ -1151,7 +1151,7 @@ class OverallApp extends React.Component {
           }
 
 
-          if (c!=null) {
+          if (c != null) {
             this.state.coding = url.searchParams.get("coding");
           }
     }
