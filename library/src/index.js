@@ -18,11 +18,13 @@ import { AiOutlineShareAlt } from 'react-icons/ai';
 import { ImEmbed2 } from 'react-icons/im';
 
 
+import * as codec from 'json-url'
+
 class OverallApp extends React.Component {
     constructor(props) {
         super(props);
         
-
+        this.wait = false;
         this.state = {
              classes: [{
                        class: 'countries',
@@ -1139,8 +1141,14 @@ class OverallApp extends React.Component {
           var url = new URL(url_string);
           var c = url.searchParams.get("JSON");
           // console.log(c)
-          if (c != null) this.state = JSON.parse(c)
-          else if (this.props.json != undefined) this.state = this.props.json   
+          if (c != null) {
+            codec('lzma').decompress(c).then(json => { console.log(json); this.wait = true; this.setState(json);})
+            
+          }
+          else if (this.props.json != undefined) {
+            this.state = this.props.json;
+            this.wait = true
+          }
 
 
           if (c!=null) {
@@ -1149,28 +1157,41 @@ class OverallApp extends React.Component {
     }
     componentDidMount(){
       // console.log(this.state.codin)
-     if (this.state.coding == 'false'){
-      $('#editor').css('display', 'none');
-      $('#editor').css('width', '0px');
-      $('#container').css('width', '100%');
-      
-
-      // 
-     }
-
+     
+    //  console.log(codec)
     //  console.log($('#editor').css('width'))
     //  $('#buttons').css('left', 'calc(30% - 34px)');
     }
-    share = () => {
-      var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/alliances.html?JSON=";
-      // var URLCombined = "http://127.0.0.1:8080?JSON=";
-      URLCombined += JSON.stringify(this.state);
-      URLCombined += "&coding=true"
-      this.textToClipboard(URLCombined);
-
-
-      $('#copied').fadeIn(200).delay(0).fadeOut(200)
+    componentDidUpdate(){
+      console.log(this.state.coding)
+      if (this.state.coding == 'false'){
+        $('#editor').css('display', 'none');
+        $('#editor').css('width', '0px');
+        $('#container').css('width', '100%');
+        
+  
+        // 
+       }
     }
+    share = () => {
+      // var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/index.html?JSON=";
+      
+
+      
+      codec('lzma').compress(this.state).then(result => {
+
+        var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/index.html?JSON=";
+        // var URLCombined = "http://127.0.0.1:8080?JSON=";
+        // URLCombined += JSON.stringify(this.state);
+        URLCombined += result
+        URLCombined += "&coding=true"
+        this.textToClipboard(URLCombined);
+        $('#copied').fadeIn(200).delay(0).fadeOut(200)
+      });
+
+      
+    }
+
     embedComic= () => {
 
       // http://127.0.0.1:8080/alliances.html
@@ -1179,24 +1200,28 @@ class OverallApp extends React.Component {
       // var url = new URL(url_string);
       // var c = url.searchParams.get("JSON");
       // console.log(c);
+      // var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/index.html?JSON=";
 
-      var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/alliances.html?JSON=";
-      // var URLCombined = "http://127.0.0.1:8080?JSON=";
-      URLCombined += JSON.stringify(this.state);
-      URLCombined += "&coding=false"
+      codec('lzma').compress(this.state).then(result => {
+        // var URLCombined = "http://127.0.0.1:8080?JSON=";
+        var URLCombined = "https://hugoromat.github.io/interactiveComics/library/dist/index.html?JSON=";
 
-      var iFrame = `
-      <iframe id="InteractiveComics"
-        title="InteractiveComics"
-        width="300"
-        height="200"
-        src='`+URLCombined+`'>
-      </iframe>
-    `;
+        URLCombined += result
+        URLCombined += "&coding=false"
 
-    console.log(iFrame);
-    this.textToClipboard(iFrame);
-    $('#copied').fadeIn(200).delay(0).fadeOut(200)
+          var iFrame = `
+          <iframe id="InteractiveComics"
+            title="InteractiveComics"
+            width="300"
+            height="200"
+            src='`+URLCombined+`'>
+          </iframe>
+        `;
+
+        console.log(iFrame);
+        this.textToClipboard(iFrame);
+        $('#copied').fadeIn(200).delay(0).fadeOut(200)
+      })
     }
     textToClipboard (text) {
       var dummy = document.createElement("textarea");
@@ -1244,61 +1269,64 @@ class OverallApp extends React.Component {
 
    }
     render() {
-
+     
       // console.log(this.state.coding)
       // var size = (this.state.coding == 'false') ? [0,100] : [0, 100]
 
       // console.log(size)
           return(
                <div>
-                    <Split sizes={[30, 70]} style={{display: 'flex'}}>
+                    
+                    {this.wait == true ?
 
-                        <div id="editor">
-                          <div id="buttons">
-                              <button id="go" className="boutton" onMouseDown={this.renderComic}> <VscRunAll size={28}/> </button>
-                              <button id="embed" className="boutton" onMouseDown={this.embedComic}> <ImEmbed2 size={28}/></button>
-                              <button id="share" className="boutton" onMouseDown={this.share}> <AiOutlineShareAlt size={28}/></button>
+                      <Split sizes={[30, 70]} style={{display: 'flex'}}>
 
-                              <div id="copied" >Copied in clipboard</div>
+                          <div id="editor">
+                            <div id="buttons">
+                                <button id="go" className="boutton" onMouseDown={this.renderComic}> <VscRunAll size={28}/> </button>
+                                <button id="embed" className="boutton" onMouseDown={this.embedComic}> <ImEmbed2 size={28}/></button>
+                                <button id="share" className="boutton" onMouseDown={this.share}> <AiOutlineShareAlt size={28}/></button>
 
+                                <div id="copied" >Copied in clipboard</div>
+
+                            </div>
+                                
+                                <AceEditor
+                                    onLoad={editorInstance => {
+                                          editorInstance.container.style.resize = "both";
+                                          // mouseup = css resize end
+                                          document.addEventListener("mouseup", e => (
+                                          editorInstance.resize()
+                                        ));
+                                    }}
+                                    onInput={d => {
+                                        // this.renderComic();
+                                    }}
+                                    onKeyDown={e => {
+                                      console.log(e)
+                                    }}
+
+                                    ref="aceEditor"
+                                    mode="java"
+                                    theme="monokai"
+                                    wrapEnabled={true}
+                                    // onChange={onChange}
+                                    fontSize={12}
+                                    defaultValue={JSON.stringify(this.state, 1, 1)}
+                                    name="hello"
+                                    // editorProps={{ $blockScrolling: false }}
+                                    
+                                    // commands={Beautify.commands}
+                                    style={{width:'100%', height:window.innerHeight+'px'}}
+                                />
                           </div>
+                          <div id="container">
+                              {this.state.panels.length > 0  ? (<App json={this.state}/>) : ( null)}
+
+
                               
-                              <AceEditor
-                                   onLoad={editorInstance => {
-                                        editorInstance.container.style.resize = "both";
-                                        // mouseup = css resize end
-                                        document.addEventListener("mouseup", e => (
-                                        editorInstance.resize()
-                                      ));
-                                   }}
-                                   onInput={d => {
-                                      // this.renderComic();
-                                   }}
-                                   onKeyDown={e => {
-                                    console.log(e)
-                                   }}
-
-                                   ref="aceEditor"
-                                   mode="java"
-                                   theme="monokai"
-                                   wrapEnabled={true}
-                                   // onChange={onChange}
-                                   fontSize={12}
-                                   defaultValue={JSON.stringify(this.state, 1, 1)}
-                                   name="hello"
-                                   // editorProps={{ $blockScrolling: false }}
-                                   
-                                   // commands={Beautify.commands}
-                                   style={{width:'100%', height:window.innerHeight+'px'}}
-                              />
-                        </div>
-                        <div id="container">
-                            {this.state.panels.length > 0 ? (<App json={this.state}/>) : ( null)}
-
-
-                             
-                        </div>
-                    </Split>
+                          </div>
+                      </Split> : null }
                </div>
           );
     }

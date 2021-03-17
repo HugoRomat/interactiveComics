@@ -145,7 +145,7 @@ export class EventsPanels {
         if (trigger == "click"){
             // console.log(idSelector, trigger)
             idSelector.on(trigger, function(d, i){
-                
+                // console.log('CLICK')
                 var isTriggered = d3.select(this).attr('isTriggered')
                 console.log(isTriggered)
                 if (isTriggered == 'false'){
@@ -183,12 +183,12 @@ export class EventsPanels {
 
 
 
-        // console.log(trigger, event.operation)
+        // Pour gerer le mouseover
+        // 
         if (trigger == 'mouseover'){
             idSelector.attr('isTriggered' + trigger, 'false')
-            // console.log(idSelector)
-            idSelector.on('mouseenter', function(d, i){
 
+            idSelector.on('mouseenter', function(d, i){
                 var isTriggered = d3.select(this).attr('isTriggered' + trigger)
                 // console.log('goooo', isTriggered)
                 if (isTriggered == 'false'){
@@ -197,6 +197,7 @@ export class EventsPanels {
                 } 
             })
             idSelector.on('mouseout', function(d, i){
+                // console.log(idPanel, trigger, event, parent);
                 var isTriggered = d3.select(this).attr('isTriggered' + trigger)
                 if (isTriggered == 'true'){
                     that.populateEvent(event, idSelector, true);
@@ -277,7 +278,7 @@ export class EventsPanels {
                 this.unhighlight(element, after, selector)
             }
 
-            if (event.operation == 'loadLayout' && isSatisfied){
+            if (event.operation == 'loadLayout' && isSatisfied && reverse == false){
                 // console.log('GO')
                 var element = event['element'];
                 var layout = event['layout'];

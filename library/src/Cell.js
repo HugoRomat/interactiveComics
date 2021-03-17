@@ -191,11 +191,11 @@ class Cell extends React.Component {
 
             } 
             if (firstCharact == 'htt' && extension == 'svg') {
-                // console.log(that.props.cellData.url)
+                
                 d3.svg(that.props.cellData.url).then(function(xml) {
                     // var width = d3.select(xml.documentElement).attr('width')
                     // var height = d3.select(xml.documentElement).attr('height')
-    
+                    // console.log(that.props.cellData.url)
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
                     d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
     

@@ -13,12 +13,12 @@
 
 <script>
    var JSONFile = {
-	"gutter": 0,
+	"gutter": -2,
 	"currentLayout": "init",
 	"layouts":[
 		{
 			"name":"init",
-			"panels":[["title"],["ozone","methane"],["water"]]
+			"panels":[["title"],["humansPanel"]]
 		}
 	],
 	"panels":[
@@ -26,8 +26,8 @@
 			"id": "title",
 			"url": "https://interactivedatacomics.github.io/tutorials/title.svg"
 		},{
-			"id": "humans",
-			"url": "https://interactivedatacomics.github.io/tutorials/human.svg"
+			"id": "humansPanel",
+			"url": "https://interactivedatacomics.github.io/tutorials/humans.svg"
 		},{
 			"id": "carbon",
 			"url": "https://interactivedatacomics.github.io/tutorials/carbon.svg"
@@ -42,8 +42,56 @@
 			"url": "https://interactivedatacomics.github.io/tutorials/water.svg"
 		},{
 			"id": "oceans",
-			"url": "https://interactivedatacomics.github.io/tutorials/oceans.svg"
+			"url": "https://interactivedatacomics.github.io/tutorials/biodiversity.svg"
+		},{
+			"id": "biodiversity",
+			"url": "https://interactivedatacomics.github.io/tutorials/biodiversity.svg"
 		}
+	], 
+	"operations":[
+	{
+           "trigger": "mouseover",
+           "operation": "loadLayout",
+           "element": "btn-oceans",
+           "layout": ["oceans"],
+           "after": "humansPanel",
+           "group": "group1"
+        },{
+           "trigger": "mouseover",
+           "operation": "loadLayout",
+           "element": "btn-carbon",
+           "layout": ["carbon"],
+           "after": "humansPanel",
+           "group": "group1"
+        },{
+           "trigger": "mouseover",
+           "operation": "loadLayout",
+           "element": "btn-methane",
+           "layout": ["methane"],
+           "after": "humansPanel",
+           "group": "group1"
+        },{
+           "trigger": "mouseover",
+           "operation": "loadLayout",
+           "element": "btn-ozone",
+           "layout": ["ozone"],
+           "after": "humansPanel",
+           "group": "group1"
+        },{
+           "trigger": "mouseover",
+           "operation": "loadLayout",
+           "element": "btn-water",
+           "layout": ["water"],
+           "after": "humansPanel",
+           "group": "group1"
+        },{
+           "trigger": "mouseover",
+           "operation": "loadLayout",
+           "element": "btn-biodiversity",
+           "layout": ["biodiversity"],
+           "after": "humansPanel",
+           "group": "group1"
+        }
 	]
 }
    interactiveComics.start(JSONFile)
