@@ -13,86 +13,37 @@
 
 <script>
    var JSONFile = {
-	"gutter": -2,
-	"currentLayout": "init",
-	"layouts":[
-		{
-			"name":"init",
-			"panels":[["title"],["humansPanel"]]
-		}
-	],
-	"panels":[
-		{
-			"id": "title",
-			"url": "https://interactivedatacomics.github.io/tutorials/title.svg"
-		},{
-			"id": "humansPanel",
-			"url": "https://interactivedatacomics.github.io/tutorials/humans.svg"
-		},{
-			"id": "carbon",
-			"url": "https://interactivedatacomics.github.io/tutorials/carbon.svg"
-		},{
-			"id": "ozone",
-			"url": "https://interactivedatacomics.github.io/tutorials/ozone.svg"
-		},{
-			"id": "methane",
-			"url": "https://interactivedatacomics.github.io/tutorials/methane.svg"
-		},{
-			"id": "water",
-			"url": "https://interactivedatacomics.github.io/tutorials/water.svg"
-		},{
-			"id": "oceans",
-			"url": "https://interactivedatacomics.github.io/tutorials/biodiversity.svg"
-		},{
-			"id": "biodiversity",
-			"url": "https://interactivedatacomics.github.io/tutorials/biodiversity.svg"
-		}
-	], 
-	"operations":[
-	{
-           "trigger": "mouseover",
-           "operation": "loadLayout",
-           "element": "btn-oceans",
-           "layout": ["oceans"],
-           "after": "humansPanel",
-           "group": "group1"
-        },{
-           "trigger": "mouseover",
-           "operation": "loadLayout",
-           "element": "btn-carbon",
-           "layout": ["carbon"],
-           "after": "humansPanel",
-           "group": "group1"
-        },{
-           "trigger": "mouseover",
-           "operation": "loadLayout",
-           "element": "btn-methane",
-           "layout": ["methane"],
-           "after": "humansPanel",
-           "group": "group1"
-        },{
-           "trigger": "mouseover",
-           "operation": "loadLayout",
-           "element": "btn-ozone",
-           "layout": ["ozone"],
-           "after": "humansPanel",
-           "group": "group1"
-        },{
-           "trigger": "mouseover",
-           "operation": "loadLayout",
-           "element": "btn-water",
-           "layout": ["water"],
-           "after": "humansPanel",
-           "group": "group1"
-        },{
-           "trigger": "mouseover",
-           "operation": "loadLayout",
-           "element": "btn-biodiversity",
-           "layout": ["biodiversity"],
-           "after": "humansPanel",
-           "group": "group1"
-        }
-	]
+ "gutter": 10,
+ "currentLayout": "init",
+ "layouts": [
+  {
+   "name": "init",
+   "panels": [
+    [
+     "full_dog"
+    ]
+   ]
+  }
+ ],
+ "panels": [
+  {
+   "id": "full_dog",
+   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog.svg"
+  }
+ ],
+ "operations": [
+  {
+  "trigger": "mouseover",
+   "element": "tummy",
+   "operation": "highlight",
+   "after": {
+      "style": {
+        "fill": "black",
+        "stroke": "red"
+      }
+    }
+  }
+ ]
 }
    interactiveComics.start(JSONFile)
    console.log()
