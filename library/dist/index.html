@@ -13,35 +13,58 @@
 
 <script>
    var JSONFile = {
- "gutter": 10,
+ "gutter": 20,
  "currentLayout": "init",
  "layouts": [
-  {
-   "name": "init",
-   "panels": [
-    [
-     "full_dog"
-    ]
-   ]
-  }
- ],
+    {
+      "name": "init",
+      "panels": [
+      [
+        "full_dog"
+      ]
+     ]
+    }
+  ],
  "panels": [
-  {
-   "id": "full_dog",
-   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog.svg"
-  }
+    {
+      "id": "full_dog",
+      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog.svg"
+    },
+    {
+      "id": "full_dog-tum",
+      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog-tum.svg"
+    }
  ],
  "operations": [
   {
-  "trigger": "mouseover",
-   "element": "tummy",
-   "operation": "highlight",
-   "after": {
+    "trigger": "mouseover",
+    "element": "tummy",
+    "operation": "highlight",
+    "after": {
       "style": {
-        "fill": "black",
-        "stroke": "red"
-      }
+        "fill": "blue"
+        }
     }
+  },
+  {
+    "trigger": "mouseover",
+    "element": "Nose",
+    "operation": "highlight",
+    "after": {
+      "style": {
+        "stroke": "blue",
+        "fill": "red"
+        }
+    }
+  },
+  {
+    "trigger": "click",
+    "element": "tummy",
+    "operation": "replace",
+    "replace": "full_dog",
+    "newpanels": [
+      "full_dog-tum"
+    ]
   }
  ]
 }

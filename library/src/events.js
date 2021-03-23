@@ -392,15 +392,38 @@ export class EventsPanels {
             // console.log()
             if (this.objectsAttributes[element][k] != undefined){
                 var items = this.objectsAttributes[element][k].getElementsByTagName("*");
-                // console.log(childNodesInterface, items)
+                // console.log(items)
                 for (var i = items.length; i--;) {
                     var itemWithoutCSS = items[i];
                     var itemInterface = childNodesInterface[i];
                     // console.log($(itemWithoutCSS).attr('style'))
                     // console.log($(itemInterface).attr('style'))
                     itemInterface.style.cssText = $(itemWithoutCSS).attr('style')
+
+                    
+                    // for (var aInitial in itemWithoutCSS.attributes){
+                    //     itemInterface.setAttribute(aInitial, itemWithoutCSS.attributes[aInitial]);
+                    //     console.log(aInitial)
+                    // }
+
+                    // console.log(this.objectsAttributes[element][k].attributes)
                 }
+                // console.log(nodeInterface, this.objectsAttributes[element][k])
+                // console.log($(this.objectsAttributes[element][k]).attr('style'))
                 nodeInterface.style.cssText = $(this.objectsAttributes[element][k]).attr('style')
+
+                // var arrayName = ['isTriggered','isTriggeredmouseover','getNamedItem','getNamedItemNS','item','class', 'removeNamedItem','removeNamedItemNS','setNamedItem','setNamedItemNS']
+                // for (var aInitialIndex in this.objectsAttributes[element][k].attributes){
+                //     var name = this.objectsAttributes[element][k].attributes[aInitialIndex]['name'];
+                //     var value = this.objectsAttributes[element][k].attributes[aInitialIndex]['value'];
+                   
+                //     if (arrayName.indexOf(name) == -1 && name!= undefined) {
+                //         // console.log(name, value)
+                //         // nodeInterface.setAttribute(name, value);
+                //     }
+                    
+                // }
+
             }
             
         }
@@ -409,17 +432,23 @@ export class EventsPanels {
     }
     highlight(element, after, idSelector){
         // console.log('HIGHLIGHT')
-
+        this.objectsAttributes[element] = []
         // if ()
         var elementDOM = idSelector.nodes();
 
+        // console.log(elementDOM)
+        // To push elements in the array
         for (var i in elementDOM){
             var cloned = elementDOM[i].cloneNode(true);
-            $(cloned).attr('class', '');
+            // $(cloned).attr('class', '');
             if (this.objectsAttributes[element] == undefined) this.objectsAttributes[element] = []
+            // console.log(cloned)
             this.objectsAttributes[element].push(cloned)
-            
+
+            // console.log(cloned)
         }
+
+        // Generate highlight 
         for (var key in after.style){
             // console.log(idSelector.node(), key, after.style[key])
             idSelector.selectAll('*').each(function(){
@@ -434,16 +463,20 @@ export class EventsPanels {
             })
         }
         for (var key in after.attr){
-            // console.log(idSelector.node(), key, after.style[key])
+            console.log(key)
             idSelector.selectAll('*').attr(key, after.style[key])
             idSelector.attr(key, after.style[key])
         }
 
-        // console.log(this.objectsAttributes[0])
+        // console.log(JSON.parse(JSON.stringify(this.objectsAttributes)))
         //.cloneNode(true);
         // console.log(elementDOM)
         // REMOVE CLASS OF THE FICTIVE ELEMENT 
-        
+        // for (var k in this.objectsAttributes){
+        //     for (var i in this.objectsAttributes[k]){
+        //         console.log(this.objectsAttributes[k][i])
+        //     }
+        // }
 
     }
     replace(where, what, isFlex){
