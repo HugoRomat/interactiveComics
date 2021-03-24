@@ -13,60 +13,34 @@
 
 <script>
    var JSONFile = {
- "gutter": 20,
+ "gutter": 0,
  "currentLayout": "init",
  "layouts": [
-    {
-      "name": "init",
-      "panels": [
-      [
-        "full_dog"
-      ]
-     ]
-    }
-  ],
- "panels": [
-    {
-      "id": "full_dog",
-      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog.svg"
-    },
-    {
-      "id": "full_dog-tum",
-      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog-tum.svg"
-    }
- ],
- "operations": [
   {
-    "trigger": "mouseover",
-    "element": "tummy",
-    "operation": "highlight",
-    "after": {
-      "style": {
-        "fill": "blue"
-        }
-    }
-  },
-  {
-    "trigger": "mouseover",
-    "element": "Nose",
-    "operation": "highlight",
-    "after": {
-      "style": {
-        "stroke": "blue",
-        "fill": "red"
-        }
-    }
-  },
-  {
-    "trigger": "click",
-    "element": "tummy",
-    "operation": "replace",
-    "replace": "full_dog",
-    "newpanels": [
-      "full_dog-tum"
-    ]
+   "name": "init",
+   "panels": [
+    ["p0"],[ "p1"]
+    
+    
+   ]
   }
- ]
+ ],
+ "panels": [
+ {
+   "id": "p0",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/top.svg"
+  },
+  {
+    "id": "p1",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
+  }
+ ],
+ "operations": [{
+   "trigger": "click",
+   "element": ["Group_103", "long"],
+   "operation": "loadLayers",
+   "layer": ["triple-alliance", "triple-entente"]
+  }]
 }
    interactiveComics.start(JSONFile)
    console.log()

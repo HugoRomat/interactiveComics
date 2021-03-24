@@ -198,6 +198,23 @@ class Cell extends React.Component {
                     // console.log(that.props.cellData.url)
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
                     d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
+
+                    $(DOM).append(that.parseSVG(`
+                    <defs>
+                        <filter id="dropshadow" width="130%" height="130%">
+                        <feOffset result="offOut" in="SourceGraphic" dx="5" dy="5"></feOffset>
+                        <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                        values="0 0 0 0 1
+                                0 0 0 0 0
+                                0 0 0 0 0 
+                                0 0 0 1 0" />
+                        <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="2"></feGaussianBlur>
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
+                    </filter>
+                </defs>
+                `)
+                    
+                    );
     
                     if (that.props.cellData.content != undefined){
                         d3.select("#"+ that.props.cellData.id).select('svg').selectAll('*').remove();
@@ -206,6 +223,8 @@ class Cell extends React.Component {
     
                     var id = $("#"+ that.props.cellData.id).attr('id')
                     $("#"+ that.props.cellData.id).addClass(id);
+
+                    // console.log('GOOOOO')
                     resolve(true)
                 })
             }
@@ -221,7 +240,14 @@ class Cell extends React.Component {
             } 
         })
     }
-    
+    parseSVG(s) {
+        var div= document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+        div.innerHTML= '<svg xmlns="http://www.w3.org/2000/svg">'+s+'</svg>';
+        var frag= document.createDocumentFragment();
+        while (div.firstChild.firstChild)
+            frag.appendChild(div.firstChild.firstChild);
+        return frag;
+    }
     render() {
         var that = this;
         let svg;

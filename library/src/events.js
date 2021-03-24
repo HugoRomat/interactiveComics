@@ -4,6 +4,7 @@ import { useThumbOverlap } from 'react-range';
 import { select } from 'd3';
 import $ from 'jquery';
 import update from 'immutability-helper';
+import { uuidv4 } from './helper';
 
 export class EventsPanels { 
     constructor(appTontext, state){
@@ -37,11 +38,43 @@ export class EventsPanels {
     // Group operations
     // parent to init only in one panel
     init(parent){
+        // console.log('FO')
         //groupByElement
+        var i = 0
+        for (var operation in this.state.operations){
+            var ope = this.state.operations[operation];
+            if (ope.element.length > 1){
+                i =0
+                var groupName = uuidv4() 
+                for (var element in ope.element){
+                    var el = ope.element[element];
+                    // console.log(el)
+                    if (element == ope.element.length-1){
+                        var json = ope;
+                        json.element = el;
+                        json.layer = ope.layer[i];
+                        json.group = groupName
+                    } else {
+                        var json = JSON.parse(JSON.stringify(ope));
+                        console.log(json)
+                        json.element = el;
+                        json.layer = ope.layer[i]
+                        json.group = groupName
+                        this.state.operations.push(json)
+                    }
+                    i++
+                    
+                }
+            }
+            
+        }
+        // console.log(this.state.operations)
         var objectGrouped = _.groupBy(this.state.operations, "element");
         var keys = Object.keys(objectGrouped)
+
+
         
-        console.log(objectGrouped)
+        console.log(this.state.operations)
         // grouped by panel trigerring and panel
         for (var i in keys){
             var idPanel = keys[i];
@@ -60,6 +93,8 @@ export class EventsPanels {
                 // if (trigger == "condition") this.setEventsCondition(operationTrigger[trigger])
                 // console.log(idPanel, trigger, operationTrigger[trigger])
                 if (trigger != 'undefined') this.setEvents(idPanel, trigger, operationTrigger[trigger], parent)
+
+                // console.log(operationTrigger[trigger])
             }
         }
     }
@@ -135,6 +170,10 @@ export class EventsPanels {
         else if (idPanel == parent) idSelector = d3.select('.'+ idPanel)
         else idSelector = d3.select('.'+parent).selectAll('.'+ idPanel)
 
+
+        // idSelector.style('filter', 'url(#shadowSuggestInteractivity)')
+        // idSelector.attr('filter', "url(#dropshadow)")
+        // filter="url(#filter1)"
         // var sentence = '.'+parent + ' .'+ idPanel
         // console.log(idSelector, parent, idPanel)
         // console.log($('.'+parent + ' .'+ idPanel).get()[0])
@@ -143,7 +182,7 @@ export class EventsPanels {
         idSelector.attr('isTriggered', 'false')
         
         if (trigger == "click"){
-            // console.log(idSelector, trigger)
+            // console.log(idSelector.node(), trigger)
             idSelector.on(trigger, function(d, i){
                 // console.log('CLICK')
                 var isTriggered = d3.select(this).attr('isTriggered')
@@ -151,6 +190,8 @@ export class EventsPanels {
                 if (isTriggered == 'false'){
                     d3.select(this).attr('isTriggered', 'true')
                     
+
+
                     that.populateEvent(event, idSelector);
                 }
                 
@@ -298,6 +339,22 @@ export class EventsPanels {
                    
                 // }, 500)
             }
+
+            if (event.operation == 'loadLayers' && isSatisfied && (reverse == false || reverse == undefined)){
+                console.log('GO', event)
+                var element = event['element'];
+                var layer = event['layer'];
+                var group = event['group'];
+                // // if (where == undefined) where = element
+
+                // // console.log(where)
+                this.loadLayer(element, layer, group);
+                // setTimeout(()=>{
+                //     this.appendEventsToPanels(JSON.parse(JSON.stringify(layout)));
+                // }, 500)
+                
+                idSelector.attr('isTriggered', 'false')
+            }
             if (event.operation == 'zoom' && isSatisfied){
                 var element = event['element'];
                 var linked = event['linked'];
@@ -325,6 +382,17 @@ export class EventsPanels {
     zoom(element, layout){
         console.log(element, layout)
 
+    }
+    loadLayer(element, layer, group){
+        var sameGroup = this.state.operations.filter(x => x.group == group);
+        var elementObj = this.state.operations.find(x => x.element == element);
+        // console.log(sameGroup, elementObj)
+
+        for (var i in sameGroup){
+            var gr = sameGroup[i];
+            d3.selectAll('.' + gr.layer).style('opacity', 0)
+        }
+        d3.selectAll('.' + elementObj.layer).style('opacity', 1)
     }
     loadLayout(element, layout, where, group){
 
@@ -453,13 +521,15 @@ export class EventsPanels {
             // console.log(idSelector.node(), key, after.style[key])
             idSelector.selectAll('*').each(function(){
                 var node = d3.select(this).node()
-                if (node.tagName == 'path' && key == 'fill') d3.select(this).style('stroke', after.style[key])
-                else d3.select(this).style(key, after.style[key])
+                // if (node.tagName == 'path' && key == 'fill') d3.select(this).style('stroke', after.style[key])
+                // else 
+                d3.select(this).style(key, after.style[key])
             })
             idSelector.each(function(){
                 var node = d3.select(this).node()
-                if (node.tagName == 'path'  && key == 'fill') d3.select(this).style('stroke', after.style[key])
-                else d3.select(this).style(key, after.style[key])
+                // if (node.tagName == 'path'  && key == 'fill') d3.select(this).style('stroke', after.style[key])
+                // else 
+                d3.select(this).style(key, after.style[key])
             })
         }
         for (var key in after.attr){
