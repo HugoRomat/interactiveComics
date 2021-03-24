@@ -39,9 +39,9 @@ class App extends React.Component {
                     item.elements.forEach((id)=>{
 
                          
-                         $(id).addClass(item.class);
+                         $('.' + id).addClass(item.class);
                          // d3.select(id).attr('class', item.class)
-                         // console.log(id)
+                         // console.log(id, item.class, $('.' + id).get())
                     })
      
                })

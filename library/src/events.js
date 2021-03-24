@@ -12,7 +12,7 @@ export class EventsPanels {
         this.stateApp = appTontext;
         this.objectsAttributes = {}
 
-    console.log(this.state)
+        console.log(this.state)
        this.layout = this.state.layouts.find(x => x.name == this.state.currentLayout)
        console.log(this.layout)
 
@@ -43,7 +43,9 @@ export class EventsPanels {
         var i = 0
         for (var operation in this.state.operations){
             var ope = this.state.operations[operation];
-            if (ope.element.length > 1){
+            // console.log(ope)
+            if (Array.isArray(ope.element)){
+            // if (ope.element.length > 1){
                 i =0
                 var groupName = uuidv4() 
                 for (var element in ope.element){

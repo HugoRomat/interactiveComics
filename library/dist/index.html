@@ -15,31 +15,38 @@
    var JSONFile = {
  "gutter": 0,
  "currentLayout": "init",
+ "classes": [{
+    "class": "France",
+    "elements":["France-t", "France-c"]
+  }, {
+    "class": "US",
+    "elements":["US-t", "US-c"]
+  },{
+    "class": "Germany",
+    "elements":["Germany-t", "Germany-c"]
+  },{
+    "class": "Spain",
+    "elements":["Spain-t", "Spain-c"]
+  }],
  "layouts": [
   {
    "name": "init",
    "panels": [
-    ["p0"],[ "p1"]
-    
-    
+    ["p0"]
    ]
   }
  ],
  "panels": [
  {
    "id": "p0",
-   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/top.svg"
-  },
-  {
-    "id": "p1",
-   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/alliances/A.svg"
+   "url": "C02chart.svg"
   }
  ],
  "operations": [{
-   "trigger": "click",
-   "element": ["Group_103", "long"],
+   "trigger": "mouseover",
+   "element": ["US-b", "Germany-b", "France-b", "Spain-b"],
    "operation": "loadLayers",
-   "layer": ["triple-alliance", "triple-entente"]
+   "layer": ["US", "Germany", "France", "Spain"]
   }]
 }
    interactiveComics.start(JSONFile)

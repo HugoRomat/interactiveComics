@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+ "gutter": 20,
+ "currentLayout": "init",
+ "layouts": [
+    {
+      "name": "init",
+      "panels": [
+        ["dog"]
+      ]
+    },
+    {
+        "name": "tum",
+        "panels": [
+            ["panels-tummy"]
+        ]
+    },
+    {
+        "name": "nose",
+        "panels": [
+            ["panels-nose"]
+        ]
+    }
+  ],
+ "panels": [
+    {
+      "id": "dog",
+      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog.svg"
+    },
+    {
+      "id": "dog-tum",
+      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog-tum.svg"
+    },
+    {
+      "id": "dog-nose",
+      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog-nose.svg"
+    },
+    {
+      "id": "panels-nose",
+      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/panels-nose.svg"
+    },
+    {
+      "id": "panels-tummy",
+      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/panels-tummy.svg"
+    }
+ ],
+ "operations": [
+  {
+    "trigger": "click",
+    "element": "tummy",
+    "operation": "loadLayout",
+    "layout": [["panels-tummy"]],
+    "after": "dog",
+    "group": "group1"
+  },
+  {
+    "trigger": "click",
+    "element": "nose",
+    "operation": "loadLayout",
+    "layout": [["panels-nose"]],
+    "after": "dog",
+    "group": "group1"
+  }
+ ]
+}
+   interactiveComics.start(JSONFile)
+   console.log()
+ </script>
+</html>
