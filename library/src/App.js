@@ -318,6 +318,7 @@ class App extends React.Component {
                                              cellData={cellData}
                                              key={id}
                                              debug={this.state.debug}
+                                             showInteraction={this.state.showInteraction}
                                              // event={event}
                                              changeLayout={this.changeLayout}
                                              updateVariable={this.updateVariable}

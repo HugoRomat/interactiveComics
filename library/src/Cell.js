@@ -236,22 +236,32 @@ class Cell extends React.Component {
     }
     appendShadow(DOM){
         var that = this;
-        $(DOM).append(that.parseSVG(`
-                    <defs>
-                        <filter id="dropshadowCustom" width="130%" height="130%">
-                        <feOffset result="offOut" in="SourceGraphic" dx="5" dy="5"></feOffset>
-                        <feColorMatrix result="matrixOut" in="offOut" type="matrix"
-                        values="0 0 0 0 1
-                                0 0 0 0 0
-                                0 0 0 0 0 
-                                0 0 0 1 0" />
-                        <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="2"></feGaussianBlur>
-                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
-                    </filter>
-                </defs>
-                `)
-                    
-                    );
+        // (IsItMuted === true) ? 'On' : 'Off';
+        if (this.props.showInteraction != undefined && this.props.showInteraction != false){
+            console.log(d3.color(this.props.showInteraction))
+            var R = (d3.color(this.props.showInteraction).r /255 != Infinity) ? d3.color(this.props.showInteraction).r/255: 0;
+            var G = (d3.color(this.props.showInteraction).g /255 != Infinity) ? d3.color(this.props.showInteraction).g/255: 0;
+            var B = (d3.color(this.props.showInteraction).b /255 != Infinity) ? d3.color(this.props.showInteraction).b/255: 0;
+
+            console.log(R, G, B)
+            $(DOM).append(that.parseSVG(`
+            <defs>
+                <filter id="dropshadowCustom" width="130%" height="130%">
+                <feOffset result="offOut" in="SourceGraphic" dx="5" dy="5"></feOffset>
+                <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                values="0 0 0 0 `+R+`
+                        0 0 0 0 `+G+`
+                        0 0 0 0 `+B+`
+                        0 0 0 1 0" />
+                <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="2"></feGaussianBlur>
+                <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
+            </filter>
+        </defs>
+        `)
+            
+            );
+        }
+        
     }
     parseSVG(s) {
         var div= document.createElementNS('http://www.w3.org/1999/xhtml', 'div');

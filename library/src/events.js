@@ -184,9 +184,9 @@ export class EventsPanels {
 
 
         // idSelector.style('filter', 'url(#shadowSuggestInteractivity)')
-        if (this.state.showInteraction != undefined && this.state.showInteraction == true) {
+        if (this.state.showInteraction != undefined && this.state.showInteraction != false) {
             idSelector.attr('filter', "url(#dropshadowCustom)")
-            console.log('GOOOO')
+            // console.log('GOOOO')
         }
         // filter="url(#filter1)"
         // var sentence = '.'+parent + ' .'+ idPanel
