@@ -43,24 +43,34 @@ export class EventsPanels {
         var i = 0
         for (var operation in this.state.operations){
             var ope = this.state.operations[operation];
-            // console.log(ope)
-            if (Array.isArray(ope.element)){
+            console.log(ope)
+
+            //GET THE ARRAYS
+            var arraysElements = null
+            for (var key in ope){
+                if (Array.isArray(ope[key]) && key != element){
+                    arraysElements = key;
+                }
+            }
+            // console.log(arraysElements)
+            if (arraysElements != null){
             // if (ope.element.length > 1){
-                i =0
+                i = 0
                 var groupName = uuidv4() 
                 for (var element in ope.element){
                     var el = ope.element[element];
-                    // console.log(el)
+                    // console.log(ope)
+
                     if (element == ope.element.length-1){
                         var json = ope;
                         json.element = el;
-                        json.layer = ope.layer[i];
+                        json[arraysElements] = ope[arraysElements][i];
                         json.group = groupName
                     } else {
                         var json = JSON.parse(JSON.stringify(ope));
-                        console.log(json)
+                        // console.log(json)
                         json.element = el;
-                        json.layer = ope.layer[i]
+                        json[arraysElements] = ope[arraysElements][i]
                         json.group = groupName
                         this.state.operations.push(json)
                     }
@@ -174,7 +184,10 @@ export class EventsPanels {
 
 
         // idSelector.style('filter', 'url(#shadowSuggestInteractivity)')
-        // idSelector.attr('filter', "url(#dropshadow)")
+        if (this.state.showInteraction != undefined && this.state.showInteraction == true) {
+            idSelector.attr('filter', "url(#dropshadowCustom)")
+            console.log('GOOOO')
+        }
         // filter="url(#filter1)"
         // var sentence = '.'+parent + ' .'+ idPanel
         // console.log(idSelector, parent, idPanel)
@@ -357,6 +370,17 @@ export class EventsPanels {
                 
                 idSelector.attr('isTriggered', 'false')
             }
+
+            if (event.operation == 'jump' && isSatisfied && (reverse == false || reverse == undefined)){
+                console.log('GO', event)
+                var element = event['element'];
+                var target = event['target'];
+                var group = event['group'];
+
+                this.jump(element, target, group);
+                
+                idSelector.attr('isTriggered', 'false')
+            }
             if (event.operation == 'zoom' && isSatisfied){
                 var element = event['element'];
                 var linked = event['linked'];
@@ -395,6 +419,10 @@ export class EventsPanels {
             d3.selectAll('.' + gr.layer).style('opacity', 0)
         }
         d3.selectAll('.' + elementObj.layer).style('opacity', 1)
+    }
+    jump(element, target, group){
+        var positionTarget = d3.select('.'+target).node().getBoundingClientRect();
+        d3.select('#container').node().scrollTop = positionTarget.y;
     }
     loadLayout(element, layout, where, group){
 

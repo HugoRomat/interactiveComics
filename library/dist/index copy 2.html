@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+ "gutter": 0,
+ "currentLayout": "init",
+ 'showInteraction': true,
+ "classes": [{
+    "class": "France",
+    "elements":["France-t", "France-c"]
+  }, {
+    "class": "US",
+    "elements":["US-t", "US-c"]
+  },{
+    "class": "Germany",
+    "elements":["Germany-t", "Germany-c"]
+  },{
+    "class": "Spain",
+    "elements":["Spain-t", "Spain-c"]
+  }],
+ "layouts": [
+  {
+   "name": "init",
+   "panels": [
+    ["p0"]
+   ]
+  }
+ ],
+ "panels": [
+ {
+   "id": "p0",
+   "url": "C02chart.svg"
+  }
+ ],
+ "operations": [{
+   "trigger": "mouseover",
+   "element": ["US-b", "Germany-b", "France-b", "Spain-b"],
+   "operation": "loadLayers",
+   "layer": ["US", "Germany", "France", "Spain"]
+  }]
+}
+   interactiveComics.start(JSONFile)
+   console.log()
+ </script>
+</html>

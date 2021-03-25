@@ -13,41 +13,47 @@
 
 <script>
    var JSONFile = {
- "gutter": 0,
+ "gutter": 20,
  "currentLayout": "init",
- "classes": [{
-    "class": "France",
-    "elements":["France-t", "France-c"]
-  }, {
-    "class": "US",
-    "elements":["US-t", "US-c"]
-  },{
-    "class": "Germany",
-    "elements":["Germany-t", "Germany-c"]
-  },{
-    "class": "Spain",
-    "elements":["Spain-t", "Spain-c"]
-  }],
  "layouts": [
   {
    "name": "init",
-   "panels": [
-    ["p0"]
-   ]
+   "panels": [["p1"],["p2","p3_1"],["p4"],["p5","p6"],["p7"]]
   }
  ],
  "panels": [
- {
-   "id": "p0",
-   "url": "C02chart.svg"
+  {
+   "id": "p1",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Intro.png",
+  "width": '1000'
+  },
+  {
+   "id": "p2",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Slider.png"
+  },
+  {
+   "id": "p3_1",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap1.png"
+  },
+  {
+   "id": "p4",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Underwater.png"
+  },
+  {
+   "id": "p5",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Zoom.png"
+  },
+  {
+   "id": "p6",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Rain.png"
+  },
+  {
+   "id": "p7",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/End.png"
   }
  ],
- "operations": [{
-   "trigger": "mouseover",
-   "element": ["US-b", "Germany-b", "France-b", "Spain-b"],
-   "operation": "loadLayers",
-   "layer": ["US", "Germany", "France", "Spain"]
-  }]
+ "operations": [
+ ]
 }
    interactiveComics.start(JSONFile)
    console.log()

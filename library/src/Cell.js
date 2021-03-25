@@ -8,6 +8,7 @@ import $ from 'jquery';
 import shallowCompare from 'react-addons-shallow-compare';
 import { CSSTransition, Transition } from 'react-transition-group';
 import { uuidv4 } from './helper';
+import { autoType } from 'd3';
 
 class Cell extends React.Component {
     constructor(props) {
@@ -169,6 +170,8 @@ class Cell extends React.Component {
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
                     // console.log(d3.select("#panel_"+ that.props.cellData.id).node(), "panel_"+ that.props.cellData.id)
                     d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
+
+                    that.appendShadow(DOM)
     
                     if (that.props.cellData.content != undefined){
                         d3.select("#"+ that.props.cellData.id).select('svg').selectAll('*').remove();
@@ -181,7 +184,9 @@ class Cell extends React.Component {
                 })
             } 
             if (firstCharact != 'htt' && (extension == 'png' || extension == 'jpg')) {
-                $("#"+ that.props.cellData.id).append("<img width='400px' src='images/"+  that.props.cellData.url +"'/>")
+                // console.log(that.props.cellData)
+                // if (that.props.cellData )
+                $("#"+ that.props.cellData.id).append("<img src='images/"+  that.props.cellData.url +"'/>")
 
 
                 var id = $("#"+ that.props.cellData.id).attr('id')
@@ -199,22 +204,7 @@ class Cell extends React.Component {
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
                     d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
 
-                    $(DOM).append(that.parseSVG(`
-                    <defs>
-                        <filter id="dropshadow" width="130%" height="130%">
-                        <feOffset result="offOut" in="SourceGraphic" dx="5" dy="5"></feOffset>
-                        <feColorMatrix result="matrixOut" in="offOut" type="matrix"
-                        values="0 0 0 0 1
-                                0 0 0 0 0
-                                0 0 0 0 0 
-                                0 0 0 1 0" />
-                        <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="2"></feGaussianBlur>
-                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
-                    </filter>
-                </defs>
-                `)
-                    
-                    );
+                    that.appendShadow(DOM)
     
                     if (that.props.cellData.content != undefined){
                         d3.select("#"+ that.props.cellData.id).select('svg').selectAll('*').remove();
@@ -229,7 +219,11 @@ class Cell extends React.Component {
                 })
             }
             if (firstCharact == 'htt' && (extension == 'png' || extension == 'jpg')) {
-                $("#"+ that.props.cellData.id).append("<img width='400px' src='"+  that.props.cellData.url +"'/>")
+                // console.log(that.props.cellData)
+                var width = null
+                if (that.props.cellData.width == undefined) width = 'auto'
+                else width = that.props.cellData.width + 'px'
+                $("#"+ that.props.cellData.id).append("<img width='"+width+"' src='"+  that.props.cellData.url +"'/>")
 
 
                 var id = $("#"+ that.props.cellData.id).attr('id')
@@ -239,6 +233,25 @@ class Cell extends React.Component {
 
             } 
         })
+    }
+    appendShadow(DOM){
+        var that = this;
+        $(DOM).append(that.parseSVG(`
+                    <defs>
+                        <filter id="dropshadowCustom" width="130%" height="130%">
+                        <feOffset result="offOut" in="SourceGraphic" dx="5" dy="5"></feOffset>
+                        <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                        values="0 0 0 0 1
+                                0 0 0 0 0
+                                0 0 0 0 0 
+                                0 0 0 1 0" />
+                        <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="2"></feGaussianBlur>
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
+                    </filter>
+                </defs>
+                `)
+                    
+                    );
     }
     parseSVG(s) {
         var div= document.createElementNS('http://www.w3.org/1999/xhtml', 'div');

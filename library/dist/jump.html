@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+ "gutter": 0,
+ "currentLayout": "init",
+ 'showInteraction': true,
+ "classes": [],
+ "layouts": [
+  {
+   "name": "init",
+   "panels": [
+    ["p0"], ["p1"], ["p2"]
+   ]
+  }
+ ],
+ "panels": [
+ {
+   "id": "p0",
+   "url": "1.svg"
+  },
+  {
+   "id": "p2",
+   "url": "2.svg"
+  },
+  {
+   "id": "p1",
+   "url": "3.svg"
+  }
+ ],
+ "operations": [{
+   "trigger": "click",
+   "operation": "jump",
+   "element": ["down", "up"],
+   "target": ["p2", "p0"]
+  }]
+}
+   interactiveComics.start(JSONFile)
+   console.log()
+ </script>
+</html>
