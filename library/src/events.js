@@ -43,7 +43,7 @@ export class EventsPanels {
         var i = 0
         for (var operation in this.state.operations){
             var ope = this.state.operations[operation];
-            console.log(ope)
+            // console.log(ope)
 
             //GET THE ARRAYS
             var arraysElements = null
@@ -53,7 +53,7 @@ export class EventsPanels {
                 }
             }
             // console.log(arraysElements)
-            if (arraysElements != null){
+            if (arraysElements != null && Array.isArray(ope['element'])){
             // if (ope.element.length > 1){
                 i = 0
                 var groupName = uuidv4() 
