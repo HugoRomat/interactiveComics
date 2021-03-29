@@ -14,6 +14,7 @@ import $ from 'jquery';
 import Split from 'react-split';
 import { EventsPanels } from "./events";
 import { Slider } from './slider.js';
+import { uuidv4 } from './helper.js';
 
 // import operator from 'operator';
 
@@ -28,7 +29,21 @@ class App extends React.Component {
 
 
           this.isMounted_ = false;
+         
+
+
+
+          // this.state.panels = this.state.panels.map(obj=> ({ ...obj, idTemp : uuidv4() }))
+          // this.state.panels.forEach((item)=>{
+          //      item.idTemp = uuidv4();
+
+          // })
+
+          // console.log(this.state.panels)
+
           this.panels = JSON.parse(JSON.stringify(this.state.panels));
+
+
      }
      // Change id to class
      createClasses(){
@@ -47,8 +62,9 @@ class App extends React.Component {
                })
           }
 
-          // REMOVE ALL FILTER ATTRIBUTES
+          // create unique ID
 
+         
          
      }
      updateIsotype(){
@@ -292,7 +308,7 @@ class App extends React.Component {
      render() {
           
           var comicRendering = null;
-          // console.log(this.state.panels, this.state.layout.arrangment)
+          console.log(this.state.layouts)
           if (this.state.layouts.length != 0){
                var layout = this.state.layouts.find(x => x.name == this.state.currentLayout)
                // console.log(layout)
@@ -305,9 +321,18 @@ class App extends React.Component {
                                    var cellData = [];
                                    if (Array.isArray(cell)) cell.forEach((d)=> cellData.push(this.panels.find(x => x.id == d)))
                                    else cellData = this.panels.find(x => x.id == cell)
-                                   // console.log(cellData)
+                                   // console.log(cellData, cell)
+                                   // console.log(this.panels)\\
+
+                                   cellData = JSON.parse(JSON.stringify(cellData))
+                                   
+                                   var isDuplicate = layout.panels.flat(2).filter(x => x == cell)
+                                   console.log(isDuplicate)
+                                   // var id = (Array.isArray(cell)) ? cellData.map((d=> d.idTemp)).join() : cellData.idTemp;
                                    var id = (Array.isArray(cell)) ? cell.join() : cell;
-                                   // console.log(id)
+
+                                   if (isDuplicate.length > 1 && !(Array.isArray(cell))) id = indexCell
+                                   console.log(id)
                                    return ( 
                                         <Cell  
                                              // h="100"

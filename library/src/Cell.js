@@ -16,6 +16,7 @@ class Cell extends React.Component {
 
         this.state = { values: [50], sliders: null, isotype: [], mounted: false };
         this.slidersPosition = [];
+        this.myRef = React.createRef();
         
     }
     componentWillUnmount(){
@@ -53,7 +54,7 @@ class Cell extends React.Component {
         var that = this;
         
         // console.log(that.props)
-        // console.log('CREATE ', this.props.cell)
+        console.log('CREATE ', this.props.cellData)
         if (that.props.cellData.url != undefined){
             this.loadingImage().then(()=> {
 
@@ -154,6 +155,8 @@ class Cell extends React.Component {
     loadingImage(){
         var that = this;
 
+        var node = this.myRef.current;
+
         return new Promise((resolve, reject) => {
             //.attr("viewBox", "0 0 700 500")
                 // .attr("preserveAspectRatio", "xMinYMin meet")
@@ -169,28 +172,28 @@ class Cell extends React.Component {
     
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
                     // console.log(d3.select("#panel_"+ that.props.cellData.id).node(), "panel_"+ that.props.cellData.id)
-                    d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
+                    d3.select(node).node().appendChild(DOM);
 
                     that.appendShadow(DOM)
     
                     if (that.props.cellData.content != undefined){
-                        d3.select("#"+ that.props.cellData.id).select('svg').selectAll('*').remove();
-                        $("#"+ that.props.cellData.id).addClass('noBorder');
+                        d3.select(node).select('svg').selectAll('*').remove();
+                        $(node).addClass('noBorder');
                     }
     
-                    var id = $("#"+ that.props.cellData.id).attr('id')
-                    $("#"+ that.props.cellData.id).addClass(id);
+                    var id = $(node).attr('id')
+                    $(node).addClass(id);
                     resolve(true)
                 })
             } 
             if (firstCharact != 'htt' && (extension == 'png' || extension == 'jpg')) {
                 // console.log(that.props.cellData)
                 // if (that.props.cellData )
-                $("#"+ that.props.cellData.id).append("<img src='images/"+  that.props.cellData.url +"'/>")
+                $(node).append("<img src='images/"+  that.props.cellData.url +"'/>")
 
 
-                var id = $("#"+ that.props.cellData.id).attr('id')
-                $("#"+ that.props.cellData.id).addClass(id);
+                var id = $(node).attr('id')
+                $(node).addClass(id);
 
                 resolve(true)
 
@@ -202,17 +205,17 @@ class Cell extends React.Component {
                     // var height = d3.select(xml.documentElement).attr('height')
                     // console.log(that.props.cellData.url)
                     var DOM = that.replaceClass(xml.documentElement.cloneNode(true))
-                    d3.select("#"+ that.props.cellData.id).node().appendChild(DOM);
+                    d3.select(node).node().appendChild(DOM);
 
                     that.appendShadow(DOM)
     
                     if (that.props.cellData.content != undefined){
-                        d3.select("#"+ that.props.cellData.id).select('svg').selectAll('*').remove();
-                        $("#"+ that.props.cellData.id).addClass('noBorder');
+                        d3.select(node).select('svg').selectAll('*').remove();
+                        $(node).addClass('noBorder');
                     }
     
-                    var id = $("#"+ that.props.cellData.id).attr('id')
-                    $("#"+ that.props.cellData.id).addClass(id);
+                    var id = $(node).attr('id')
+                    $(node).addClass(id);
 
                     // console.log('GOOOOO')
                     resolve(true)
@@ -223,11 +226,11 @@ class Cell extends React.Component {
                 var width = null
                 if (that.props.cellData.width == undefined) width = 'auto'
                 else width = that.props.cellData.width + 'px'
-                $("#"+ that.props.cellData.id).append("<img width='"+width+"' src='"+  that.props.cellData.url +"'/>")
+                $(node).append("<img width='"+width+"' src='"+  that.props.cellData.url +"'/>")
 
 
-                var id = $("#"+ that.props.cellData.id).attr('id')
-                $("#"+ that.props.cellData.id).addClass(id);
+                var id = $(node).attr('id')
+                $(node).addClass(id);
 
                 resolve(true)
 
@@ -333,7 +336,7 @@ class Cell extends React.Component {
           return(
             <CSSTransition in={this.state.mounted} timeout={500} classNames="my-node" >
                 <div> 
-                    <div className="panel" id={this.props.cell} style={{...defaultStyle}}>
+                    <div className="panel" id={this.props.cell} style={{...defaultStyle}} ref={this.myRef}>
                         {svg}
                         {sliders}
                         

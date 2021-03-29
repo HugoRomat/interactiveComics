@@ -180,9 +180,9 @@ export class EventsPanels {
         // IF THE PANEL HAS BEEN RELOADED
         if (parent == undefined ) idSelector = d3.selectAll('.'+ idPanel)
         else if (idPanel == parent) idSelector = d3.select('.'+ idPanel)
-        else idSelector = d3.select('.'+parent).selectAll('.'+ idPanel)
+        else idSelector = d3.selectAll('.'+parent).selectAll('.'+ idPanel)
 
-
+        console.log(idSelector.nodes(), parent)
         // idSelector.style('filter', 'url(#shadowSuggestInteractivity)')
         if (this.state.showInteraction != undefined && this.state.showInteraction != false) {
             idSelector.attr('filter', "url(#dropshadowCustom)")
@@ -194,7 +194,8 @@ export class EventsPanels {
         // console.log($('.'+parent + ' .'+ idPanel).get()[0])
         // console.log($('.panel_3 .compare').get()[0])
         idSelector.style('cursor', 'pointer')
-        idSelector.attr('isTriggered', 'false')
+            .attr('isTriggered', 'false')
+            .attr('state', 'false')
         
         if (trigger == "click"){
             // console.log(idSelector.node(), trigger)
@@ -204,6 +205,9 @@ export class EventsPanels {
                 // console.log(isTriggered)
                 if (isTriggered == 'false'){
                     d3.select(this).attr('isTriggered', 'true')
+                    that.populateEvent(event, idSelector);
+                } else {
+                    d3.select(this).attr('isTriggered', 'false')
                     that.populateEvent(event, idSelector);
                 }
 
@@ -215,8 +219,7 @@ export class EventsPanels {
                     d3.select(this).attr('state', 'false');
                 }
             })
-            .attr('isTriggered', 'false')
-            .attr('state', 'false')
+            
         }
         
         if (trigger == "zoom"){
@@ -242,8 +245,6 @@ export class EventsPanels {
 
         }
 
-
-
         // Pour gerer le mouseover
         // 
         if (trigger == 'mouseover'){
@@ -253,16 +254,18 @@ export class EventsPanels {
                 var isTriggered = d3.select(this).attr('isTriggered' + trigger)
                 // console.log('goooo', isTriggered)
                 if (isTriggered == 'false'){
-                    that.populateEvent(event, idSelector, false);
-                    d3.select(this).attr('isTriggered' + trigger, 'true')
+                    that.populateEvent(event, idSelector);
+                    // d3.select(this).attr('isTriggered' + trigger, 'true');
+                    d3.select(this).attr('state', 'true');
                 } 
             })
             idSelector.on('mouseout', function(d, i){
                 // console.log(idPanel, trigger, event, parent);
                 var isTriggered = d3.select(this).attr('isTriggered' + trigger)
-                if (isTriggered == 'true'){
-                    that.populateEvent(event, idSelector, true);
-                    d3.select(this).attr('isTriggered' + trigger, 'false')
+                if (isTriggered == 'false'){
+                    that.populateEvent(event, idSelector);
+                    d3.select(this).attr('state', 'false');
+                    // d3.select(this).attr('isTriggered' + trigger, 'false')
                 }
             })
         }
@@ -297,7 +300,8 @@ export class EventsPanels {
                 // var isFlex = event['flexwrap'];
                 // var newline = event['newline'];
                 // var condition = event['newline'];
-                console.log(what,where);
+                console.log(where, what);
+                // if (where == undefined) idSelector.
                 this.append(where, JSON.parse(JSON.stringify(what)));//, isFlex, newline)
                 setTimeout(()=>{
                     this.appendEventsToPanels(what);
@@ -318,34 +322,39 @@ export class EventsPanels {
 
 
             } 
+            if (event.operation == 'remove' && isSatisfied){
+                var what = event['what'];
+                var where = event['where'];
+                this.remove(what);//, isFlex, newline)
+            }
             // ONLY FOR MOUSEOVER
-            if (event.operation == 'highlight' && reverse == false && isSatisfied){
-                var element = event['element'];
-                var after = event['after'];
-                var what = event['what']
-                // console.log('highlight')
-                if (what == undefined) var selector = d3.selectAll('.'+element)
-                else var selector = d3.selectAll('.'+what)
-                this.highlight(element, after, selector)
-            }
+            // if ((event.operation == 'highlight' || event.operation == 'changeProperties') && reverse == false && isSatisfied){
+            //     var element = event['element'];
+            //     var after = event['after'];
+            //     var what = event['what']
+            //     // console.log('highlight')
+            //     if (what == undefined) var selector = d3.selectAll('.'+element)
+            //     else var selector = d3.selectAll('.'+what)
+            //     this.highlight(element, after, selector)
+            // }
 
-            // console.log(event, reverse, isSatisfied)
-            if (event.operation == 'highlight' && reverse == true && isSatisfied){
-                // console.log('GO')
-                var element = event['element'];
-                var after = event['after'];
-                var what = event['what']
+            // // console.log(event, reverse, isSatisfied)
+            // if ((event.operation == 'highlight' || event.operation == 'changeProperties') && reverse == true && isSatisfied){
+            //     // console.log('GO')
+            //     var element = event['element'];
+            //     var after = event['after'];
+            //     var what = event['what']
 
-                // console.log('highlight')
+            //     // console.log('highlight')
 
-                if (what == undefined) var selector = d3.selectAll('.'+element)
-                else var selector = d3.selectAll('.'+what)
-                // console.log('non highlight')
+            //     if (what == undefined) var selector = d3.selectAll('.'+element)
+            //     else var selector = d3.selectAll('.'+what)
+            //     // console.log('non highlight')
                 
-                this.unhighlight(element, after, selector)
-            }
+            //     this.unhighlight(element, after, selector)
+            // }
             // ONLY FOR OTHER THINGS THAN MOUSEOVER
-            if (event.operation == 'highlight' && reverse == undefined && isSatisfied){
+            if ((event.operation == 'highlight' || event.operation == 'changeproperties') && reverse == undefined && isSatisfied){
                
                 var element = event['element'];
                 var after = event['after'];
@@ -589,16 +598,16 @@ export class EventsPanels {
             }
             
             idSelector.each(function(){
-                console.log('HEY', key, after.style)
+                // console.log('HEY', key, after.style)
                 // var node = d3.select(this).node()
                 // if (node.tagName == 'path'  && key == 'fill') d3.select(this).style('stroke', after.style[key])
                 // else 
                 d3.select(this).style(key, after.style[key])
-                console.log(d3.select(this).node().cloneNode(true))
+                // console.log(d3.select(this).node().cloneNode(true))
             })
         }
         for (var key in after.attr){
-            console.log(key)
+            // console.log(key)
             idSelector.selectAll('*').attr(key, after.style[key])
             idSelector.attr(key, after.style[key])
         }
@@ -795,13 +804,19 @@ export class EventsPanels {
             } 
         }
         if (indexes.length == 0) console.log('no INDEXES FOUND')
-        // console.log(indexes)
+
+        if (indexes.length == 0){
+            indexes.push([arrayArrangement.length-1, 0])
+        }
+        console.log(indexes)
         // console.log(myNewLine)
 
        if (isFlex == undefined){
         //    console.log(what)
-            if (what.length > 0) arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
+        console.log(indexes,myNewLine)
+            if (Array.isArray(what) && what.length > 0) arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
 
+            
             // IF THERE IS A NEW LINE MENTIONNED
             if (myNewLine.length > 0){
                 console.log(myNewLine)
@@ -817,7 +832,7 @@ export class EventsPanels {
             }
             // console.log(arrayArrangement, this.state.layout)
             this.layout.panels = arrayArrangement;
-            // console.log(this.layout.panels)
+            console.log(this.layout.panels)
 
             this.stateApp.setState({layouts: this.state.layouts})
         } 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+ "gutter": 0,
+ "currentLayout": "init",
+ 'showInteraction': 'red',
+ "classes": [],
+ "layouts": [
+  {
+   "name": "init",
+   "panels": [
+    ["p0", "p1"]
+   ]
+  }
+ ],
+ "panels": [
+ {
+   "id": "p0",
+   "url": "https://raw.githubusercontent.com/nathalieriche/comicsassets/main/p1.svg"
+  },
+  {
+   "id": "p1",
+   "url": "https://raw.githubusercontent.com/nathalieriche/comicsassets/main/police-p1.svg"
+  },
+  {
+   "id": "panel2",
+   "url": "https://interactivedatacomics.github.io/tutorials/humans.svg"
+  },
+  {
+   "id": "panel3",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a.svg"
+  }
+  
+ ],
+ "operations": [{
+   "trigger": "click",
+   "element": ["p1w", "p1b"],
+   "operation": "append",
+   "newpanels": [[["panel2", "p1"]], [["p0", "p1"]]]
+  }]
+}
+   interactiveComics.start(JSONFile)
+   console.log()
+ </script>
+</html>

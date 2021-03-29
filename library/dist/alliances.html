@@ -15,7 +15,7 @@
    var JSONFile = {
     "gutter": 0,
     "currentLayout": "init",
-    "layouts": [
+    "layouts": [{}, 
      {
       "name": "init",
       "panels": [
@@ -143,40 +143,12 @@
      },
      {
       "trigger": "click",
-      "element": "medium",
+      "element": ["medium", long]
       "operation": "loadLayout",
       "group": "group1",
       "after": "p1",
-      "layout": [
-       [
-        "p4","p5"
-       ],
-       [
-        "p6","p7","p8"
-       ],
-       [
-        "p9","p10","p11"
-       ],
-       ["p12","p13"]
-      ]
-     },
-     {
-      "trigger": "click",
-      "element": "long",
-      "operation": "loadLayout",
-      "group": "group1",
-      "after": "p1",
-      "layout": [
-        [
-            "p4","p5"
-        ],
-           ["p14"],["p16","p17"],
-           ["p19"],
-           ["p20"],
-           ["p21","p22","p23","p24"],
-           ["p12","p13"]
-      ]
-     },
+      "layout": [medium, long]
+     }
      {
    "trigger": "click",
    "element": "detail-a",
@@ -366,3 +338,23 @@
 
  </script>
 </html>
+
+
+
+
+
+loadLayout
+element: [button1, button2, button3]
+layouts: [layout1, layout2, layout3]
+
+
+
+
+
+loadLayout
+eleemnt: button1
+layout: layout1
+
+loadLayout
+eleemnt: button2
+layout: layout2

@@ -71,9 +71,9 @@
 //    "after": [{"style": {"opacity": 0.7}},{"style": {"opacity": 0.7}}]
   // }
   {
-   "trigger": "click",
+   "trigger": "mouseover",
    "element": "a",
-   "operation": "highlight",
+   "operation": "changeproperties",
    "after": {
     "style": {
      "opacity": 0.7,
@@ -81,12 +81,13 @@
      "transform-origin": "center"
     }
    }
-  },
+  }
+  ,
   {
-   "trigger": "click",
+   "trigger": "mouseover",
    "element": "a",
    "what": "p_units",
-   "operation": "highlight",
+   "operation": "changeproperties",
    "after": {
     "style": {
      "transform": "translate(200px,200px)"
