@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   
+   <title>React App</title>
+</head>
+<body>
+<div id="root"></div>
+
+
+<script type="text/javascript" src="main.js"></script></body>
+
+<script>
+   var JSONFile = {
+ "currentLayout": "init",
+ "layouts": [
+  {
+   "name": "init",
+   "panels": [
+    [
+     "title"
+    ],
+    [
+     "dog"
+    ]
+   ]
+  }
+ ],
+ "classes": [],
+ "variables": [],
+ "panels": [
+  {
+   "id": "title",
+   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/comics_title.svg"
+  },
+  {
+   "id": "dog",
+   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/comics_main.svg"
+  },
+  {
+   "id": "nose-panels1",
+   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/comics_nose-panels1.svg"
+  },
+  {
+   "id": "tummy-panels1",
+   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/comics_tummy-panels1.svg"
+  },
+  {
+   "id": "tummy-panels2",
+   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/comics_tummy-panels2.svg"
+  },
+  {
+   "id": "tummy-panels3",
+   "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/comics_tummy-panels3.svg"
+  }
+ ],
+ "operations": [
+  {
+   "trigger": "mouseover",
+   "element": "tummy",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "orange",
+     "stroke": "orange"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "nose",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "orange",
+     "stroke": "orange"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "back",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "orange",
+     "stroke": "orange"
+    }
+   }
+  },
+  {
+   "trigger": "mouseover",
+   "element": "next-tummy-1",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "blue",
+     "stroke": "orange"
+    }
+   }
+  },
+  {
+   "trigger": "click",
+   "operation": "loadLayout",
+   "element": "tummy",
+   "layout": [
+    [
+     "tummy-panels1"
+    ]
+   ],
+   "after": "dog",
+   "group": "group1"
+  },
+  {
+   "trigger": "click",
+   "operation": "loadLayout",
+   "element": "nose",
+   "layout": [
+    [
+     "nose-panels1"
+    ]
+   ],
+   "after": "dog",
+   "group": "group1"
+  },
+  {
+   "trigger": "click",
+   "operation": "loadLayout",
+   "element": "next",
+   "layout": [
+    [
+     "tummy-panels2"
+    ]
+   ],
+   "after": "dog",
+   "group": "group1"
+  },
+  {
+   "trigger": "click",
+   "operation": "loadLayout",
+   "element": "next-tummy-2",
+   "layout": [
+    [
+     "tummy-panels3"
+    ]
+   ],
+   "after": "dog",
+   "group": "group1"
+  }
+ ],
+ "coding": [],
+ "gutter": 0
+}
+   interactiveComics.start(JSONFile)
+   console.log()
+ </script>
+</html>
