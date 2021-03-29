@@ -13,67 +13,98 @@
 
 <script>
    var JSONFile = {
- "gutter": 20,
+ "gutter": -10,
  "currentLayout": "init",
  "layouts": [
-    {
-      "name": "init",
-      "panels": [
-        ["dog"]
-      ]
-    },
-    {
-        "name": "tum",
-        "panels": [
-            ["panels-tummy"]
-        ]
-    },
-    {
-        "name": "nose",
-        "panels": [
-            ["panels-nose"]
-        ]
-    }
-  ],
- "panels": [
-    {
-      "id": "dog",
-      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog.svg"
-    },
-    {
-      "id": "dog-tum",
-      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog-tum.svg"
-    },
-    {
-      "id": "dog-nose",
-      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/dog-nose.svg"
-    },
-    {
-      "id": "panels-nose",
-      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/panels-nose.svg"
-    },
-    {
-      "id": "panels-tummy",
-      "url": "https://raw.githubusercontent.com/oseph/interactive-data-comics-assets/main/panels-tummy.svg"
-    }
- ],
- "operations": [
   {
-    "trigger": "click",
-    "element": "tummy",
-    "operation": "loadLayout",
-    "layout": [["panels-tummy"]],
-    "after": "dog",
-    "group": "group1"
+   "name": "init",
+   "panels": [
+    [
+     "p_price"
+    ],
+    [
+     "p_units"
+    ]
+   ]
+  }
+ ],
+ "panels": [
+  {
+   "id": "p_price",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/price.svg"
   },
   {
-    "trigger": "click",
-    "element": "nose",
-    "operation": "loadLayout",
-    "layout": [["panels-nose"]],
-    "after": "dog",
-    "group": "group1"
+   "id": "p_units",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/units.svg"
+  },
+  {
+   "id": "p_sales-a",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a.svg"
+  },
+  {
+   "id": "p_sales-b",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b.svg"
+  },
+  {
+   "id": "p_sales-c",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c.svg"
+  },
+  {
+   "id": "p_sales-a-small",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-a-small.svg"
+  },
+  {
+   "id": "p_sales-b-small",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-b-small.svg"
+  },
+  {
+   "id": "p_sales-c-small",
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/getstarted/panels/sales-c-small.svg"
   }
+ ],
+ "operations": [
+ {
+   "trigger": "click",
+   "element": "a",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "opacity": 0.7
+    }
+   }
+  }
+  // {
+  //  "trigger": "click",
+  //  "element": "a",
+  //  "operation": "highlight",
+  //  "after": {
+  //   "style": {
+  //    "opacity": 0.7
+  //   }
+  //  }
+  // },
+  // {
+  //  "trigger": "click",
+  //  "element": "a",
+  //  "what": "Arrow_2",
+  //  "operation": "highlight",
+  //  "after": {
+  //   "style": {
+  //    "fill": "red"
+  //   }
+  //  }
+  // },
+  // {
+  //  "trigger": "click",
+  //  "element": "a",
+  //  "what": "b",
+  //  "operation": "highlight",
+  //  "after": {
+  //   "style": {
+  //    "fill": "red"
+  //   }
+  //  }
+  // }
  ]
 }
    interactiveComics.start(JSONFile)

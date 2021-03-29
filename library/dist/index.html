@@ -13,31 +13,91 @@
 
 <script>
    var JSONFile = {
- "gutter": 20,
  "currentLayout": "init",
  "layouts": [
   {
    "name": "init",
-   "panels": [["p1"],["p2","p3_1"],["p4"],["p5","p6"],["p7"]]
+   "panels": [
+    [
+     "p1"
+    ],
+    [
+     "p2",
+     "p3_1"
+    ],
+    [
+     "p4"
+    ],
+    [
+     "p5",
+     "p6"
+    ],
+    [
+     "p7"
+    ]
+   ]
+  }
+ ],
+ "classes": [],
+ "variables": [
+  {
+   "name": "year",
+   "value": "1"
   }
  ],
  "panels": [
   {
    "id": "p1",
    "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Intro.png",
-  "width": '1000'
+   "width": "1000"
   },
   {
    "id": "p2",
-   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Slider.png"
+   "url": "https://raw.githubusercontent.com/interactivedatacomics/interactivedatacomics.github.io/main/comics/SliderVect.svg",
+   "width": "700",
+   "sliders": [
+    {
+     "id": "Slider",
+     "variable": "year",
+     "min": 1,
+     "max": 6
+    }
+   ]
   },
   {
    "id": "p3_1",
-   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap1.png"
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap1.png",
+   "width": "650"
+  },
+  {
+   "id": "p3_2",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap2.png",
+   "width": "650"
+  },
+  {
+   "id": "p3_3",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap3.png",
+   "width": "650"
+  },
+  {
+   "id": "p3_4",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap4.png",
+   "width": "650"
+  },
+  {
+   "id": "p3_5",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap5.png",
+   "width": "650"
+  },
+  {
+   "id": "p3_6",
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/PlasticHeap6.png",
+   "width": "650"
   },
   {
    "id": "p4",
-   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Underwater.png"
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/Underwater.png",
+   "width": "1010"
   },
   {
    "id": "p5",
@@ -49,11 +109,15 @@
   },
   {
    "id": "p7",
-   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/End.png"
+   "url": "https://raw.githubusercontent.com/MomosArts/plastic/main/End.png",
+   "width": "1010"
   }
  ],
  "operations": [
- ]
+
+ ],
+ "coding": [],
+ "gutter": 5
 }
    interactiveComics.start(JSONFile)
    console.log()

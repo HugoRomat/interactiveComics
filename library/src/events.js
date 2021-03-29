@@ -200,18 +200,23 @@ export class EventsPanels {
             // console.log(idSelector.node(), trigger)
             idSelector.on(trigger, function(d, i){
                 // console.log('CLICK')
-                var isTriggered = d3.select(this).attr('isTriggered')
-                console.log(isTriggered)
+                var isTriggered = d3.select(this).attr('isTriggered')         
+                // console.log(isTriggered)
                 if (isTriggered == 'false'){
                     d3.select(this).attr('isTriggered', 'true')
-                    
-
-
                     that.populateEvent(event, idSelector);
                 }
-                
+
+                //To record the state of the button
+                var state = d3.select(this).attr('state');
+                if (state == 'false'){
+                    d3.select(this).attr('state', 'true');
+                } else {
+                    d3.select(this).attr('state', 'false');
+                }
             })
             .attr('isTriggered', 'false')
+            .attr('state', 'false')
         }
         
         if (trigger == "zoom"){
@@ -263,7 +268,7 @@ export class EventsPanels {
         }
     }
     populateEvent(events, idSelector, reverse){
-        // console.log(events)
+        
         for (var i in events){
             var event = events[i];
 
@@ -312,7 +317,9 @@ export class EventsPanels {
                 }, 500)
 
 
-            } else if (event.operation == 'highlight' && reverse == false && isSatisfied){
+            } 
+            // ONLY FOR MOUSEOVER
+            if (event.operation == 'highlight' && reverse == false && isSatisfied){
                 var element = event['element'];
                 var after = event['after'];
                 var what = event['what']
@@ -321,11 +328,15 @@ export class EventsPanels {
                 else var selector = d3.selectAll('.'+what)
                 this.highlight(element, after, selector)
             }
+
+            // console.log(event, reverse, isSatisfied)
             if (event.operation == 'highlight' && reverse == true && isSatisfied){
                 // console.log('GO')
                 var element = event['element'];
                 var after = event['after'];
                 var what = event['what']
+
+                // console.log('highlight')
 
                 if (what == undefined) var selector = d3.selectAll('.'+element)
                 else var selector = d3.selectAll('.'+what)
@@ -333,7 +344,23 @@ export class EventsPanels {
                 
                 this.unhighlight(element, after, selector)
             }
+            // ONLY FOR OTHER THINGS THAN MOUSEOVER
+            if (event.operation == 'highlight' && reverse == undefined && isSatisfied){
+               
+                var element = event['element'];
+                var after = event['after'];
+                var what = event['what']
+                
+                if (what == undefined) var selector = d3.selectAll('.'+element)
+                else var selector = d3.selectAll('.'+what)
 
+                // console.log('GO', selector.node())
+
+                var state = idSelector.attr('state')
+                if (state == 'false') this.highlight(element, after, selector);
+                else this.unhighlight(element, after, selector);
+                idSelector.attr('isTriggered', 'false')
+            }
             if (event.operation == 'loadLayout' && isSatisfied && (reverse == false || reverse == undefined)){
                 // console.log('GO')
                 var element = event['element'];
@@ -525,12 +552,12 @@ export class EventsPanels {
             }
             
         }
-        this.objectsAttributes[element] = []
+        // this.objectsAttributes[element] = []
     
     }
     highlight(element, after, idSelector){
         // console.log('HIGHLIGHT')
-        this.objectsAttributes[element] = []
+        // this.objectsAttributes[element] = []
         // if ()
         var elementDOM = idSelector.nodes();
 
