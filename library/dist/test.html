@@ -63,38 +63,47 @@
   }
  ],
  "operations": [
+//  {
+//    "trigger": "click",
+//    "element": ["a", "a"],
+//    "what": ["a", "Arrow_2"],
+//    "operation": "highlight",
+//    "after": [{"style": {"opacity": 0.7}},{"style": {"opacity": 0.7}}]
+  // }
   {
    "trigger": "click",
    "element": "a",
    "operation": "highlight",
    "after": {
     "style": {
-     "opacity": 0.7
+     "opacity": 0.7,
+     "transform": "scale(1.5)",
+     "transform-origin": "center"
     }
    }
   },
   {
    "trigger": "click",
    "element": "a",
-   "what": "Arrow_2",
+   "what": "p_units",
    "operation": "highlight",
    "after": {
     "style": {
-     "fill": "red"
-    }
-   }
-  },
-  {
-   "trigger": "click",
-   "element": "a",
-   "what": "b",
-   "operation": "highlight",
-   "after": {
-    "style": {
-     "fill": "red"
+     "transform": "translate(200px,200px)"
     }
    }
   }
+  // {
+  //  "trigger": "click",
+  //  "element": "a",
+  //  "what": "b",
+  //  "operation": "highlight",
+  //  "after": {
+  //   "style": {
+  //    "fill": "red"
+  //   }
+  //  }
+  // }
  ]
 }
    interactiveComics.start(JSONFile)

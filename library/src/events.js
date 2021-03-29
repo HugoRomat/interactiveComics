@@ -556,7 +556,7 @@ export class EventsPanels {
     
     }
     highlight(element, after, idSelector){
-        // console.log('HIGHLIGHT')
+        // console.log('HIGHLIGHT', after)
         // this.objectsAttributes[element] = []
         // if ()
         var elementDOM = idSelector.nodes();
@@ -575,18 +575,26 @@ export class EventsPanels {
 
         // Generate highlight 
         for (var key in after.style){
+            
             // console.log(idSelector.node(), key, after.style[key])
-            idSelector.selectAll('*').each(function(){
-                var node = d3.select(this).node()
-                // if (node.tagName == 'path' && key == 'fill') d3.select(this).style('stroke', after.style[key])
-                // else 
-                d3.select(this).style(key, after.style[key])
-            })
+            if (key != 'transform'){
+                idSelector.selectAll('*').each(function(){
+                
+                    // var node = d3.select(this).node()
+                    // if (node.tagName == 'path' && key == 'fill') d3.select(this).style('stroke', after.style[key])
+                    // else 
+                    // console.log(key, after.style[key])
+                    d3.select(this).style(key, after.style[key])
+                })
+            }
+            
             idSelector.each(function(){
-                var node = d3.select(this).node()
+                console.log('HEY', key, after.style)
+                // var node = d3.select(this).node()
                 // if (node.tagName == 'path'  && key == 'fill') d3.select(this).style('stroke', after.style[key])
                 // else 
                 d3.select(this).style(key, after.style[key])
+                console.log(d3.select(this).node().cloneNode(true))
             })
         }
         for (var key in after.attr){
