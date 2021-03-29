@@ -63,45 +63,38 @@
   }
  ],
  "operations": [
- {
+  {
    "trigger": "click",
-   "element": ["a", "a"],
-   "what": ["a", "Arrow_2"],
+   "element": "a",
    "operation": "highlight",
-   "after": [{"style": {"opacity": 0.7}},{"style": {"opacity": 0.7}}]
+   "after": {
+    "style": {
+     "opacity": 0.7
+    }
+   }
+  },
+  {
+   "trigger": "click",
+   "element": "a",
+   "what": "Arrow_2",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "red"
+    }
+   }
+  },
+  {
+   "trigger": "click",
+   "element": "a",
+   "what": "b",
+   "operation": "highlight",
+   "after": {
+    "style": {
+     "fill": "red"
+    }
+   }
   }
-  // {
-  //  "trigger": "click",
-  //  "element": "a",
-  //  "operation": "highlight",
-  //  "after": {
-  //   "style": {
-  //    "opacity": 0.7
-  //   }
-  //  }
-  // },
-  // {
-  //  "trigger": "click",
-  //  "element": "a",
-  //  "what": "Arrow_2",
-  //  "operation": "highlight",
-  //  "after": {
-  //   "style": {
-  //    "fill": "red"
-  //   }
-  //  }
-  // },
-  // {
-  //  "trigger": "click",
-  //  "element": "a",
-  //  "what": "b",
-  //  "operation": "highlight",
-  //  "after": {
-  //   "style": {
-  //    "fill": "red"
-  //   }
-  //  }
-  // }
  ]
 }
    interactiveComics.start(JSONFile)
