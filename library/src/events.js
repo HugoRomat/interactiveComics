@@ -52,7 +52,7 @@ export class EventsPanels {
                     arraysElements = key;
                 }
             }
-            // console.log(arraysElements)
+            console.log(arraysElements)
             if (arraysElements != null && Array.isArray(ope['element'])){
             // if (ope.element.length > 1){
                 i = 0
