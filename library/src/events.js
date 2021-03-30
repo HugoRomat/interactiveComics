@@ -182,7 +182,7 @@ export class EventsPanels {
         else if (idPanel == parent) idSelector = d3.select('.'+ idPanel)
         else idSelector = d3.selectAll('.'+parent).selectAll('.'+ idPanel)
 
-        console.log(idSelector.nodes(), parent)
+        // console.log(idSelector.nodes(), parent)
         // idSelector.style('filter', 'url(#shadowSuggestInteractivity)')
         if (this.state.showInteraction != undefined && this.state.showInteraction != false) {
             idSelector.attr('filter', "url(#dropshadowCustom)")
@@ -623,33 +623,7 @@ export class EventsPanels {
         // }
 
     }
-    replace(where, what, isFlex){
-        console.log('replace', where, what)
-        // var where = parseInt(where.split('_')[1])
-        // var what = this.splitArray(what);
-        console.log(where, what);
-        
-        var indexes = [];
-        var arrayArrangement = JSON.parse(JSON.stringify(this.layout.panels));
-        for (var i= 0; i <  arrayArrangement.length; i++){
-            for (var j= 0; j <  arrayArrangement[i].length; j++){
-                    if (arrayArrangement[i][j] == where){indexes.push([i,j])}
-            } 
-        }
-        console.log(indexes)
-        // Object.assign([], array, {2: newItem});
-        // const newArray = Object.assign([...array], {2: 'item2'});
-
-       
-        // this.state
-        arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1, ...what);
-        // arrayArrangement[2][0] = [16]
-        this.layout.panels = arrayArrangement
-
-        // console.log(this.layout.panels)
-        this.stateApp.setState({layouts: this.state.layouts})
-
-    }
+   
     remove(items, isFlex){
 
         return new Promise((resolve, reject) => {
@@ -753,6 +727,45 @@ export class EventsPanels {
         })
         return newData
     }
+     replace(where, what, isFlex){
+        // console.log('replace', where, what)
+        // var where = parseInt(where.split('_')[1])
+        // var what = this.splitArray(what);
+        // console.log(where, what);
+        
+        
+        // console.log(...what)
+        // Object.assign([], array, {2: newItem});
+        // const newArray = Object.assign([...array], {2: 'item2'});
+
+        // console.log(indexes, ...what)
+        // this.state
+        
+
+        // console.log(this.layout.panels)
+        // this.stateApp.setState({layouts: this.state.layouts})
+        // arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1, ...what);
+
+        // arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1);
+        // arrayArrangement.splice(indexes[0][0], 0, ...what);
+        // arrayArrangement.splice(indexes[0][0], 1, ...what);
+        // arrayArrangement[2][0] = [16]
+
+        this.append(where, what, undefined)
+
+
+        var indexes = [];
+        var arrayArrangement = JSON.parse(JSON.stringify(this.layout.panels));
+        for (var i= 0; i <  arrayArrangement.length; i++){
+            for (var j= 0; j <  arrayArrangement[i].length; j++){
+                    if (arrayArrangement[i][j] == where){indexes.push([i,j])}
+            } 
+        }
+        arrayArrangement[indexes[0][0]].splice(indexes[0][1], 1);
+        this.layout.panels = arrayArrangement
+        this.stateApp.setState({layouts: this.state.layouts})
+
+    }
     append(where, what, isFlex){
         
         console.log(where, what, isFlex);
@@ -813,7 +826,7 @@ export class EventsPanels {
 
        if (isFlex == undefined){
         //    console.log(what)
-        console.log(indexes,myNewLine)
+            console.log(indexes,myNewLine)
             if (Array.isArray(what) && what.length > 0) arrayArrangement[indexes[0][0]].splice(indexes[0][1]+1, 0, ...what);
 
             

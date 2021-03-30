@@ -311,7 +311,7 @@ class App extends React.Component {
           console.log(this.state.layouts)
           if (this.state.layouts.length != 0){
                var layout = this.state.layouts.find(x => x.name == this.state.currentLayout)
-               // console.log(layout)
+               console.log('=====================', layout.panels)
                comicRendering = layout.panels.map((line, index) => (
                     // <div className="line" key={'b'}>line.flat(5)[0]
                      <div className="line" key={index}> 
