@@ -123,13 +123,37 @@ class App extends React.Component {
           
      }
 
+     // Update the display of all variables in the DOM
+     // This method refreshes variable values shown on panels without recalculating them
+     updateAllVariablesDisplay = () => {
+          console.log('Updating all variables display...')
+          for (var i in this.state.variables){
+               var variable = this.state.variables[i];
+               // update all panels name
+               var elementsSelected = $('.' + variable.name).get();
+               $('.variables'+variable.name).remove()
+               for (var k in elementsSelected){
+                    var elementSelected = elementsSelected[k]
+                    var BBox = $(elementSelected).get()[0].getBBox()
+
+                    var parentNode = $(elementSelected).parent().get()[0]
+
+                    var parent = d3.select(parentNode).append('g').attr('class', 'variables'+variable.name)
+                         .attr('transform', 'translate('+ BBox.x + ',' + (BBox.y + 15) + ')')
+
+                    var fO = parent.append('text').attr('fill', 'black').text(variable.value)
+               }
+          }
+          this.updateIsotype();
+     }
+
      // For mathematical operations
      // When moving the sliders or updating things
      updateVariable = (variableName, value, isFinal) => {
 
           var myIndex = this.state.variables.findIndex(x => x.name ==variableName);
           this.state.variables[myIndex]['value'] = value;
-          
+
 
           for (var i in this.state.variables){
                var variable = this.state.variables[i];
@@ -147,38 +171,20 @@ class App extends React.Component {
                          }
                     }
                     variable.value = eval(mathematicalFunction)
-                    
+
                }
-               // update all panels name
-               // $("."+variable.name +"> text").remove();
-               // $("."+variable.name +"> text").html('<text> hello </text>')
-               // d3.selectAll('.'+variable.name).text(variable.value)
-               // d3.selectAll('.'+variable.name).text(variable.value)
-               var elementsSelected = $('.' + variable.name).get();
-               $('.variables'+variable.name).remove()
-               for (var k in elementsSelected){
-                    var elementSelected = elementsSelected[k]
-                    var BBox = $(elementSelected).get()[0].getBBox()
-
-                    var parentNode = $(elementSelected).parent().get()[0]//.select(this.parentNode)
-                    
-                    var parent = d3.select(parentNode).append('g').attr('class', 'variables'+variable.name)
-                         .attr('transform', 'translate('+ BBox.x + ',' + (BBox.y + 15) + ')')
-
-                    var fO = parent.append('text').attr('fill', 'black').text(variable.value)
-
-                    
-               }
-
           }
+
+          // Update the display of all variables
+          this.updateAllVariablesDisplay();
+
           if (isFinal) {
                // console.log('END')
                this.setState({variables:this.state.variables})
           }
           // console.log('GOO')
-          this.updateIsotype();
           this.events.setCondition();
-          
+
      }
      changeLayout = (event, from, to, width) => {
           console.log(event, from, to, width)

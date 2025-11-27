@@ -305,6 +305,11 @@ export class EventsPanels {
                 this.append(where, JSON.parse(JSON.stringify(what)));//, isFlex, newline)
                 setTimeout(()=>{
                     this.appendEventsToPanels(what);
+                    // Update all variables display after new panels are appended
+                    setTimeout(()=>{
+                        console.log('Refreshing variables display after append...')
+                        this.stateApp.updateAllVariablesDisplay();
+                    }, 300)
                 }, 500)
             } else if (event.operation == 'replace' && isSatisfied){
 
@@ -318,6 +323,11 @@ export class EventsPanels {
 
                 setTimeout(()=>{
                     this.appendEventsToPanels(newpanels);
+                    // Update all variables display after panels are replaced
+                    setTimeout(()=>{
+                        console.log('Refreshing variables display after replace...')
+                        this.stateApp.updateAllVariablesDisplay();
+                    }, 300)
                 }, 500)
 
 
@@ -382,12 +392,17 @@ export class EventsPanels {
                 this.loadLayout(element, layout, where, group);
                 setTimeout(()=>{
                     this.appendEventsToPanels(JSON.parse(JSON.stringify(layout)));
+                    // Update all variables display after new panels are loaded
+                    setTimeout(()=>{
+                        console.log('Refreshing variables display after loadLayout...')
+                        this.stateApp.updateAllVariablesDisplay();
+                    }, 300)
                 }, 500)
-                
+
                 idSelector.attr('isTriggered', 'false')
 
                 // setTimeout(()=>{
-                   
+
                 // }, 500)
             }
 
